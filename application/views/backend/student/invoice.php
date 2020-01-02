@@ -25,7 +25,6 @@
                     		<th style="text-align: center;"><div><?php echo get_phrase('Amount'); ?></div></th>
                     		<th style="text-align: center;"><div><?php echo get_phrase('Date'); ?></div></th>
                             <th style="text-align: center;"><div><?php echo get_phrase('Status');?></div></th>
-                            <th style="text-align: center;"><div><?php echo get_phrase('Options');?></div></th>
 						</tr>
 					</thead>
                     <tbody>
@@ -38,14 +37,6 @@
 							<td style="text-align: center;"><?php echo date('d M,Y', $row['creation_timestamp']);?></td>
                             <td style="text-align: center;">
                                 <span class="label label-<?php if($row['status']=='paid')echo 'success';else echo 'danger';?>"><?php echo $row['status'];?></span>
-                            </td>
-                            <td style="text-align: center;">
-                            <?php echo form_open('student/invoice/make_payment');?>
-                                    <input type="hidden" name="invoice_id" value="<?php echo $row['invoice_id'];?>" />
-                                        <button type="submit" class="btn btn-info" <?php if($row['status'] == 'paid'):?> disabled="disabled"<?php endif;?>>
-                                            <i class="icon-paypal"></i> Pay with PayPal
-                                        </button>
-                                </form>
                             </td>
                         </tr>
                         <?php endforeach;?>

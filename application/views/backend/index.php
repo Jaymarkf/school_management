@@ -3,6 +3,7 @@
 	$system_name        =	$this->db->get_where('settings' , array('type'=>'system_name'))->row()->description;
 	$system_title       =	$this->db->get_where('settings' , array('type'=>'system_title'))->row()->description;
 	$account_type       =	$this->session->userdata('login_type');
+
 	?>
 <!DOCTYPE html>
 <html lang="en" dir="<?php if ($rtl == 'rtl') echo 'rtl';?>">
@@ -14,7 +15,7 @@
     <meta name="author" content="Web Studio Guatemala">
     <link rel="icon" type="ico" sizes="16x16" href="style/images/favicon.ico">
 	<title><?php echo $page_title;?> | <?php echo $system_title;?></title>
-	<?php include 'topcss.php';?>	
+	<?php include 'topcss.php';?>
 </head>
 
 <body>
@@ -22,7 +23,7 @@
         <div class="cssload-speeding-wheel"></div>
     </div>
     <div id="wrapper">
-		<?php include $account_type.'/navigation.php';?>	
+		<?php include $account_type.'/navigation.php';?>
 		<?php include 'header.php';?>
 		 <div id="page-wrapper">
             <div class="container-fluid">
