@@ -17,6 +17,7 @@
 if ( ! function_exists('get_phrase'))
 {
 	function get_phrase($phrase = '') {
+
 		$CI	=&	get_instance();
 		$CI->load->database();
 		$current_language	=	$CI->db->get_where('settings' , array('type' => 'language'))->row()->description;
@@ -40,7 +41,7 @@ if ( ! function_exists('get_phrase'))
 		// return the current sessioned language field of according phrase, else return uppercase spaced word
 		if (isset($row->$current_language) && $row->$current_language !="")
 			return $row->$current_language;
-		else 
+		else
 			return ucwords(str_replace('_',' ',$phrase));
 	}
 }

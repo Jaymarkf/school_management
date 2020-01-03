@@ -38,7 +38,7 @@
 <script>
     function checkDelete()
     {
-        var chk=confirm("¢ÄEsta seguro?");
+        var chk=confirm("are you sure?");
         if(chk)
         { return true;  }
         else{ return false;}

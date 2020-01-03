@@ -10,32 +10,9 @@
 </div>
 
 <div class="row">
-<div class="col-md-12">
-<div class="alert alert-info">
-        <span style="color: #fff; font-weight: Verdana; font-size: 23px;">
-<marquee direction="left" scrollamount="10"><?php echo $this->db->get_where('settings' , array('type' =>'ad'))->row()->description;?></marquee></span>
-</div>
-</div>
 </div>
 
 <div class="row">
-<div class="col-md-6">
-                        <div class="white-box">
-                            <h3 class="box-title">Social</h3>
-                            <div class="button-box">
-                                <div class="button-list">
-                                    <a target="_blank" href="<?php echo $this->db->get_where('settings' , array('type' =>'facebook_url'))->row()->description;?>"><button class="btn btn-facebook waves-effect waves-light" type="button"> <i class="fa fa-facebook"></i> </button></a>
-                                    <a target="_blank" href="<?php echo $this->db->get_where('settings' , array('type' =>'twitter_url'))->row()->description;?>"><button class="btn btn-twitter waves-effect waves-light" type="button"> <i class="fa fa-twitter"></i> </button></a>
-                                     <a target="_blank" href="<?php echo $this->db->get_where('settings' , array('type' =>'google_url'))->row()->description;?>"><button class="btn btn-googleplus waves-effect waves-light" type="button"> <i class="fa fa-google-plus"></i> </button></a>
-                                     <a target="_blank" href="<?php echo $this->db->get_where('settings' , array('type' =>'linkedin_url'))->row()->description;?>"><button class="btn btn-linkedin waves-effect waves-light" type="button"> <i class="fa fa-linkedin"></i> </button></a>
-                                    <a target="_blank" href="<?php echo $this->db->get_where('settings' , array('type' =>'instagram_url'))->row()->description;?>"><button class="btn btn-instagram waves-effect waves-light" type="button"> <i class="fa fa-instagram"></i> </button></a>
-                                    <a target="_blank" href="<?php echo $this->db->get_where('settings' , array('type' =>'pinterest_url'))->row()->description;?>"><button class="btn btn-pinterest waves-effect waves-light" type="button"> <i class="fa fa-pinterest"></i> </button></a>
-                                    <a target="_blank" href="<?php echo $this->db->get_where('settings' , array('type' =>'dribbble_url'))->row()->description;?>"><button class="btn btn-dribbble waves-effect waves-light" type="button"> <i class="fa fa-dribbble"></i> </button></a>
-                                    <a target="_blank" href="<?php echo $this->db->get_where('settings' , array('type' =>'youtube_url'))->row()->description;?>"><button class="btn btn-youtube waves-effect waves-light" type="button"> <i class="fa fa-youtube"></i> </button></a>
-                                </div>
-                            </div>
-    </div>
-</div>
 <div class="col-md-6">
                 <div class="alert alert-warning">
                     <div class="icon"><i class="entypo-chart-bar"></i></div>

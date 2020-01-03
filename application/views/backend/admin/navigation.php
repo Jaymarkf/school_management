@@ -29,8 +29,7 @@
                              <?php endforeach; ?>
                         </ul>
                     </li>
-                    <li> <a href="<?php echo base_url(); ?>index.php?admin/student_promotion" class="waves-effect"><i class="ti-back-right"></i> <span class="hide-menu"><?php echo get_phrase('Student-Promotion'); ?></span></a>
-                    </li>
+
                     <li> <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-graduation-cap"></i> <span class="hide-menu"><?php echo get_phrase('Manage-Classes'); ?><span class="fa arrow"></span></span></a>
                         <ul class="nav nav-second-level">
                             <li> <a href="<?php echo base_url(); ?>index.php?admin/manage_classes"><?php echo get_phrase('Manage-Classes'); ?></a></li>
@@ -43,13 +42,6 @@
                             foreach ($classes as $row): ?>
                             <li> <a href="<?php echo base_url(); ?>index.php?admin/courses/<?php echo $row['class_id']; ?>"><?php echo $row['name']; ?></a></li>
                              <?php endforeach; ?>
-                        </ul>
-                    </li>
-                    <li> <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-graduation-cap"></i> <span class="hide-menu"><?php echo get_phrase('Qualifications'); ?><span class="fa arrow"></span></span></a>
-                        <ul class="nav nav-second-level">
-                            <li> <a href="<?php echo base_url(); ?>index.php?admin/semesters"><?php echo get_phrase('Semesters'); ?></a></li>
-                             <li> <a href="<?php echo base_url(); ?>index.php?admin/upload_marks"><?php echo get_phrase('Upload-Marks'); ?></a></li>
-                             <li> <a href="<?php echo base_url(); ?>index.php?admin/tab_sheet"><?php echo get_phrase('Tabulation'); ?></a></li>
                         </ul>
                     </li>
                      <li> <a href="javascript:void(0);" class="waves-effect"><i class="ti-check-box"></i> <span class="hide-menu"><?php echo get_phrase('Attendance'); ?><span class="fa arrow"></span></span></a>
@@ -86,12 +78,7 @@
                              <li> <a href="<?php echo base_url(); ?>index.php?admin/enviar_noticia"><?php echo get_phrase('Send'); ?></a></li>
                         </ul>
                     </li>
-                    <li> <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-book"></i> <span class="hide-menu"><?php echo get_phrase('Library'); ?><span class="fa arrow"></span></span></a>
-                        <ul class="nav nav-second-level">
-                            <li> <a href="<?php echo base_url(); ?>index.php?admin/library"><?php echo get_phrase('Library'); ?></a></li>
-                             <li> <a href="<?php echo base_url(); ?>index.php?admin/virtual_library"><?php echo get_phrase('Virtual-Library'); ?></a></li>
-                        </ul>
-                    </li>
+
                     <li> <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-file-picture-o"></i> <span class="hide-menu"><?php echo get_phrase('Gallery'); ?><span class="fa arrow"></span></span></a>
                         <ul class="nav nav-second-level">
                             <li> <a href="<?php echo base_url(); ?>index.php?admin/gallery_category"><?php echo get_phrase('Upload-Video'); ?></a></li>
@@ -120,32 +107,6 @@
                         </ul>
                     </li>
 
-                    <li> <a href="<?php echo base_url(); ?>index.php?admin/school_bus" class="waves-effect"><i class="fa fa-bus"></i> <span class="hide-menu"><?php echo get_phrase('School-Bus'); ?></span></a>
-                    </li>
-
-                    <li> <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-plus-square"></i> <span class="hide-menu"> <?php echo get_phrase('ListsPerms'); ?><span class="fa arrow"></span></span></a>
-                        <ul class="nav nav-second-level">
-                            <li> <a href="<?php echo base_url(); ?>index.php?admin/request"><?php echo get_phrase('TeacherRequest'); ?></a></li>
-                             <li> <a href="<?php echo base_url(); ?>index.php?admin/request_student"><?php echo get_phrase('StudentRequest'); ?></a></li>
-                        </ul>
-                    </li>
-
-                    <li><a href="javascript:void(0)" class="waves-effect"><i data-icon="F" class="fa fa-flag"></i> <span class="hide-menu"><?php echo get_phrase('StaticPages'); ?><span class="fa arrow"></span></span></a>
-          <ul class="nav nav-second-level">
-            <li> <a href="<?php echo base_url(); ?>index.php?admin/manage_pages"><?php echo get_phrase('ManagePages'); ?></a> </li>
-            <li> <a href="<?php echo base_url(); ?>index.php?admin/static_page_add"><?php echo get_phrase('NewPage'); ?></a> </li>
-            <li> <a href="javascript:void(0)" class="waves-effect"><?php echo get_phrase('Pages'); ?><span class="fa arrow"></span></a>
-              <ul class="nav nav-third-level">
-              <?php
-                        $pages = $this->db->get('pages')->result_array();
-                        foreach ($pages as $row):
-                            ?>
-                <li> <a href="<?php echo base_url(); ?>index.php?admin/pages_view/page_details/<?php echo $row['page_id']; ?>"><?php echo $row['title']; ?></a> </li>
-                <?php endforeach; ?>
-              </ul>
-            </li>
-          </ul>
-        </li>
 
                     <li> <a href="<?php echo base_url(); ?>index.php?admin/message" class="waves-effect"><i class="fa fa-envelope"></i> <span class="hide-menu"><?php echo get_phrase('Messages'); ?></span></a>
                     </li>
