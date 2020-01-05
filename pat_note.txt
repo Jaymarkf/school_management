@@ -1,10 +1,26 @@
+*message box language
+*Slider
+
+
 admin
 =====
-student information(ayaw mag load)
-<MANAGE CLASSES Btn> (remove Titular okay na yung teacher lang)
-ATTENDANCE(ayaw gumana)
-remove MEDIA GALLERY
-remove CLASSROOMS/SALONS
-remove CONTENTS
-remove teacher SALARY
+*student information(ayaw mag load)
+*<MANAGE CLASSES Btn> (remove Titular okay na yung teacher lang)
+*ATTENDANCE(ayaw gumana)
+*remove MEDIA GALLERY
+*remove CLASSROOMS/SALONS
+*remove CONTENTS
+*remove teacher SALARY
+*messages
+*Student Portal not working
+*MARKS(Change mo ng GRADES then mas okay kung grades na mismo yung iinput. wag na yung may mga ativity)
+*Schedule>Exam routine (Hindi nakikita yung date)
+*Schedule>Exam & Class routine (Hindi maayos yung time)
+*MESSAGE
 ======
+
+STUDENT
+=====
+Teacher btn (not working)
+message
+=====
