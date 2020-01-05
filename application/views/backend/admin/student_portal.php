@@ -33,7 +33,7 @@
                   <br>
                                  <?php $student_birthday = $this->db->get_where('student' , array(
         	'student_id' => $row['student_id']))->row()->birthday;
-				list ($day, $month, $year) = split("-", $student_birthday);
+				list ($day, $month, $year) = explode("-", $student_birthday);
 				$now = date("m");
                 if ($now == $month):?>
                     <center><div class="badge badge-warnig">

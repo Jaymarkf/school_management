@@ -12,14 +12,17 @@ admin
 *remove CONTENTS(DONE)
 *remove teacher SALARY(DONE)
 *messages
-*Student Portal not working(to be continue)
+*Student Portal not working(DONE)
 *MARKS(Change mo ng GRADES then mas okay kung grades na mismo yung iinput. wag na yung may mga ativity) to be continue..
 *Schedule>Exam routine (Hindi nakikita yung date)(DONE)
-*Schedule>Exam
+*Schedule>Exam ano to<<?
 ======
 
 STUDENT
 =====
 Teacher btn (not working)
 message
-=====i
+=====
+
+
+

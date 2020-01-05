@@ -128,15 +128,6 @@
                   </div>
 
 
-                  <div class="form-group">
-                    <label class="col-sm-4 control-label"><?php echo get_phrase('Salary');?></label>
-                    <div class="col-sm-5">
-                    <div class="input-group">
-                      <div class="input-group-addon"><i class="fa fa-money"></i></div>
-                      <input type="text" class="form-control" name="salary" placeholder="<?php echo get_phrase('Salary');?>">
-                    </div>
-                    </div>
-                  </div>
 
 					<div class="form-group">
 						<label for="field-1" class="col-sm-4 control-label"><?php echo get_phrase('Sex');?></label>
