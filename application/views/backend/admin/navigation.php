@@ -78,17 +78,6 @@
                              <li> <a href="<?php echo base_url(); ?>index.php?admin/enviar_noticia"><?php echo get_phrase('Send'); ?></a></li>
                         </ul>
                     </li>
-
-                    <li> <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-file-picture-o"></i> <span class="hide-menu"><?php echo get_phrase('Gallery'); ?><span class="fa arrow"></span></span></a>
-                        <ul class="nav nav-second-level">
-                            <li> <a href="<?php echo base_url(); ?>index.php?admin/gallery_category"><?php echo get_phrase('Upload-Video'); ?></a></li>
-                             <li> <a href="<?php echo base_url(); ?>index.php?admin/videos"><?php echo get_phrase('VideoGallery'); ?></a></li>
-                        </ul>
-                    </li>
-                    <li> <a href="<?php echo base_url(); ?>index.php?admin/classrooms" class="waves-effect"><i class="ti-home"></i> <span class="hide-menu"><?php echo get_phrase('ManageClassrooms'); ?></span></a>
-                    </li>
-                    <li> <a href="<?php echo base_url(); ?>index.php?admin/unit_content" class="waves-effect"><i class="ti-book"></i> <span class="hide-menu"><?php echo get_phrase('SemesterContent'); ?></span></a>
-                    </li>
                     <li> <a href="<?php echo base_url(); ?>index.php?admin/files" class="waves-effect"><i class="ti-files"></i> <span class="hide-menu"><?php echo get_phrase('TeachersFiles'); ?></span></a>
                     </li>
                     <li> <a href="<?php echo base_url(); ?>index.php?admin/events" class="waves-effect"><i class="fa fa-calendar"></i> <span class="hide-menu"><?php echo get_phrase('Events'); ?></span></a>

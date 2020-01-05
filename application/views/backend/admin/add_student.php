@@ -1,3 +1,18 @@
+<style>
+    .field-icon {
+        float: right;
+        margin-left: -25px;
+        margin-top: -25px;
+        position: relative;
+        z-index: 2;
+    }
+
+    .container{
+        padding-top:50px;
+        margin: auto;
+    }
+</style>
+
 <div class="row bg-title">
 <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
     <h4 class="page-title"><?php echo get_phrase('Add-Student'); ?></h4> </div>
@@ -128,40 +143,11 @@
 					<div class="form-group">
 						<label for="field-2" class="col-sm-3 control-label"><?php echo get_phrase('Password'); ?></label>
 						<div class="col-sm-5">
-							<input type="password" class="form-control" name="password" required="" value="" >
-						</div> 
-					</div>
+                                <input id="password-field" type="password" class="form-control" name="password" value="">
+                                <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password text-success"></span>
+						</div>
 
-					<div class="form-group">
-						<label for="field-2" class="col-sm-3 control-label"><?php echo get_phrase('Living-Assigned'); ?></label>
-                        
-						<div class="col-sm-5">
-							<select name="dormitory_id" class="form-control selectboxit">
-                              <option value=""><?php echo get_phrase('Select'); ?></option>
-	                              <?php 
-	                              	$dormitories = $this->db->get('dormitory')->result_array();
-	                              	foreach($dormitories as $row): ?>
-                              		<option value="<?php echo $row['dormitory_id'];?>"><?php echo $row['name'];?></option>
-                          		<?php endforeach;?>
-                          </select>
-						</div> 
 					</div>
-
-					<div class="form-group">
-						<label for="field-2" class="col-sm-3 control-label"><?php echo get_phrase('School-Bus'); ?></label>
-                        
-						<div class="col-sm-5">
-							<select name="transport_id" class="form-control selectboxit">
-                              <option value=""><?php echo get_phrase('Select'); ?></option>
-	                              <?php 
-	                              	$transports = $this->db->get('transport')->result_array();
-	                              	foreach($transports as $row): ?>
-                              		<option value="<?php echo $row['transport_id'];?>"><?php echo $row['route_name'];?></option>
-                          		<?php endforeach;?>
-                          </select>
-						</div> 
-					</div>
-	
 					<div class="form-group">
 						<label for="field-1" class="col-sm-3 control-label"><?php echo get_phrase('Photo'); ?></label>
                         
@@ -195,6 +181,14 @@
 </div>
 
 <script type="text/javascript">
+    $(".toggle-password").click(function () {
+        var input = $($(this).attr("toggle"));
+        if (input.attr("type") == "password") {
+            input.attr("type", "text");
+        } else {
+            input.attr("type", "password");
+        }
+    });
 	function get_class_sections(class_id) 
 	{
     	$.ajax({
@@ -205,4 +199,6 @@
             }
         });
     }
+
+
 </script>

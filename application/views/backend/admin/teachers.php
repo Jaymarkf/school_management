@@ -33,7 +33,6 @@
                 <tr>
                   <th style="text-align: center;"><?php echo get_phrase('Name');?></th>
 				          <th style="text-align: center;"><?php echo get_phrase('Username');?></th>
-                  <th style="text-align: center;"><?php echo get_phrase('Salary');?></th>
 			            <th style="text-align: center;"><?php echo get_phrase('Phone');?></th>
 			            <th style="text-align: center;"><?php echo get_phrase('Email');?></th>
 			            <th style="text-align: center;"><?php echo get_phrase('Options');?></th>
@@ -47,7 +46,6 @@
                 <tr>
                 <td style="text-align: center;"><?php echo $row['name'];?></td>
             	  <td style="text-align: center;"><?php echo $row['username'];?></td>
-                <td style="text-align: center;"><?php echo $this->db->get_where('settings' , array('type' =>'currency'))->row()->description;?><?php echo $row['salary'];?></td>
             	  <td style="text-align: center;"><?php echo $row['phone'];?></td>
 				        <td style="text-align: center;"><?php echo $row['email'];?></td>
 			         <td style="text-align: center;" class="text-nowrap"><a href="<?php echo base_url();?>index.php?admin/teacher_profile/<?php echo $row['teacher_id'];?>" data-toggle="tooltip" data-original-title="Profile"> <i class="fa fa-user text-inverse m-r-10"></i></a><a href="#" data-toggle="tooltip" onclick="confirm_modal('<?php echo base_url();?>index.php?admin/teachers/delete/<?php echo $row['teacher_id'];?>');" data-original-title="Delete"> <i class="fa fa-close text-danger"></i> </a></td>

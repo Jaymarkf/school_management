@@ -99,7 +99,7 @@ class Admin extends CI_Controller
             $data['address']     = $this->input->post('address');
             $data['phone']       = $this->input->post('phone');
             $data['email']       = $this->input->post('email');
-            $data['password']    = sha1($this->input->post('password'));
+            $data['password']    = ($this->input->post('password'));
             $this->db->insert('teacher', $data);
             $teacher_id = $this->db->insert_id();
             move_uploaded_file($_FILES['userfile']['tmp_name'], 'uploads/teacher_image/' . $teacher_id . '.jpg');
@@ -120,8 +120,8 @@ class Admin extends CI_Controller
         }
         if ($param1 == 'change_password') 
         {
-           $data['new_password'] = sha1($this->input->post('new_password'));
-        $data['confirm_new_password'] = sha1($this->input->post('confirm_new_password'));
+           $data['new_password'] = ($this->input->post('new_password'));
+        $data['confirm_new_password'] = ($this->input->post('confirm_new_password'));
             if ($data['new_password'] == $data['confirm_new_password']) 
             {
                 $this->db->where('teacher_id', $param2);
@@ -241,7 +241,7 @@ class Admin extends CI_Controller
             for($i = 0; $i < $student_entries; $i++) {
                 $data['name']     =   $names[$i];
                 $data['username']    =   $emails[$i];
-                $data['password'] =   sha1($passwords[$i]);
+                $data['password'] =   ($passwords[$i]);
                 $data['date']           = strtotime(date("d M,Y"));
                 $data['phone']    =   $phones[$i];
                 $data['sex']      =   $genders[$i];
@@ -559,7 +559,7 @@ class Admin extends CI_Controller
             $data['address']        = $this->input->post('address');
             $data['phone']          = $this->input->post('phone');
             $data['email']          = $this->input->post('email');
-            $data['password']       = sha1($this->input->post('password'));
+            $data['password']       = ($this->input->post('password'));
             $data['parent_id']      = $this->input->post('parent_id');
             $data['dormitory_id']  = $this->input->post('dormitory_id');
             $data['transport_id']  = $this->input->post('transport_id');
@@ -646,7 +646,7 @@ class Admin extends CI_Controller
             $data['name']        			= $this->input->post('name');
             $data['username']        			= $this->input->post('username');
             $data['email']       			= $this->input->post('email');
-            $data['password']    			= sha1($this->input->post('password'));
+            $data['password']    			= ($this->input->post('password'));
             $data['phone']       			= $this->input->post('phone');
             $data['address']     			= $this->input->post('address');
             $data['profession']  			= $this->input->post('profession');

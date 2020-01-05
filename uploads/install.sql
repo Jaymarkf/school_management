@@ -18,7 +18,9 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8mb4 */;
 
+
 --
+create database pro_sms;
 use pro_sms;
 --
 
@@ -91,7 +93,7 @@ CREATE TABLE `admin` (
 --
 
 INSERT INTO `admin` (`admin_id`, `name`, `email`, `password`, `phone`, `address`, `owner_status`, `username`, `status`, `birthday`) VALUES
-(1, 'Steve Jobs', 'steve@eduappgt.com', '7110eda4d09e062aa5e4a390b0a572ac0d2c0220', '7767 7767', 'Guatemala', 1, 'admin', 1, '29-12-2016');
+(1, 'Steve Jobs', 'steve@eduappgt.com', 'admin', '7767 7767', 'Guatemala', 1, 'admin', 1, '29-12-2016');
 
 -- --------------------------------------------------------
 
