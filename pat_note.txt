@@ -15,8 +15,7 @@ admin
 *Student Portal not working(to be continue)
 *MARKS(Change mo ng GRADES then mas okay kung grades na mismo yung iinput. wag na yung may mga ativity) to be continue..
 *Schedule>Exam routine (Hindi nakikita yung date)(DONE)
-*Schedule>Exam & Class routine (Hindi maayos yung time)
-*MESSAGE
+*Schedule>Exam
 ======
 
 STUDENT
