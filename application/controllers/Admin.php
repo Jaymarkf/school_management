@@ -94,7 +94,6 @@ class Admin extends CI_Controller
         {
             $data['name']        = $this->input->post('name');
             $data['username']        = $this->input->post('username');
-            $data['salary']        = $this->input->post('salary');
             $data['sex']         = $this->input->post('sex');
             $data['address']     = $this->input->post('address');
             $data['phone']       = $this->input->post('phone');
