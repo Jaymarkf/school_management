@@ -16,14 +16,14 @@ $messages = $this->db->get_where('message', array('message_thread_code' => $curr
     </div>
 <?php endforeach; ?>
 <br><hr>
-<?php echo form_open(base_url() . 'index.php?teacher/message/send_reply/' . $current_message_thread_code, array('enctype' => 'multipart/form-data')); ?>
+<?php echo form_open(base_url() . 'index.php?student/message/send_reply/' . $current_message_thread_code, array('enctype' => 'multipart/form-data')); ?>
 <div class="mail-reply">
     <div class="compose-message-editor">
         <textarea class="textarea_editor form-control" name="message" rows="15" placeholder="<?php echo get_phrase('Reply'); ?>..."></textarea>
     </div>
     <br>
     <button type="submit" class="btn btn-info btn-icon pull-right">
-        <?php echo get_phrase('Send');?>
+        <?php echo get_phrase('asdadadsd');?>
         <i class="fa fa-mail-forward"></i>
     </button>
     <br><br>
