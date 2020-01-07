@@ -23,7 +23,7 @@ $messages = $this->db->get_where('message', array('message_thread_code' => $curr
     </div>
     <br>
     <button type="submit" class="btn btn-info btn-icon pull-right">
-        <?php echo get_phrase('asdadadsd');?>
+        <?php echo get_phrase('Send');?>
         <i class="fa fa-mail-forward"></i>
     </button>
     <br><br>

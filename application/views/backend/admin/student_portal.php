@@ -58,9 +58,6 @@
         <p><span><?php echo get_phrase('Class'); ?>:</span>    <span class="pull-right label label-info label-rounded"><?php echo $this->crud_model->get_class_name($row['class_id']); ?></span></p>
 
         <p><span><?php echo get_phrase('Section'); ?>:</span>    <span class="pull-right label label-info label-rounded"><?php echo $this->db->get_where('section' , array('section_id' => $row['section_id']))->row()->name; ?></span></p>
-
-         <p><span><?php echo get_phrase('School-Bus'); ?>:</span><span class="pull-right label label-info label-rounded"><?php $trans_id = $this->db->get_where('student' , array('student_id' => $row['student_id']))->row()->transport_id; echo $this->db->get_where('transport' , array('transport_id' => $trans_id))->row()->route_name; ?></span></p>
-
         <p><span><?php echo get_phrase('Parent'); ?>:</span>    <span class="pull-right label label-info label-rounded"><?php echo $this->crud_model->get_type_name_by_id('parent', $this->db->get_where('student' , array(
         'student_id' => $row['student_id']))->row()->parent_id); ?></span></p>
 
@@ -79,8 +76,6 @@
         <p><span><?php echo get_phrase('Address'); ?>:</span>    <span class="pull-right label label-info label-rounded"><?php echo $this->db->get_where('student' , array(
         'student_id' => $row['student_id']))->row()->address; ?></span></p>
 
-        <p><span><?php echo get_phrase('Class-Assigned'); ?>:</span>    <span class="pull-right label label-info label-rounded"><?php echo $this->crud_model->get_type_name_by_id('dormitory', $this->db->get_where('student' , array(
-        'student_id' => $row['student_id']))->row()->dormitory_id); ?></span></p>
                         </div>
                     </div>
 	<?php endforeach;?>
@@ -154,38 +149,6 @@ foreach ($edit_data as $row3):
                                         </div>
                                     </div>
 
-                                     <div class="form-group">
-                                        <label class="col-sm-12"><?php echo get_phrase('Salon');?></label>
-                                        <div class="col-sm-12">
-                                            <select class="form-control" name="dormitory_id">
-                                                <option><?php echo get_phrase('Select'); ?></option>
-                                               <?php
-	                              	$classroom_id = $this->db->get_where('student' , array('student_id' => $row3['student_id']))->row()->dormitory_id;
-	                              	$classrooms = $this->db->get('dormitory')->result_array();
-	                              	foreach($classrooms as $row2):
-	                              ?>
-                                                <option value="<?php echo $row2['dormitory_id'];?>" <?php if($classroom_id == $row2['dormitory_id']) echo 'selected';?>><?php echo $row2['name'];?></option>
-                                                <?php endforeach; ?>
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label class="col-sm-12"><?php echo get_phrase('School-Bus');?></label>
-                                        <div class="col-sm-12">
-                                            <select class="form-control" name="transport_id">
-                                                <option><?php echo get_phrase('Select'); ?></option>
-                                                 <?php
-	                              	$trans_id = $this->db->get_where('student' , array('student_id' => $row['student_id']))->row()->transport_id; 
-	                              	$transports = $this->db->get('transport')->result_array();
-	                              	foreach($transports as $row2):
-	                              ?>
-                                                <option value="<?php echo $row2['transport_id'];?>" <?php if($trans_id == $row2['transport_id']) echo 'selected';?>><?php echo $row2['route_name'];?></option>
-                                                <?php endforeach; ?>
-                                            </select>
-                                        </div>
-                                    </div>
-
                                       <div class="form-group">
                                         <label class="col-sm-12"><?php echo get_phrase('Account-Status'); ?></label>
                                         <div class="col-sm-12">
@@ -201,6 +164,26 @@ foreach ($edit_data as $row3):
                                             </select>
                                         </div>
                                     </div>
+                                <div class="form-group">
+                                    <label for="field-1" class="col-sm-3 control-label"><?php echo get_phrase('Photo'); ?></label>
+
+                                    <div class="col-sm-5">
+                                        <div class="fileinput fileinput-new" data-provides="fileinput">
+                                            <div class="fileinput-new thumbnail" style="width: 100px; height: 100px;" data-trigger="fileinput">
+                                                <img src="http://placehold.it/200x200" alt="...">
+                                            </div>
+                                            <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px"></div>
+                                            <div>
+									<span class="btn btn-info btn-file">
+										<span class="fileinput-new"><?php echo get_phrase('Upload'); ?></span>
+										<span class="fileinput-exists"><?php echo get_phrase('Change'); ?></span>
+										<input type="file" name="userfile" accept="image/*">
+									</span>
+                                                <a href="#" class="btn btn-orange fileinput-exists" data-dismiss="fileinput"><?php echo get_phrase('Delete'); ?></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
 
                                     <button type="submit" class="btn btn-info waves-effect waves-light m-r-10"><?php echo get_phrase('Update'); ?></button>  
                                  <?php echo form_close();?>

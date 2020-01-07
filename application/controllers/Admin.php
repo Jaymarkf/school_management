@@ -285,7 +285,7 @@ class Admin extends CI_Controller
         $page_data['page_title'] =  get_phrase('Student-Portal') . " - " . $system;
         $page_data['student_id']  =  $student_id;
         $page_data['class_id']   =   $class_id;
-
+      //  die($param1);
         $this->load->view('backend/index', $page_data);
     }
 
@@ -560,8 +560,6 @@ class Admin extends CI_Controller
             $data['email']          = $this->input->post('email');
             $data['password']       = ($this->input->post('password'));
             $data['parent_id']      = $this->input->post('parent_id');
-            $data['dormitory_id']  = $this->input->post('dormitory_id');
-            $data['transport_id']  = $this->input->post('transport_id');
             $this->db->insert('student', $data);
             $student_id = $this->db->insert_id();
             $data2['student_id']     = $student_id;
@@ -583,16 +581,13 @@ class Admin extends CI_Controller
             $data['username']           = $this->input->post('username');
             $data['phone']          = $this->input->post('phone');
             $data['address']        = $this->input->post('address');
+            $data['email']          = $this->input->post('email');
             $data['parent_id']      = $this->input->post('parent_id');
             $data['birthday']       = $this->input->post('birthday');
-            $data['dormitory_id']   = $this->input->post('dormitory_id');
-            $data['transport_id']   = $this->input->post('transport_id');
             $data['student_session'] = $this->input->post('student_session');
-            $data['email']          = $this->input->post('email');
             $this->db->where('student_id', $param2);
             $this->db->update('student', $data);
-
-            move_uploaded_file($_FILES['userfile']['tmp_name'], 'uploads/student_image/' . $param3 . '.jpg');
+            move_uploaded_file($_FILES['userfile']['tmp_name'], 'uploads/student_image/' . $param2 . '.jpg');
             $this->crud_model->clear_cache();
             redirect(base_url() . 'index.php?admin/student_portal/' . $param2, 'refresh');
         }
