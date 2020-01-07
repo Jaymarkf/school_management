@@ -102,8 +102,9 @@
                     <div class="col-sm-5">
                     <div class="input-group">
                       <div class="input-group-addon"><i class="fa fa-key"></i></div>
-                      <input type="password" class="form-control" required="" name="password" placeholder="<?php echo get_phrase('Password');?>">
+                      <input id="password-field" type="password" class="form-control" required="" name="password" placeholder="<?php echo get_phrase('Password');?>">
                     </div>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password text-success"></span>
                     </div>
                   </div>
 					
@@ -175,6 +176,15 @@
 </div>
 
 <script>
+
+    $(".toggle-password").click(function () {
+        var input = $($(this).attr("toggle"));
+        if (input.attr("type") == "password") {
+            input.attr("type", "text");
+        } else {
+            input.attr("type", "password");
+        }
+    });
     $(document).ready(function(){
       $('#myTable').DataTable();
       $(document).ready(function() {
@@ -216,4 +226,6 @@
             'copy', 'csv', 'excel', 'pdf', 'print'
         ]
     });
+
+
   </script>

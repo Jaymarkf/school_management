@@ -1,7 +1,6 @@
 *message box language
 *Slider
 
-
 admin
 =====
 *student information(ayaw mag load)
@@ -26,21 +25,21 @@ message
 
 NEW
 ====
-User>parent>Teacher btn (not working)
+User>parent>Teacher btn (not working)(DONE)
 
 
-User>admin>users>student registration (hindi gumagana yung picture)
-user>Admin>student registration (d nakaka register)
-user>admin>information>update profile (remove the salon & school bus)
-user>Admin>Exam routine> (nag dodoble yung time ex. (18-19)(6:0-7:0pm))
-user>admin>schedule (pag ineedit yung sched nawawala yung nakalagay)
+User>admin>users>student registration (hindi gumagana yung picture)(DONE)
+user>Admin>student registration (d nakaka register)(DONE)
+user>admin>information>update profile (remove the salon & school bus)(DONE)
+user>Admin>Exam routine> (nag dodoble yung time ex. (18-19)(6:0-7:0pm)(DONE)
+user>admin>schedule (pag ineedit yung sched nawawala yung nakalagay)DONE()
 
-Dashboard>News>Option (change to DESCRIPTION)
+Dashboard>News>Option (change to DESCRIPTION)DONE()
 ====
 
-Nung nag create ako ng ADMIN hindi agad naka login need pa ichange ang password
-MESSAGE(Still not working parang gc pa din sakin)
-add/new teacher,parents,admin (wala yung nakikita ang password)
+Nung nag create ako ng ADMIN hindi agad naka login need pa ichange ang password(DONE)
+MESSAGE(Still not working parang gc pa din sakin)(DONE)
+add/new teacher,parents,admin (wala yung nakikita ang password)(DONE)
 
 
 
