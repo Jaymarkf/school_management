@@ -139,7 +139,15 @@ class Admin extends CI_Controller
         $page_data['page_title'] = get_phrase('Manage-Teachers');
         $this->load->view('backend/index', $page_data);
     }
-    
+
+    function grades(){
+        if ($this->session->userdata('admin_login') != 1)
+            redirect(base_url(), 'refresh');
+        $page_data['page_name']  = 'grades';
+        $page_data['page_title'] = get_phrase('Student-Grade');
+        $this->load->view('backend/index', $page_data);
+
+    }
     function add_student()
     {
         if ($this->session->userdata('admin_login') != 1)

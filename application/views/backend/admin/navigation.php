@@ -50,6 +50,11 @@
                              <li> <a href="<?php echo base_url(); ?>index.php?admin/attendance_report"><?php echo get_phrase('Attendance-Report'); ?></a></li>
                         </ul>
                     </li>
+                    <li> <a href="javascript:void(0);" class="waves-effect"><i class="ti-id-badge"></i> <span class="hide-menu"><?php echo get_phrase('Grades'); ?><span class="fa arrow"></span></span></a>
+                        <ul class="nav nav-third-level">
+                            <li> <a href="<?php echo base_url(); ?>index.php?admin/grades"><?php echo get_phrase('Manage Grades'); ?></a></li>
+                        </ul>
+                    </li>
                      <li> <a href="javascript:void(0)" class="waves-effect"><i data-icon="F" class="ti-alarm-clock"></i> <span class="hide-menu"><?php echo get_phrase('Schedules'); ?><span class="fa arrow"></span></span></a>
                         <ul class="nav nav-second-level">
                         <li> <a href="javascript:void(0)" class="waves-effect"><?php echo get_phrase('Class-Routine'); ?><span class="fa arrow"></span></a>
