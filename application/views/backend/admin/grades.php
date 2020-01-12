@@ -1,7 +1,7 @@
 <?php $running_year = $this->db->get_where('settings' , array('type' => 'running_year'))->row()->description; ?>
 <div class="row bg-title">
     <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-        <h4 class="page-title"><?php echo get_phrase('Manage Attendance'); ?></h4>
+        <h4 class="page-title"><?php echo get_phrase('Manage Grades'); ?></h4>
     </div>
     <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
         <ol class="breadcrumb">
@@ -11,8 +11,18 @@
 </div>
 
 
-<?php echo form_open(base_url() . 'index.php?admin/attendance_selector/');?>
+<?php echo form_open(base_url() . 'index.php?admin/grade_selector/');?>
 <div class="row">
+    <div class="col-md-3">
+        <div class="form-group">
+            <label class="control-label" style="margin-bottom: 5px;"><?php echo get_phrase('Semester'); ?></label>
+            <select name="semester_id" class="form-control selectboxit">
+                <option value=""><?php echo get_phrase('Select'); ?></option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+            </select>
+        </div>
+    </div>
     <div class="col-md-3">
         <div class="form-group">
             <label class="control-label" style="margin-bottom: 5px;"><?php echo get_phrase('Class'); ?></label>
@@ -40,13 +50,24 @@
         </div>
     </div>
 
-    <div class="col-md-3">
-        <div class="form-group">
-            <label class="control-label" style="margin-bottom: 5px;"><?php echo get_phrase('Date'); ?></label>
-            <input type="text" class="form-control mydatepicker" name="timestamp"
-                   value="<?php echo date("d-m-Y");?>"/>
+    <div id="subject_holder">
+        <div class="col-md-3">
+            <div class="form-group">
+                <label class="control-label" style="margin-bottom: 5px;"><?php echo get_phrase('Subject'); ?></label>
+                <select class="form-control selectboxit" name="subject_id">
+                    <option value=""><?php echo get_phrase('Select'); ?></option>
+                </select>
+            </div>
         </div>
     </div>
+
+    <!--    <div class="col-md-3">-->
+<!--        <div class="form-group">-->
+<!--            <label class="control-label" style="margin-bottom: 5px;">--><?php //echo get_phrase('Date'); ?><!--</label>-->
+<!--            <input type="text" class="form-control mydatepicker" name="timestamp"-->
+<!--                   value="--><?php //echo date("d-m-Y");?><!--"/>-->
+<!--        </div>-->
+<!--    </div>-->
     <input type="hidden" name="year" value="<?php echo $running_year;?>">
 
     <div class="col-md-3" style="margin-top: 20px;">
@@ -63,8 +84,21 @@
             url: '<?php echo base_url(); ?>index.php?admin/get_section/' + class_id,
             success:function (response)
             {
+                console.log(response);
                 jQuery('#section_holder').html(response);
             }
         });
     }
+    function select_subject(class_id)
+    {
+
+        $.ajax({
+            url: '<?php echo base_url(); ?>index.php?admin/get_subjects/' + class_id,
+            success:function (response)
+            {
+                jQuery('#subject_holder').html(response);
+            }
+        });
+    }
+
 </script>

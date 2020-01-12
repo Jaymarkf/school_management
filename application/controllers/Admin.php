@@ -303,6 +303,7 @@ class Admin extends CI_Controller
         $this->load->view('backend/admin/student_bulk_sections' , $page_data);
     }
 
+
     function manage_pages($param1 = "", $page_id = "")
     {
         if ($this->session->userdata('admin_login') != 1)
@@ -1347,6 +1348,13 @@ class Admin extends CI_Controller
           $this->load->view('backend/admin/manage_attendance_section_holder' , $page_data);
     }
 
+    function get_subjects($class_id)
+    {
+        $page_data['class_id'] = $class_id;
+        $this->load->view('backend/admin/student_bulk_subjects' , $page_data);
+    }
+
+
     function attendance_selector()
     {
         $data['class_id']   = $this->input->post('class_id');
@@ -1358,11 +1366,13 @@ class Admin extends CI_Controller
                 'section_id'=>$data['section_id'],
                     'year'=>$data['year'],
                         'timestamp'=>$data['timestamp']));
+
         if($query->num_rows() < 1) 
         {
             $students = $this->db->get_where('enroll' , array(
                 'class_id' => $data['class_id'] , 'section_id' => $data['section_id'] , 'year' => $data['year']
             ))->result_array();
+
             foreach($students as $row) {
                 $attn_data['class_id']   = $data['class_id'];
                 $attn_data['year']       = $data['year'];
@@ -1374,6 +1384,52 @@ class Admin extends CI_Controller
         }
         redirect(base_url().'index.php?admin/manage_attendance/'.$data['class_id'].'/'.$data['section_id'].'/'.$data['timestamp'],'refresh');
     }
+    function grade_selector(){
+	    $data['semester_id'] = $this->input->post('semester_id');
+        $data['class_id']   = $this->input->post('class_id');
+        $data['section_id'] = $this->input->post('section_id');
+        $data['subject_id'] = $this->input->post('subject_id');
+        $data['year'] = $this->db->get_where('settings' , array('type' => 'running_year'))->row()->description;
+//
+//        $query = $this->db->get_where('attendance' ,array(
+//            'class_id'=>$data['class_id'],
+//            'section_id'=>$data['section_id'],
+//            'year'=>$data['year'],
+//            'timestamp'=>$data['timestamp']));
+//        if($query->num_rows() < 1)
+//        {
+//            $students = $this->db->get_where('enroll' , array(
+//                'class_id' => $data['class_id'] , 'section_id' => $data['section_id'] , 'year' => $data['year']
+//            ))->result_array();
+//
+//            foreach($students as $row) {
+//                $attn_data['class_id']   = $data['class_id'];
+//                $attn_data['year']       = $data['year'];
+//                $attn_data['timestamp']  = $data['timestamp'];
+//                $attn_data['section_id'] = $data['section_id'];
+//                $attn_data['student_id'] = $row['student_id'];
+//                $this->db->insert('attendance' , $attn_data);
+//            }
+//
+        redirect(base_url().'index.php?admin/manage_grade/'.$data['class_id'].'/'.$data['section_id'].'/'.$data['semester_id'].'/'.$data['subject_id'],'refresh');
+    }
+    function manage_grade($class_id = '' , $section_id = '' , $semester_id = '',$subject_id = '')
+    {
+        if($this->session->userdata('admin_login')!=1)
+            redirect(base_url() , 'refresh');
+        $class_name = $this->db->get_where('class' , array(
+            'class_id' => $class_id
+        ))->row()->name;
+        $page_data['class_id'] = $class_id;
+        $page_data['semester_id'] = $semester_id;
+        $page_data['page_name'] = 'manage_grade';
+        $page_data['section_id'] = $section_id;
+        $page_data['subject_id'] = $subject_id;
+        $page_data['page_title'] = get_phrase('Manage Grade');
+
+        $this->load->view('backend/index', $page_data);
+    }
+
 
     function attendance_update($class_id = '' , $section_id = '' , $timestamp = '')
     {

@@ -3,7 +3,6 @@
 	if($query->num_rows() > 0):
 		$sections = $query->result_array();
 ?>
-
 <div class="col-md-3">
 	<div class="form_group">
 	<label class="control-label" style="margin-bottom: 5px;"><?php echo get_phrase('Section');?></label>
