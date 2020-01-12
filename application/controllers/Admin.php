@@ -94,12 +94,11 @@ class Admin extends CI_Controller
         {
             $data['name']        = $this->input->post('name');
             $data['username']        = $this->input->post('username');
-            $data['salary']        = $this->input->post('salary');
             $data['sex']         = $this->input->post('sex');
             $data['address']     = $this->input->post('address');
             $data['phone']       = $this->input->post('phone');
             $data['email']       = $this->input->post('email');
-            $data['password']    = sha1($this->input->post('password'));
+            $data['password']    = ($this->input->post('password'));
             $this->db->insert('teacher', $data);
             $teacher_id = $this->db->insert_id();
             move_uploaded_file($_FILES['userfile']['tmp_name'], 'uploads/teacher_image/' . $teacher_id . '.jpg');
@@ -120,8 +119,8 @@ class Admin extends CI_Controller
         }
         if ($param1 == 'change_password') 
         {
-           $data['new_password'] = sha1($this->input->post('new_password'));
-        $data['confirm_new_password'] = sha1($this->input->post('confirm_new_password'));
+           $data['new_password'] = ($this->input->post('new_password'));
+        $data['confirm_new_password'] = ($this->input->post('confirm_new_password'));
             if ($data['new_password'] == $data['confirm_new_password']) 
             {
                 $this->db->where('teacher_id', $param2);
@@ -140,7 +139,15 @@ class Admin extends CI_Controller
         $page_data['page_title'] = get_phrase('Manage-Teachers');
         $this->load->view('backend/index', $page_data);
     }
-    
+
+    function grades(){
+        if ($this->session->userdata('admin_login') != 1)
+            redirect(base_url(), 'refresh');
+        $page_data['page_name']  = 'grades';
+        $page_data['page_title'] = get_phrase('Student-Grade');
+        $this->load->view('backend/index', $page_data);
+
+    }
     function add_student()
     {
         if ($this->session->userdata('admin_login') != 1)
@@ -241,7 +248,7 @@ class Admin extends CI_Controller
             for($i = 0; $i < $student_entries; $i++) {
                 $data['name']     =   $names[$i];
                 $data['username']    =   $emails[$i];
-                $data['password'] =   sha1($passwords[$i]);
+                $data['password'] =   ($passwords[$i]);
                 $data['date']           = strtotime(date("d M,Y"));
                 $data['phone']    =   $phones[$i];
                 $data['sex']      =   $genders[$i];
@@ -286,7 +293,7 @@ class Admin extends CI_Controller
         $page_data['page_title'] =  get_phrase('Student-Portal') . " - " . $system;
         $page_data['student_id']  =  $student_id;
         $page_data['class_id']   =   $class_id;
-
+      //  die($param1);
         $this->load->view('backend/index', $page_data);
     }
 
@@ -559,10 +566,8 @@ class Admin extends CI_Controller
             $data['address']        = $this->input->post('address');
             $data['phone']          = $this->input->post('phone');
             $data['email']          = $this->input->post('email');
-            $data['password']       = sha1($this->input->post('password'));
+            $data['password']       = ($this->input->post('password'));
             $data['parent_id']      = $this->input->post('parent_id');
-            $data['dormitory_id']  = $this->input->post('dormitory_id');
-            $data['transport_id']  = $this->input->post('transport_id');
             $this->db->insert('student', $data);
             $student_id = $this->db->insert_id();
             $data2['student_id']     = $student_id;
@@ -584,16 +589,13 @@ class Admin extends CI_Controller
             $data['username']           = $this->input->post('username');
             $data['phone']          = $this->input->post('phone');
             $data['address']        = $this->input->post('address');
+            $data['email']          = $this->input->post('email');
             $data['parent_id']      = $this->input->post('parent_id');
             $data['birthday']       = $this->input->post('birthday');
-            $data['dormitory_id']   = $this->input->post('dormitory_id');
-            $data['transport_id']   = $this->input->post('transport_id');
             $data['student_session'] = $this->input->post('student_session');
-            $data['email']          = $this->input->post('email');
             $this->db->where('student_id', $param2);
             $this->db->update('student', $data);
-
-            move_uploaded_file($_FILES['userfile']['tmp_name'], 'uploads/student_image/' . $param3 . '.jpg');
+            move_uploaded_file($_FILES['userfile']['tmp_name'], 'uploads/student_image/' . $param2 . '.jpg');
             $this->crud_model->clear_cache();
             redirect(base_url() . 'index.php?admin/student_portal/' . $param2, 'refresh');
         }
@@ -646,7 +648,7 @@ class Admin extends CI_Controller
             $data['name']        			= $this->input->post('name');
             $data['username']        			= $this->input->post('username');
             $data['email']       			= $this->input->post('email');
-            $data['password']    			= sha1($this->input->post('password'));
+            $data['password']    			= ($this->input->post('password'));
             $data['phone']       			= $this->input->post('phone');
             $data['address']     			= $this->input->post('address');
             $data['profession']  			= $this->input->post('profession');

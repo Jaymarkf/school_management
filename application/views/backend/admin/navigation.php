@@ -50,6 +50,11 @@
                              <li> <a href="<?php echo base_url(); ?>index.php?admin/attendance_report"><?php echo get_phrase('Attendance-Report'); ?></a></li>
                         </ul>
                     </li>
+                    <li> <a href="javascript:void(0);" class="waves-effect"><i class="ti-id-badge"></i> <span class="hide-menu"><?php echo get_phrase('Grades'); ?><span class="fa arrow"></span></span></a>
+                        <ul class="nav nav-third-level">
+                            <li> <a href="<?php echo base_url(); ?>index.php?admin/grades"><?php echo get_phrase('Manage Grades'); ?></a></li>
+                        </ul>
+                    </li>
                      <li> <a href="javascript:void(0)" class="waves-effect"><i data-icon="F" class="ti-alarm-clock"></i> <span class="hide-menu"><?php echo get_phrase('Schedules'); ?><span class="fa arrow"></span></span></a>
                         <ul class="nav nav-second-level">
                         <li> <a href="javascript:void(0)" class="waves-effect"><?php echo get_phrase('Class-Routine'); ?><span class="fa arrow"></span></a>
@@ -77,17 +82,6 @@
                             <li> <a href="<?php echo base_url(); ?>index.php?admin/news"><?php echo get_phrase('List'); ?></a></li>
                              <li> <a href="<?php echo base_url(); ?>index.php?admin/enviar_noticia"><?php echo get_phrase('Send'); ?></a></li>
                         </ul>
-                    </li>
-
-                    <li> <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-file-picture-o"></i> <span class="hide-menu"><?php echo get_phrase('Gallery'); ?><span class="fa arrow"></span></span></a>
-                        <ul class="nav nav-second-level">
-                            <li> <a href="<?php echo base_url(); ?>index.php?admin/gallery_category"><?php echo get_phrase('Upload-Video'); ?></a></li>
-                             <li> <a href="<?php echo base_url(); ?>index.php?admin/videos"><?php echo get_phrase('VideoGallery'); ?></a></li>
-                        </ul>
-                    </li>
-                    <li> <a href="<?php echo base_url(); ?>index.php?admin/classrooms" class="waves-effect"><i class="ti-home"></i> <span class="hide-menu"><?php echo get_phrase('ManageClassrooms'); ?></span></a>
-                    </li>
-                    <li> <a href="<?php echo base_url(); ?>index.php?admin/unit_content" class="waves-effect"><i class="ti-book"></i> <span class="hide-menu"><?php echo get_phrase('SemesterContent'); ?></span></a>
                     </li>
                     <li> <a href="<?php echo base_url(); ?>index.php?admin/files" class="waves-effect"><i class="ti-files"></i> <span class="hide-menu"><?php echo get_phrase('TeachersFiles'); ?></span></a>
                     </li>

@@ -33,7 +33,6 @@
                 <tr>
                   <th style="text-align: center;"><?php echo get_phrase('Name');?></th>
 				          <th style="text-align: center;"><?php echo get_phrase('Username');?></th>
-                  <th style="text-align: center;"><?php echo get_phrase('Salary');?></th>
 			            <th style="text-align: center;"><?php echo get_phrase('Phone');?></th>
 			            <th style="text-align: center;"><?php echo get_phrase('Email');?></th>
 			            <th style="text-align: center;"><?php echo get_phrase('Options');?></th>
@@ -47,7 +46,6 @@
                 <tr>
                 <td style="text-align: center;"><?php echo $row['name'];?></td>
             	  <td style="text-align: center;"><?php echo $row['username'];?></td>
-                <td style="text-align: center;"><?php echo $this->db->get_where('settings' , array('type' =>'currency'))->row()->description;?><?php echo $row['salary'];?></td>
             	  <td style="text-align: center;"><?php echo $row['phone'];?></td>
 				        <td style="text-align: center;"><?php echo $row['email'];?></td>
 			         <td style="text-align: center;" class="text-nowrap"><a href="<?php echo base_url();?>index.php?admin/teacher_profile/<?php echo $row['teacher_id'];?>" data-toggle="tooltip" data-original-title="Profile"> <i class="fa fa-user text-inverse m-r-10"></i></a><a href="#" data-toggle="tooltip" onclick="confirm_modal('<?php echo base_url();?>index.php?admin/teachers/delete/<?php echo $row['teacher_id'];?>');" data-original-title="Delete"> <i class="fa fa-close text-danger"></i> </a></td>
@@ -104,8 +102,9 @@
                     <div class="col-sm-5">
                     <div class="input-group">
                       <div class="input-group-addon"><i class="fa fa-key"></i></div>
-                      <input type="password" class="form-control" required="" name="password" placeholder="<?php echo get_phrase('Password');?>">
+                      <input id="password-field" type="password" class="form-control" required="" name="password" placeholder="<?php echo get_phrase('Password');?>">
                     </div>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password text-success"></span>
                     </div>
                   </div>
 					
@@ -130,15 +129,6 @@
                   </div>
 
 
-                  <div class="form-group">
-                    <label class="col-sm-4 control-label"><?php echo get_phrase('Salary');?></label>
-                    <div class="col-sm-5">
-                    <div class="input-group">
-                      <div class="input-group-addon"><i class="fa fa-money"></i></div>
-                      <input type="text" class="form-control" name="salary" placeholder="<?php echo get_phrase('Salary');?>">
-                    </div>
-                    </div>
-                  </div>
 
 					<div class="form-group">
 						<label for="field-1" class="col-sm-4 control-label"><?php echo get_phrase('Sex');?></label>
@@ -186,6 +176,15 @@
 </div>
 
 <script>
+
+    $(".toggle-password").click(function () {
+        var input = $($(this).attr("toggle"));
+        if (input.attr("type") == "password") {
+            input.attr("type", "text");
+        } else {
+            input.attr("type", "password");
+        }
+    });
     $(document).ready(function(){
       $('#myTable').DataTable();
       $(document).ready(function() {
@@ -227,4 +226,6 @@
             'copy', 'csv', 'excel', 'pdf', 'print'
         ]
     });
+
+
   </script>

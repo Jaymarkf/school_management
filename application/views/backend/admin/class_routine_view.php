@@ -63,10 +63,28 @@
                                     <button aria-expanded="false" data-toggle="dropdown" class="btn btn-info dropdown-toggle waves-effect waves-light" type="button">
                                         <?php echo $this->crud_model->get_subject_name_by_id($row2['subject_id']);?>
                                         <?php
-                                            if ($row2['time_start_min'] == 0 && $row2['time_end_min'] == 0) 
-                                                echo '('.$row2['time_start'].'-'.$row2['time_end'].')';
-                                            if ($row2['time_start_min'] != 0 || $row2['time_end_min'] != 0)
-                                                echo '('.$row2['time_start'].':'.$row2['time_start_min'].'-'.$row2['time_end'].':'.$row2['time_end_min'].')';
+
+                                                    if($row2['time_start'] > 12  ){
+                                                        $row2['time_start'] = $row2['time_start'] - 12;
+                                                    }
+
+                                        if($row2['time_end'] > 12  ){
+                                            $row2['time_end'] = $row2['time_end'] - 12;
+                                            $mode1 = " PM";
+                                        }else{
+                                            $mode1 = " AM";
+                                        }
+                                        if($row2['time_start_min'] == 0){
+                                            $x = 0;
+                                        }else{
+                                            $x = '';
+                                        }
+                                        if($row2['time_end_min'] == 0){
+                                            $y = 0;
+                                        }else{
+                                            $y = '';
+                                        }
+                                                echo '('.$row2['time_start'].':'.$row2['time_start_min'].$x.'~'.$row2['time_end'].':'.$row2['time_end_min'].$y.$mode1.')';
                                         ?>
                                         <span class="caret"></span>
                                     </button>

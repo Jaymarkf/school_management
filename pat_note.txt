@@ -1,3 +1,46 @@
-pag nasulat at na save mo na balik ka sa git bash
+*message box language
+*Slider
 
-2nd update
+admin
+=====
+*student information(ayaw mag load)
+*<MANAGE CLASSES Btn> (remove Titular okay na yung teacher lang)
+*ATTENDANCE(ayaw gumana)
+*remove MEDIA GALLERY(DONE)
+*remove CLASSROOMS/SALONS(DONE)
+*remove CONTENTS(DONE)
+*remove teacher SALARY(DONE)
+*messages
+*Student Portal not working(DONE)
+*MARKS(Change mo ng GRADES then mas okay kung grades na mismo yung iinput. wag na yung may mga ativity) to be continue..
+*Schedule>Exam routine (Hindi nakikita yung date)(DONE)
+*Schedule>Exam ano to<<?
+======
+
+STUDENT
+=====
+Teacher btn (not working)
+message
+=====
+
+NEW
+====
+User>parent>Teacher btn (not working)(DONE)
+
+
+User>admin>users>student registration (hindi gumagana yung picture)(DONE)
+user>Admin>student registration (d nakaka register)(DONE)
+user>admin>information>update profile (remove the salon & school bus)(DONE)
+user>Admin>Exam routine> (nag dodoble yung time ex. (18-19)(6:0-7:0pm)(DONE)
+user>admin>schedule (pag ineedit yung sched nawawala yung nakalagay)DONE()
+
+Dashboard>News>Option (change to DESCRIPTION)DONE()
+====
+
+Nung nag create ako ng ADMIN hindi agad naka login need pa ichange ang password(DONE)
+MESSAGE(Still not working parang gc pa din sakin)(DONE)
+add/new teacher,parents,admin (wala yung nakikita ang password)(DONE)
+
+
+
+

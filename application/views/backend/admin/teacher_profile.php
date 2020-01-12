@@ -94,14 +94,7 @@ foreach($profile_info as $row):?>
                                     <input type="text" class="form-control" name="phone" value="<?php echo $row2['phone'];?>"  >
                             </div> 
                         </div>
-
-                        <div class="form-group">
-                            <label for="field-2" class="col-sm-3 control-label"><?php echo get_phrase('Salary');?></label>
-
-                            <div class="col-sm-5">
-                                    <input type="text" class="form-control" name="salary" value="<?php echo $row2['salary'];?>"  >
-                            </div> 
-                        </div>
+                      
 
                         <div class="form-group">
                 <label for="field-1" class="col-sm-3 control-label"><?php echo get_phrase('Photo'); ?></label>

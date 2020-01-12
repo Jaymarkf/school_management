@@ -27,13 +27,13 @@ $edit_data		=	$this->db->get_where('class_routine' , array('class_routine_id' =>
                     <label class="col-sm-3 control-label"><?php echo get_phrase('Day');?></label>
                     <div class="col-sm-5">
                         <select name="day" class="form-control selectboxit">
-                            <option value="sabado" 	<?php if($row['day']=='sabado')echo 'selected="selected"';?>><?php echo get_phrase('Saturday');?></option>
-                            <option value="domingo" 		<?php if($row['day']=='domingo')echo 'selected="selected"';?>><?php echo get_phrase('Sunday');?></option>
-                            <option value="lunes" 		<?php if($row['day']=='lunes')echo 'selected="selected"';?>><?php echo get_phrase('Monday');?></option>
-                            <option value="martes" 	<?php if($row['day']=='martes')echo 'selected="selected"';?>><?php echo get_phrase('Tuesday');?></option>
-                            <option value="miercoles" 	<?php if($row['day']=='miercoles')echo 'selected="selected"';?>><?php echo get_phrase('Wednesday');?></option>
-                            <option value="jueves" 	<?php if($row['day']=='jueves')echo 'selected="selected"';?>><?php echo get_phrase('Thursday');?></option>
-                            <option value="viernes" 		<?php if($row['day']=='viernes')echo 'selected="selected"';?>><?php echo get_phrase('Friday');?></option>
+                            <option value="Saturday" 	<?php if($row['day']=='Saturday')echo 'selected="selected"';?>><?php echo get_phrase('Saturday');?></option>
+                            <option value="Sunday" 		<?php if($row['day']=='Sunday')echo 'selected="selected"';?>><?php echo get_phrase('Sunday');?></option>
+                            <option value="Monday" 		<?php if($row['day']=='Monday')echo 'selected="selected"';?>><?php echo get_phrase('Monday');?></option>
+                            <option value="Tuesday" 	<?php if($row['day']=='Tuesday')echo 'selected="selected"';?>><?php echo get_phrase('Tuesday');?></option>
+                            <option value="Wednesday" 	<?php if($row['day']=='Wednesday')echo 'selected="selected"';?>><?php echo get_phrase('Wednesday');?></option>
+                            <option value="Thursday" 	<?php if($row['day']=='Thursday')echo 'selected="selected"';?>><?php echo get_phrase('Thursday');?></option>
+                            <option value="Friday" 		<?php if($row['day']=='Friday')echo 'selected="selected"';?>><?php echo get_phrase('Friday');?></option>
                         </select>
                     </div>
                 </div>
@@ -41,7 +41,7 @@ $edit_data		=	$this->db->get_where('class_routine' , array('class_routine_id' =>
                     <label class="col-sm-3 control-label"><?php echo get_phrase('Start');?></label>
                     <div class="col-sm-9">
                         <?php 
-                            if($row['time_start'] < 13)
+                            if($row['time_start'] < 12)
                             {
                                 $time_start		=	$row['time_start'];
                                 $time_start_min =   $row['time_start_min'];

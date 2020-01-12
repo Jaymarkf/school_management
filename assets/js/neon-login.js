@@ -69,9 +69,9 @@ var neonLogin = neonLogin || {};
 							email: $("input#user").val(),
 							password: $("input#password").val(),
 						},
-						error: function()
+						error: function(e)
 						{
-							alert("Hay un error en el inicio!");
+							alert("theres something error in controllers");
 						},
 						success: function(response)
 						{
