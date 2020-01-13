@@ -42,5 +42,29 @@ MESSAGE(Still not working parang gc pa din sakin)(DONE)
 add/new teacher,parents,admin (wala yung nakikita ang password)(DONE)
 
 
+====
+01/14/20
+sa login form baka pwede dun na lang ilagay yung Student Performance Monitoring/Management System
+Change name (SchoolName)
+CHANGE TITULAR TEACHER
+remove teacher files
+school reports
+schedule>class routine>Add sched> (palagyan po ng ROOM)
+Subject>Bsit ACT>Edit> Remove Subject activity
+System settings>Remove Paypal account
 
+====
 
+Teacher
+
+Attendance> palagyan dn po ng subject
+
+====
+student 
+
+remove teacher report
+
+=====
+
+parents>payment 
+Prents>payment> remove options
