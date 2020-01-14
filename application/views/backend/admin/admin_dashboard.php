@@ -145,7 +145,7 @@ $system_name        =	$this->db->get_where('settings' , array('type'=>'system_ti
                                         <tr>
                                 <th style="text-align: center;">#</th>
                                 <th style="text-align: center;"><div><?php echo get_phrase('Title');?></div></th>
-								<th style="text-align: center;"><div><?php echo get_phrase('Options');?></div></th>
+								<th style="text-align: center;"><div><?php echo get_phrase('Description');?></div></th>
                                         </tr>
                                     </thead>
                                     <tbody>

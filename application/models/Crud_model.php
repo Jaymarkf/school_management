@@ -157,7 +157,7 @@ class Crud_model extends CI_Model
         $data['name']         =   $this->input->post('name');
         $data['username']     =   $this->input->post('username');
         $data['email']        =   $this->input->post('email');
-        $data['password']     =   sha1($this->input->post('password'));
+        $data['password']     =   ($this->input->post('password'));
         $data['phone']        =   $this->input->post('phone');
         $data['address']      =   $this->input->post('address');
         $data['owner_status'] =   $this->input->post('owner_status');
@@ -180,8 +180,8 @@ class Crud_model extends CI_Model
     }
 
     function admin_pass($admin_id){
-        $data['new_password'] = sha1($this->input->post('new_password'));
-        $data['confirm_new_password'] = sha1($this->input->post('confirm_new_password'));
+        $data['new_password'] = ($this->input->post('new_password'));
+        $data['confirm_new_password'] = ($this->input->post('confirm_new_password'));
             if ($data['new_password'] == $data['confirm_new_password']) 
             {
                 $this->db->where('admin_id', $admin_id);
@@ -567,8 +567,8 @@ class Crud_model extends CI_Model
         $this->db->where('message_thread_code', $message_thread_code);
         $this->db->update('message', array('read_status' => 1));
     }
-    
-    function create_report() 
+
+    function create_report()
     {
         $data['title']          = $this->input->post('title');
         $data['report_code']    = substr(md5(rand(100000000, 20000000000)), 0, 15);
@@ -577,9 +577,9 @@ class Crud_model extends CI_Model
         $login_type             = $this->session->userdata('login_type');
         if($login_type == 'student')
             $data['student_id']  = $this->session->userdata('login_user_id');
-        else 
+        else
             $data['student_id']  = $this->input->post('student_id');
-        
+
         $data['timestamp']      = date("d M,Y");
         $this->db->insert('reporte_alumnos', $data);
         $data2['report_code']   = $data['report_code'];

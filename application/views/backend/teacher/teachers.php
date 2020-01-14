@@ -36,7 +36,7 @@
 
                   <td style="text-align: center;">
                   <?php $teacher_birthday = $row['birthday'];
-                      list ($day, $month, $year) = split("-", $teacher_birthday);
+                      list ($day, $month, $year) = explode("-", $teacher_birthday);
                         $now = date("m");
                       if ($now == $month):?>
                     <center><div class="badge badge-info">

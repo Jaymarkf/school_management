@@ -371,8 +371,8 @@ class Mobile extends CI_Controller
         $user_type      =   $this->input->post('login_type');
         $user_id        =   $this->input->post('login_user_id');
 
-        $old_password   =   sha1( $this->input->post('old_password') );
-        $data['password']   =   sha1( $this->input->post('new_password') );
+        $old_password   =   ( $this->input->post('old_password') );
+        $data['password']   =   ( $this->input->post('new_password') );
         $this->db->where( $user_type . '_id' , $user_id);
         $this->db->where( 'password' , $old_password);
         $verify_query   =   $this->db->get( $user_type );
@@ -459,7 +459,7 @@ class Mobile extends CI_Controller
     function login() {
         $response       = array();
         $email          = $this->input->post("email");
-        $password       = sha1($this->input->post("password"));
+        $password       = ($this->input->post("password"));
 
         $query = $this->db->get_where('admin', array('email' => $email , 'password' => $password));
         if ($query->num_rows() > 0) {

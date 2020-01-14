@@ -53,16 +53,33 @@
                                 $this->db->where('section_id' , $section_id);
                                 $this->db->where('year' , $running_year);
                                 $routines   =   $this->db->get('class_routine')->result_array();
-                                foreach($routines as $row2):
+                                 foreach($routines as $row2):
                                 ?>
                                 <div class="btn-group">
                                     <button class="btn btn-info">
                 <?php echo $this->crud_model->get_subject_name_by_id($row2['subject_id']);?>
                 <?php
-                if ($row2['time_start_min'] == 0 && $row2['time_end_min'] == 0) 
+                if ($row2['time_start_min'] == 0 && $row2['time_end_min'] == 0)
+
                 echo '('.$row2['time_start'].'-'.$row2['time_end'].')';
+
+
                 if ($row2['time_start_min'] != 0 || $row2['time_end_min'] != 0)
-                echo '('.$row2['time_start'].':'.$row2['time_start_min'].' a '.$row2['time_end'].':'.$row2['time_end_min'].')'; ?>
+                    if($row2['time_start'] > 12  ){
+                        $row2['time_start'] = $row2['time_start'] - 12;
+                        $mode = " PM";
+                    }else{
+                        $mode = " AM";
+                    }
+
+                    if($row2['time_end'] > 12  ){
+                        $row2['time_end'] = $row2['time_end'] - 12;
+                        $mode1 = " PM";
+                    }else{
+                        $mode1 = " AM";
+                    }
+
+                echo '( '.$row2['time_start'].':'.$row2['time_start_min'].$mode.' to '.$row2['time_end'].':'.$row2['time_end_min'].$mode1.' )'; ?>
                                     </button>
                                 </div>
                                 <?php endforeach;?>

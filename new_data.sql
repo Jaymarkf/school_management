@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.0
+-- version 4.9.2
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 13, 2017 at 02:47 PM
--- Server version: 10.1.25-MariaDB
--- PHP Version: 5.6.31
+-- Generation Time: Jan 16, 2020 at 10:07 PM
+-- Server version: 10.4.11-MariaDB
+-- PHP Version: 7.2.26
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -18,10 +18,8 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8mb4 */;
 
-
 --
-create database pro_sms;
-use pro_sms;
+-- Database: `pro_sms`
 --
 
 -- --------------------------------------------------------
@@ -30,6 +28,8 @@ use pro_sms;
 -- Table structure for table `academic_settings`
 --
 
+create database pro_sms;
+use pro_sms;
 CREATE TABLE `academic_settings` (
   `settings_id` int(11) NOT NULL,
   `type` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
@@ -69,6 +69,13 @@ CREATE TABLE `academic_syllabus` (
   `subject_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+--
+-- Dumping data for table `academic_syllabus`
+--
+
+INSERT INTO `academic_syllabus` (`academic_syllabus_id`, `academic_syllabus_code`, `title`, `description`, `class_id`, `uploader_type`, `uploader_id`, `year`, `timestamp`, `file_name`, `subject_id`) VALUES
+(1, 'be751ea', 'aaa', 'aaa', 1, 'admin', 1, '2019-2020', '1577954532', '', 1);
+
 -- --------------------------------------------------------
 
 --
@@ -82,9 +89,9 @@ CREATE TABLE `admin` (
   `password` longtext COLLATE utf8_unicode_ci NOT NULL,
   `phone` longtext COLLATE utf8_unicode_ci NOT NULL,
   `address` longtext COLLATE utf8_unicode_ci NOT NULL,
-  `owner_status` int(11) NOT NULL DEFAULT '0' COMMENT '1 owner, 0 not owner',
+  `owner_status` int(11) NOT NULL DEFAULT 0 COMMENT '1 owner, 0 not owner',
   `username` longtext COLLATE utf8_unicode_ci NOT NULL,
-  `status` int(11) NOT NULL DEFAULT '1',
+  `status` int(11) NOT NULL DEFAULT 1,
   `birthday` longtext COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -93,7 +100,8 @@ CREATE TABLE `admin` (
 --
 
 INSERT INTO `admin` (`admin_id`, `name`, `email`, `password`, `phone`, `address`, `owner_status`, `username`, `status`, `birthday`) VALUES
-(1, 'Steve Jobs', 'steve@eduappgt.com', 'admin', '7767 7767', 'Guatemala', 1, 'admin', 1, '29-12-2016');
+(1, 'Steve Jobs', 'steve@eduappgt.com', 'admin', '7767 7767', 'Guatemala', 1, 'admin', 1, '29-12-2016'),
+(45, 'aa', 'aa', 'admin', '2111', 'aaa', 0, 'aa', 1, '');
 
 -- --------------------------------------------------------
 
@@ -108,8 +116,33 @@ CREATE TABLE `attendance` (
   `class_id` int(11) NOT NULL,
   `section_id` int(11) NOT NULL,
   `student_id` int(11) NOT NULL,
-  `status` int(11) NOT NULL DEFAULT '0' COMMENT '0(undefined) 1(present) 2(absent)'
+  `status` int(11) NOT NULL DEFAULT 0 COMMENT '0(undefined) 1(present) 2(absent)'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `attendance`
+--
+
+INSERT INTO `attendance` (`attendance_id`, `timestamp`, `year`, `class_id`, `section_id`, `student_id`, `status`) VALUES
+(1, '1577376000', '2016-2017', 1, 1, 2, 1),
+(2, '1575129600', '2016-2017', 1, 1, 2, 1),
+(3, '1577376000', '2019-2020', 1, 1, 3, 1),
+(4, '1577894400', '2019-2020', 1, 2, 4, 2),
+(5, '1577808000', '2019-2020', 1, 2, 4, 1),
+(6, '1578240000', '2019-2020', 1, 2, 4, 1),
+(7, '0', '2019-2020', 1, 2, 4, 0),
+(8, '1577833200', '2019-2020', 1, 2, 4, 0),
+(9, '1578783600', '2019-2020', 1, 2, 4, 0),
+(10, '1580338800', '2019-2020', 1, 2, 4, 1),
+(11, '1580338800', '2019-2020', 1, 2, 7, 2),
+(12, '1579647600', '2019-2020', 1, 2, 4, 0),
+(13, '1579647600', '2019-2020', 1, 2, 7, 0),
+(14, '1579388400', '2019-2020', 1, 2, 4, 0),
+(15, '1579388400', '2019-2020', 1, 2, 7, 0),
+(16, '1578870000', '2019-2020', 1, 2, 4, 0),
+(17, '1578870000', '2019-2020', 1, 2, 7, 0),
+(18, '1579474800', '2019-2020', 1, 2, 4, 0),
+(19, '1579474800', '2019-2020', 1, 2, 7, 0);
 
 -- --------------------------------------------------------
 
@@ -153,7 +186,7 @@ CREATE TABLE `book` (
 CREATE TABLE `ci_sessions` (
   `id` varchar(40) COLLATE utf8_unicode_ci NOT NULL,
   `ip_address` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
-  `timestamp` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `timestamp` int(10) UNSIGNED NOT NULL DEFAULT 0,
   `data` blob NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -162,12 +195,8 @@ CREATE TABLE `ci_sessions` (
 --
 
 INSERT INTO `ci_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES
-('33988d154427f1c75db360ad633fe2e84f3d2d93', '127.0.0.1', 1507877817, 0x5f5f63695f6c6173745f726567656e65726174657c693a313530373837373535373b61646d696e5f6c6f67696e7c733a313a2231223b61646d696e5f69647c733a313a2231223b6c6f67696e5f757365725f69647c733a313a2231223b6e616d657c733a31303a225374657665204a6f6273223b6c6f67696e5f747970657c733a353a2261646d696e223b),
-('3dffd5fab4f424c0e7a80e60dfdf92e56342754d', '127.0.0.1', 1507878516, 0x5f5f63695f6c6173745f726567656e65726174657c693a313530373837383234303b61646d696e5f6c6f67696e7c733a313a2231223b61646d696e5f69647c733a313a2231223b6c6f67696e5f757365725f69647c733a313a2231223b6e616d657c733a31303a225374657665204a6f6273223b6c6f67696e5f747970657c733a353a2261646d696e223b),
-('a10ebb1a20f40b8d680eefaae4e35cbd56cbfaba', '127.0.0.1', 1507877156, 0x5f5f63695f6c6173745f726567656e65726174657c693a313530373837363836313b61646d696e5f6c6f67696e7c733a313a2231223b61646d696e5f69647c733a313a2231223b6c6f67696e5f757365725f69647c733a313a2231223b6e616d657c733a31303a225374657665204a6f6273223b6c6f67696e5f747970657c733a353a2261646d696e223b),
-('a32e558d82745ad90c89e1a86c64d75afe055d1e', '127.0.0.1', 1507878562, 0x5f5f63695f6c6173745f726567656e65726174657c693a313530373837383536323b61646d696e5f6c6f67696e7c733a313a2231223b61646d696e5f69647c733a313a2231223b6c6f67696e5f757365725f69647c733a313a2231223b6e616d657c733a31303a225374657665204a6f6273223b6c6f67696e5f747970657c733a353a2261646d696e223b),
-('b702c62b139408328971ee528923c7adca30d837', '127.0.0.1', 1507878231, 0x5f5f63695f6c6173745f726567656e65726174657c693a313530373837373933373b61646d696e5f6c6f67696e7c733a313a2231223b61646d696e5f69647c733a313a2231223b6c6f67696e5f757365725f69647c733a313a2231223b6e616d657c733a31303a225374657665204a6f6273223b6c6f67696e5f747970657c733a353a2261646d696e223b),
-('d2e93e87cc32f4fb190d0cc3d4f9487e54475055', '127.0.0.1', 1507877442, 0x5f5f63695f6c6173745f726567656e65726174657c693a313530373837373136393b61646d696e5f6c6f67696e7c733a313a2231223b61646d696e5f69647c733a313a2231223b6c6f67696e5f757365725f69647c733a313a2231223b6e616d657c733a31303a225374657665204a6f6273223b6c6f67696e5f747970657c733a353a2261646d696e223b);
+('b9e33dmo0cgd9mfmcdfijjmja8', '::1', 1579203135, 0x5f5f63695f6c6173745f726567656e65726174657c693a313537393230333133353b61646d696e5f6c6f67696e7c733a313a2231223b61646d696e5f69647c733a313a2231223b6c6f67696e5f757365725f69647c733a313a2231223b6e616d657c733a31303a225374657665204a6f6273223b6c6f67696e5f747970657c733a353a2261646d696e223b),
+('p74vst5p4nm3c3gh1dno5lu19r', '::1', 1579208756, 0x5f5f63695f6c6173745f726567656e65726174657c693a313537393230333133353b61646d696e5f6c6f67696e7c733a313a2231223b61646d696e5f69647c733a313a2231223b6c6f67696e5f757365725f69647c733a313a2231223b6e616d657c733a31303a225374657665204a6f6273223b6c6f67696e5f747970657c733a353a2261646d696e223b);
 
 -- --------------------------------------------------------
 
@@ -181,6 +210,14 @@ CREATE TABLE `class` (
   `name_numeric` longtext COLLATE utf8_unicode_ci NOT NULL,
   `teacher_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `class`
+--
+
+INSERT INTO `class` (`class_id`, `name`, `name_numeric`, `teacher_id`) VALUES
+(1, 'BSIT', '', 27),
+(2, 'ACT', '', 29);
 
 -- --------------------------------------------------------
 
@@ -200,6 +237,14 @@ CREATE TABLE `class_routine` (
   `day` longtext COLLATE utf8_unicode_ci NOT NULL,
   `year` longtext COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `class_routine`
+--
+
+INSERT INTO `class_routine` (`class_routine_id`, `class_id`, `section_id`, `subject_id`, `time_start`, `time_end`, `time_start_min`, `time_end_min`, `day`, `year`) VALUES
+(14, 1, 2, 1, 7, 9, 0, 0, 'Monday', '2019-2020'),
+(15, 1, 2, 2, 8, 9, 0, 30, 'Monday', '2019-2020');
 
 -- --------------------------------------------------------
 
@@ -232,6 +277,13 @@ CREATE TABLE `dormitory` (
   `description` longtext COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+--
+-- Dumping data for table `dormitory`
+--
+
+INSERT INTO `dormitory` (`dormitory_id`, `name`, `number_of_room`, `description`) VALUES
+(21, 'myRoom', '102', 'Desc');
+
 -- --------------------------------------------------------
 
 --
@@ -244,10 +296,22 @@ CREATE TABLE `enroll` (
   `student_id` int(11) NOT NULL,
   `class_id` int(11) NOT NULL,
   `section_id` int(11) DEFAULT NULL,
-  `roll` int(11) NOT NULL DEFAULT '0',
+  `roll` int(11) NOT NULL DEFAULT 0,
   `date_added` longtext COLLATE utf8_unicode_ci NOT NULL,
   `year` longtext COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `enroll`
+--
+
+INSERT INTO `enroll` (`enroll_id`, `enroll_code`, `student_id`, `class_id`, `section_id`, `roll`, `date_added`, `year`) VALUES
+(1, '4023374', 2, 1, 1, 11, '1577413447', '2016-2017'),
+(2, '56d4f76', 3, 1, 1, 102, '1577414486', '2019-2020'),
+(3, 'b9a55eb', 4, 1, 2, 0, '1577950359', '2019-2020'),
+(4, 'c2a1adb', 5, 1, 4, 1, '1578370643', '2019-2020'),
+(5, 'ef06f1c', 6, 2, 3, 2, '1578373282', '2019-2020'),
+(6, 'b4a8139', 7, 1, 2, 0, '1578802892', '2019-2020');
 
 -- --------------------------------------------------------
 
@@ -262,6 +326,13 @@ CREATE TABLE `events` (
   `datefrom` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `dateto` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `events`
+--
+
+INSERT INTO `events` (`event_id`, `title`, `description`, `datefrom`, `dateto`) VALUES
+(2, 'Year End Party', '', '01-01-2020', '02-01-2020');
 
 -- --------------------------------------------------------
 
@@ -281,7 +352,8 @@ CREATE TABLE `exam` (
 --
 
 INSERT INTO `exam` (`exam_id`, `name`, `year`, `comment`) VALUES
-(11, 'Winter', '2016-2017', 'Winter semester');
+(11, 'Winter', '2016-2017', 'Winter semester'),
+(12, '1st', '2019-2020', 'BSIT');
 
 -- --------------------------------------------------------
 
@@ -302,7 +374,7 @@ CREATE TABLE `exams` (
   `duration` int(11) NOT NULL,
   `questions` int(11) NOT NULL,
   `pass` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `accesscode` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `accesscode` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `exam_code` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -316,6 +388,13 @@ CREATE TABLE `expense_category` (
   `expense_category_id` int(11) NOT NULL,
   `name` longtext COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `expense_category`
+--
+
+INSERT INTO `expense_category` (`expense_category_id`, `name`) VALUES
+(1, 'student ID laminate card');
 
 -- --------------------------------------------------------
 
@@ -334,7 +413,7 @@ CREATE TABLE `forum` (
   `post_code` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `file_name` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `section_id` int(11) NOT NULL,
-  `post_status` int(11) DEFAULT '1'
+  `post_status` int(11) DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -380,6 +459,33 @@ CREATE TABLE `gallery_category` (
   `title` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `gallery_category`
+--
+
+INSERT INTO `gallery_category` (`category_id`, `description`, `embed`, `title`) VALUES
+(1, '', 'front image na makikita sa video ', '');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `grades`
+--
+
+CREATE TABLE `grades` (
+  `grade_id` int(11) NOT NULL,
+  `semester` int(2) NOT NULL,
+  `year` longtext NOT NULL,
+  `class_id` int(11) DEFAULT NULL,
+  `section_id` int(11) DEFAULT NULL,
+  `subject_id` int(11) NOT NULL,
+  `student_id` int(11) DEFAULT NULL,
+  `student_grade` varchar(11) DEFAULT NULL,
+  `specific_grade` varchar(11) DEFAULT NULL,
+  `comments` longtext DEFAULT NULL,
+  `status` int(11) NOT NULL DEFAULT 0 COMMENT '0-inactive, 1-active'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 -- --------------------------------------------------------
 
 --
@@ -394,12 +500,19 @@ CREATE TABLE `homework` (
   `class_id` int(11) NOT NULL,
   `subject_id` int(11) NOT NULL,
   `uploader_id` int(11) NOT NULL,
-  `homework_status` int(11) NOT NULL DEFAULT '1',
+  `homework_status` int(11) NOT NULL DEFAULT 1,
   `time_end` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `section_id` int(11) NOT NULL,
   `uploader_type` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `file_name` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `homework`
+--
+
+INSERT INTO `homework` (`homework_id`, `homework_code`, `title`, `description`, `class_id`, `subject_id`, `uploader_id`, `homework_status`, `time_end`, `section_id`, `uploader_type`, `file_name`) VALUES
+(1, '9a423ad44a', '', '', 1, 1, 27, 1, '', 1, 'teacher', 'Screenshot from 2019-12-26 15-53-47.png');
 
 -- --------------------------------------------------------
 
@@ -420,6 +533,14 @@ CREATE TABLE `horarios_examenes` (
   `year` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `fecha` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `horarios_examenes`
+--
+
+INSERT INTO `horarios_examenes` (`horario_id`, `class_id`, `section_id`, `subject_id`, `time_start`, `time_end`, `time_start_min`, `time_end_min`, `day`, `year`, `fecha`) VALUES
+(2, 1, 4, 1, 17, 18, 30, 30, 'Friday', '2019-2020', '03-01-2020'),
+(3, 1, 2, 1, 17, 18, 30, 30, 'Friday', '2019-2020', '03-01-2020');
 
 -- --------------------------------------------------------
 
@@ -443,6 +564,15 @@ CREATE TABLE `invoice` (
   `year` longtext COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+--
+-- Dumping data for table `invoice`
+--
+
+INSERT INTO `invoice` (`invoice_id`, `student_id`, `title`, `description`, `amount`, `amount_paid`, `due`, `creation_timestamp`, `payment_timestamp`, `payment_method`, `payment_details`, `status`, `year`) VALUES
+(40, 0, 'wer', 'asdfasdf', 55, '555', '-500', 1577635200, '', '', '', 'unpaid', '2016-2017'),
+(41, 0, 'ID', 'bayad sa iD', 300, '50', '250', 1577116800, '', '', '', 'unpaid', '2016-2017'),
+(42, 2, 'ID', 'bayad sa ID', 100, '80', '20', 1576684800, '', '', '', 'unpaid', '2016-2017');
+
 -- --------------------------------------------------------
 
 --
@@ -454,10 +584,10 @@ CREATE TABLE `language` (
   `phrase` longtext COLLATE utf8_unicode_ci NOT NULL,
   `english` longtext COLLATE utf8_unicode_ci NOT NULL,
   `spanish` longtext COLLATE utf8_unicode_ci NOT NULL,
-  `portuguse` longtext COLLATE utf8_unicode_ci,
-  `hindi` longtext COLLATE utf8_unicode_ci,
-  `french` longtext COLLATE utf8_unicode_ci,
-  `serbian` longtext COLLATE utf8_unicode_ci,
+  `portuguse` longtext COLLATE utf8_unicode_ci DEFAULT NULL,
+  `hindi` longtext COLLATE utf8_unicode_ci DEFAULT NULL,
+  `french` longtext COLLATE utf8_unicode_ci DEFAULT NULL,
+  `serbian` longtext COLLATE utf8_unicode_ci DEFAULT NULL,
   `arabic` longtext COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -833,7 +963,27 @@ INSERT INTO `language` (`phrase_id`, `phrase`, `english`, `spanish`, `portuguse`
 (3930, 'TeacherRequest', 'Teacher Permits', 'Permisos de Profesores', 'professores licenças', 'शिक्षक परमिट', 'enseignants permis', 'Наставници дозволе', 'تصاريح المعلمين'),
 (3931, 'StudentRequest', 'Student Permits', 'Permisos de Estudiantes', 'Visto de estudante', 'छात्र परमिट', 'Le permis d\'études', 'Студент дозволе', 'تصاريح طالب'),
 (3932, 'Late', 'I\'m late', 'Llegó tarde', 'Estou atrasado', 'यह देर हो चुकी थी', 'Je suis en retard', 'Било је касно', 'أنا في وقت متأخر'),
-(3933, 'Allowed', 'Allow to change marks more than twice?', '¿Permitir cambiar calificaciones más de dos veces?', NULL, NULL, NULL, NULL, 'السماح عشرات تغير أكثر من مرتين؟');
+(3933, 'Allowed', 'Allow to change marks more than twice?', '¿Permitir cambiar calificaciones más de dos veces?', NULL, NULL, NULL, NULL, 'السماح عشرات تغير أكثر من مرتين؟'),
+(3934, 'homework', '', '', NULL, NULL, NULL, NULL, ''),
+(3935, 'Available', '', '', NULL, NULL, NULL, NULL, ''),
+(3936, 'Unavailable', '', '', NULL, NULL, NULL, NULL, ''),
+(3937, 'class', '', '', NULL, NULL, NULL, NULL, ''),
+(3938, 'students', '', '', NULL, NULL, NULL, NULL, ''),
+(3939, 'Senasdadadd', '', '', NULL, NULL, NULL, NULL, ''),
+(3940, 'Sfffend', '', '', NULL, NULL, NULL, NULL, ''),
+(3941, 'asdadadsd', '', '', NULL, NULL, NULL, NULL, ''),
+(3942, 'Input Grade', '', '', NULL, NULL, NULL, NULL, ''),
+(3943, 'Input-Grades', '', '', NULL, NULL, NULL, NULL, ''),
+(3944, 'Grades', '', '', NULL, NULL, NULL, NULL, ''),
+(3945, 'Manage Grades', '', '', NULL, NULL, NULL, NULL, ''),
+(3946, 'Student-Grade', '', '', NULL, NULL, NULL, NULL, ''),
+(3947, 'Manage Attendance', '', '', NULL, NULL, NULL, NULL, ''),
+(3948, 'Manage Grade', '', '', NULL, NULL, NULL, NULL, ''),
+(3949, 'Grade', '', '', NULL, NULL, NULL, NULL, ''),
+(3950, 'WEW', '', '', NULL, NULL, NULL, NULL, ''),
+(3951, 'wwwww', '', '', NULL, NULL, NULL, NULL, ''),
+(3952, 'Specific Grade', '', '', NULL, NULL, NULL, NULL, ''),
+(3953, 'Comments (optional)', '', '', NULL, NULL, NULL, NULL, '');
 
 -- --------------------------------------------------------
 
@@ -870,22 +1020,29 @@ CREATE TABLE `mark` (
   `class_id` int(11) NOT NULL,
   `section_id` int(11) NOT NULL,
   `exam_id` int(11) NOT NULL,
-  `mark_obtained` int(11) NOT NULL DEFAULT '0',
-  `mark_total` int(11) NOT NULL DEFAULT '100',
-  `comment` longtext COLLATE utf8_unicode_ci,
+  `mark_obtained` int(11) NOT NULL DEFAULT 0,
+  `mark_total` int(11) NOT NULL DEFAULT 100,
+  `comment` longtext COLLATE utf8_unicode_ci DEFAULT NULL,
   `year` longtext COLLATE utf8_unicode_ci NOT NULL,
-  `labuno` int(11) NOT NULL DEFAULT '0',
-  `labdos` int(11) NOT NULL DEFAULT '0',
-  `labtres` int(11) NOT NULL DEFAULT '0',
-  `labcuatro` int(11) NOT NULL DEFAULT '0',
-  `labcinco` int(11) NOT NULL DEFAULT '0',
-  `labseis` int(11) NOT NULL DEFAULT '0',
-  `labsiete` int(11) NOT NULL DEFAULT '0',
-  `labocho` int(11) NOT NULL DEFAULT '0',
-  `labnueve` int(11) NOT NULL DEFAULT '0',
-  `labtotal` int(11) NOT NULL DEFAULT '0',
-  `final` int(11) NOT NULL DEFAULT '0'
+  `labuno` int(11) NOT NULL DEFAULT 0,
+  `labdos` int(11) NOT NULL DEFAULT 0,
+  `labtres` int(11) NOT NULL DEFAULT 0,
+  `labcuatro` int(11) NOT NULL DEFAULT 0,
+  `labcinco` int(11) NOT NULL DEFAULT 0,
+  `labseis` int(11) NOT NULL DEFAULT 0,
+  `labsiete` int(11) NOT NULL DEFAULT 0,
+  `labocho` int(11) NOT NULL DEFAULT 0,
+  `labnueve` int(11) NOT NULL DEFAULT 0,
+  `labtotal` int(11) NOT NULL DEFAULT 0,
+  `final` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `mark`
+--
+
+INSERT INTO `mark` (`mark_id`, `student_id`, `subject_id`, `class_id`, `section_id`, `exam_id`, `mark_obtained`, `mark_total`, `comment`, `year`, `labuno`, `labdos`, `labtres`, `labcuatro`, `labcinco`, `labseis`, `labsiete`, `labocho`, `labnueve`, `labtotal`, `final`) VALUES
+(1, 4, 1, 1, 2, 12, 10, 100, '', '2019-2020', 110, 10, 10, 10, 10, 10, 10, 10, 10, 200, 0);
 
 -- --------------------------------------------------------
 
@@ -903,6 +1060,14 @@ CREATE TABLE `mensaje_reporte` (
   `message_file_name` longtext COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+--
+-- Dumping data for table `mensaje_reporte`
+--
+
+INSERT INTO `mensaje_reporte` (`news_message_id`, `message`, `news_id`, `date`, `user_type`, `user_id`, `message_file_name`) VALUES
+(1, 'fffff', 44, '07 Jan 2020', 'student', 2, ''),
+(2, 'haysss', 44, '07 Jan 2020', 'teacher', 27, '');
+
 -- --------------------------------------------------------
 
 --
@@ -915,8 +1080,40 @@ CREATE TABLE `message` (
   `message` longtext NOT NULL,
   `sender` longtext NOT NULL,
   `timestamp` longtext NOT NULL,
-  `read_status` int(11) NOT NULL DEFAULT '0' COMMENT '0 unread 1 read'
+  `read_status` int(11) NOT NULL DEFAULT 0 COMMENT '0 unread 1 read'
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `message`
+--
+
+INSERT INTO `message` (`message_id`, `message_thread_code`, `message`, `sender`, `timestamp`, `read_status`) VALUES
+(65, '8c5850c8524e1a4', 'hjhjhj', 'student-1', '1577412293', 1),
+(66, '298afd842319cc4', '<div>eyyyy</div>', 'student-3', '1577419521', 1),
+(67, '023630696759add', 'fff', 'teacher-27', '1578277070', 0),
+(68, '4d279596774ff9b', 'caercae', 'teacher-27', '1578278845', 1),
+(69, '8c5850c8524e1a4', 'hi koko', 'admin-1', '1578292754', 0),
+(70, '4d279596774ff9b', 'oh bakit', 'student-3', '1578292795', 1),
+(71, '4e93023f4cbd5f6', 'gggg', 'student-3', '1578293013', 0),
+(72, '4e93023f4cbd5f6', 'aw', 'student-3', '1578293375', 0),
+(73, '4d279596774ff9b', 'hoy', 'student-3', '1578293449', 1),
+(74, '4e93023f4cbd5f6', 'aa', 'student-3', '1578294138', 0),
+(75, '8c5850c8524e1a4', 'hups', 'admin-1', '1578294169', 0),
+(76, '8c5850c8524e1a4', 'hayss', 'admin-1', '1578294199', 0),
+(77, '298afd842319cc4', 'kupalll', 'student-2', '1578294242', 0),
+(78, 'c2039cf78227286', 'love', 'admin-1', '1578294751', 1),
+(79, 'c2039cf78227286', 'vv', 'student-4', '1578295188', 1),
+(80, '6f325e711611fdb', 'sss', 'student-4', '1578295200', 0),
+(81, '0aa295a86f491d4', 'ff', 'admin-1', '1578295524', 1),
+(82, '0aa295a86f491d4', 'fff', 'admin-1', '1578295636', 1),
+(83, 'c2039cf78227286', 'ffff', 'admin-1', '1578295649', 0),
+(84, 'c2039cf78227286', 'aaaa', 'admin-1', '1578295659', 0),
+(85, '0aa295a86f491d4', 'test', 'student-2', '1578295721', 1),
+(86, '0aa295a86f491d4', 'test2', 'student-2', '1578297158', 1),
+(87, '4d279596774ff9b', 'bakit', 'teacher-27', '1578297368', 0),
+(88, '0aa295a86f491d4', 'hui', 'student-2', '1578366164', 1),
+(89, '4842169b098bd74', 'ho pat', 'teacher-27', '1578539335', 0),
+(90, '4842169b098bd74', 'fff', 'teacher-27', '1578539356', 0);
 
 -- --------------------------------------------------------
 
@@ -932,6 +1129,21 @@ CREATE TABLE `message_thread` (
   `last_message_timestamp` longtext COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+--
+-- Dumping data for table `message_thread`
+--
+
+INSERT INTO `message_thread` (`message_thread_id`, `message_thread_code`, `sender`, `reciever`, `last_message_timestamp`) VALUES
+(1, '8c5850c8524e1a4', 'student-1', 'admin-1', ''),
+(2, '298afd842319cc4', 'student-3', 'student-2', ''),
+(3, '023630696759add', 'teacher-27', 'student-1', ''),
+(4, '4d279596774ff9b', 'teacher-27', 'student-3', ''),
+(5, '4e93023f4cbd5f6', 'student-3', 'student-1', ''),
+(6, 'c2039cf78227286', 'admin-1', 'student-4', ''),
+(7, '6f325e711611fdb', 'student-4', 'student-4', ''),
+(8, '0aa295a86f491d4', 'admin-1', 'student-2', ''),
+(9, '4842169b098bd74', 'teacher-27', 'student-4', '');
+
 -- --------------------------------------------------------
 
 --
@@ -943,8 +1155,15 @@ CREATE TABLE `news` (
   `news_code` longtext COLLATE utf8_unicode_ci NOT NULL,
   `title` longtext COLLATE utf8_unicode_ci NOT NULL,
   `description` longtext COLLATE utf8_unicode_ci NOT NULL,
-  `news_status` int(11) NOT NULL DEFAULT '1' COMMENT '1 for running, 0 for archived'
+  `news_status` int(11) NOT NULL DEFAULT 1 COMMENT '1 for running, 0 for archived'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `news`
+--
+
+INSERT INTO `news` (`news_id`, `news_code`, `title`, `description`, `news_status`) VALUES
+(44, '6ab0d1c62e', 'Voting system', 'Voting System', 1);
 
 -- --------------------------------------------------------
 
@@ -957,7 +1176,7 @@ CREATE TABLE `news_teacher` (
   `notice_code` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `title` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `description` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `notice_status` int(11) NOT NULL DEFAULT '1'
+  `notice_status` int(11) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -1013,7 +1232,9 @@ CREATE TABLE `parent` (
 INSERT INTO `parent` (`parent_id`, `name`, `email`, `password`, `phone`, `address`, `profession`, `username`) VALUES
 (28, 'Adan Miller', 'adan@gmail.com', '5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8', '07737719200', '60 Eastbourne Rd', 'Enginner', 'adan'),
 (29, 'Alexander Morgan', 'alexander@gmail.com', '7c4a8d09ca3762af61e59520943dc26494f8941b', '50241181902', '26 Nith Street', 'Enginner', 'alexander'),
-(30, 'Isabel Jobs', 'isabel@gmail.com', 'a8803f9ed887f2bdaff770a533cf2f251187a94f', '54833724', '26 Stroud Rd', 'Architect', 'isabel');
+(30, 'Isabel Jobs', 'isabel@gmail.com', 'a8803f9ed887f2bdaff770a533cf2f251187a94f', '54833724', '26 Stroud Rd', 'Architect', 'isabel'),
+(31, 'noel', 'noel@gmail.com', 'cancer', '099099897', 'manila', '', 'noel'),
+(32, 'Teresa', 'teresa@gmail.com', '2eb1f74718222b9cab10e7d8b0120535f7a7ad72', '0999998444', 'Jose Panganiban C.N.', '', 'Teresa');
 
 -- --------------------------------------------------------
 
@@ -1034,6 +1255,15 @@ CREATE TABLE `payment` (
   `timestamp` longtext COLLATE utf8_unicode_ci NOT NULL,
   `year` longtext COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `payment`
+--
+
+INSERT INTO `payment` (`payment_id`, `expense_category_id`, `title`, `payment_type`, `invoice_id`, `student_id`, `method`, `description`, `amount`, `timestamp`, `year`) VALUES
+(49, 0, 'wer', 'income', 40, 0, '1', 'asdfasdf', '555', '1577635200', '2016-2017'),
+(50, 0, 'ID', 'income', 41, 0, '1', 'bayad sa iD', '50', '1577116800', '2016-2017'),
+(51, 0, 'ID', 'income', 42, 2, '1', 'bayad sa ID', '80', '1576684800', '2016-2017');
 
 -- --------------------------------------------------------
 
@@ -1113,7 +1343,7 @@ CREATE TABLE `request` (
   `teacher_id` int(11) NOT NULL,
   `start_date` longtext COLLATE utf8_unicode_ci NOT NULL,
   `end_date` longtext COLLATE utf8_unicode_ci NOT NULL,
-  `status` int(11) NOT NULL DEFAULT '0' COMMENT '0 = pending, 1 = accepted, 2 = rejected',
+  `status` int(11) NOT NULL DEFAULT 0 COMMENT '0 = pending, 1 = accepted, 2 = rejected',
   `description` longtext COLLATE utf8_unicode_ci NOT NULL,
   `title` longtext COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -1130,6 +1360,15 @@ CREATE TABLE `section` (
   `class_id` int(11) NOT NULL,
   `teacher_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `section`
+--
+
+INSERT INTO `section` (`section_id`, `name`, `class_id`, `teacher_id`) VALUES
+(2, 'IT51', 1, 0),
+(3, 'A11', 2, 0),
+(4, 'IT61', 1, 29);
 
 -- --------------------------------------------------------
 
@@ -1159,9 +1398,9 @@ INSERT INTO `settings` (`settings_id`, `type`, `description`) VALUES
 (11, 'language', 'english'),
 (13, 'minimark', '50'),
 (15, 'ad', ''),
-(16, 'skin_colour', 'blue'),
+(16, 'skin_colour', 'danger'),
 (18, 'domain', 'google.com'),
-(21, 'running_year', '2016-2017'),
+(21, 'running_year', '2019-2020'),
 (22, 'facebook_url', 'https://www.facebook.com/'),
 (23, 'twitter_url', 'https://www.twitter.com/'),
 (24, 'google_url', 'https://www.google.com/'),
@@ -1180,7 +1419,7 @@ INSERT INTO `settings` (`settings_id`, `type`, `description`) VALUES
 CREATE TABLE `student` (
   `student_id` int(11) NOT NULL,
   `name` longtext COLLATE utf8_unicode_ci NOT NULL,
-  `birthday` longtext COLLATE utf8_unicode_ci,
+  `birthday` longtext COLLATE utf8_unicode_ci DEFAULT NULL,
   `sex` longtext COLLATE utf8_unicode_ci NOT NULL,
   `address` longtext COLLATE utf8_unicode_ci NOT NULL,
   `phone` longtext COLLATE utf8_unicode_ci NOT NULL,
@@ -1189,13 +1428,26 @@ CREATE TABLE `student` (
   `parent_id` int(11) DEFAULT NULL,
   `dormitory_id` int(11) DEFAULT NULL,
   `transport_id` int(11) DEFAULT NULL,
-  `student_session` int(11) NOT NULL DEFAULT '1',
+  `student_session` int(11) NOT NULL DEFAULT 1,
   `username` longtext COLLATE utf8_unicode_ci NOT NULL,
   `aditional_subjects_id` longtext COLLATE utf8_unicode_ci NOT NULL,
   `date` longtext COLLATE utf8_unicode_ci NOT NULL,
-  `board` int(11) NOT NULL DEFAULT '0',
+  `board` int(11) NOT NULL DEFAULT 0,
   `student_code` longtext COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `student`
+--
+
+INSERT INTO `student` (`student_id`, `name`, `birthday`, `sex`, `address`, `phone`, `email`, `password`, `parent_id`, `dormitory_id`, `transport_id`, `student_session`, `username`, `aditional_subjects_id`, `date`, `board`, `student_code`) VALUES
+(1, 'koko', '30-21-2019', 'male', 'manila', '0101010101', 'dadd@dadd.com', '1234', 1, 1, 1, 1, 'koko', '', '', 1, '101'),
+(2, 'cancer', '25-11-2019', 'female', 'sss', '1111', 'daddydadduy22@gmail.com', 'cancer', 28, 0, 0, 1, 'cancer', '', '1577449140', 0, ''),
+(3, 'cancer_cancer', '09-12-2019', 'male', 'asdf', '123123', 'blink_spoted23@yahoo.com', 'cancer1', 31, 21, NULL, 1, 'cancer_cancer', '', '1577449140', 0, ''),
+(4, 'Patricia S. Cabrera', '29-12-1995', 'female', 'Jose Panganiban C.N.', '0999999999', 'patriciacabrera@gmail.com', 'pat', 32, 0, 0, 1, 'Cabrera', '', '1577967600', 0, ''),
+(5, 'sad', '29-12-1995', 'male', 'asdfasdf', '111', 'blink_spoted23@yahoo.com', 'sad', 31, 21, NULL, 1, 'sad', '', '1578399600', 0, ''),
+(6, 'sample', '06-01-2020', 'male', 'afasdf', '23123', 'daddydadduy22@gmail.com', 'sample', 31, NULL, NULL, 1, 'sample', '', '1578399600', 0, ''),
+(7, 'Jaymark', '31-12-2019', 'male', 'fff', '111', 'albertespiritu14@yahoo.com', 'jaymark', 30, NULL, NULL, 1, 'jayson', '', '1578856800', 0, '');
 
 -- --------------------------------------------------------
 
@@ -1225,7 +1477,7 @@ CREATE TABLE `student_exam` (
   `student_id` int(11) NOT NULL,
   `starttime` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `endtime` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `correctlyanswered` int(11) NOT NULL DEFAULT '0',
+  `correctlyanswered` int(11) NOT NULL DEFAULT 0,
   `status` enum('completed','inprogress') CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT 'inprogress',
   `class_id` int(11) NOT NULL,
   `section_id` int(11) NOT NULL
@@ -1243,18 +1495,26 @@ CREATE TABLE `subject` (
   `class_id` int(11) NOT NULL,
   `teacher_id` int(11) DEFAULT NULL,
   `year` longtext COLLATE utf8_unicode_ci NOT NULL,
-  `la1` longtext COLLATE utf8_unicode_ci,
-  `la2` longtext COLLATE utf8_unicode_ci,
-  `la3` longtext COLLATE utf8_unicode_ci,
-  `la4` longtext COLLATE utf8_unicode_ci,
-  `la5` longtext COLLATE utf8_unicode_ci,
-  `la6` longtext COLLATE utf8_unicode_ci,
-  `la7` longtext COLLATE utf8_unicode_ci,
-  `la8` longtext COLLATE utf8_unicode_ci,
-  `la9` longtext COLLATE utf8_unicode_ci,
-  `la10` longtext CHARACTER SET utf16 COLLATE utf16_unicode_ci,
-  `final` longtext COLLATE utf8_unicode_ci
+  `la1` longtext COLLATE utf8_unicode_ci DEFAULT NULL,
+  `la2` longtext COLLATE utf8_unicode_ci DEFAULT NULL,
+  `la3` longtext COLLATE utf8_unicode_ci DEFAULT NULL,
+  `la4` longtext COLLATE utf8_unicode_ci DEFAULT NULL,
+  `la5` longtext COLLATE utf8_unicode_ci DEFAULT NULL,
+  `la6` longtext COLLATE utf8_unicode_ci DEFAULT NULL,
+  `la7` longtext COLLATE utf8_unicode_ci DEFAULT NULL,
+  `la8` longtext COLLATE utf8_unicode_ci DEFAULT NULL,
+  `la9` longtext COLLATE utf8_unicode_ci DEFAULT NULL,
+  `la10` longtext CHARACTER SET utf16 COLLATE utf16_unicode_ci DEFAULT NULL,
+  `final` longtext COLLATE utf8_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `subject`
+--
+
+INSERT INTO `subject` (`subject_id`, `name`, `class_id`, `teacher_id`, `year`, `la1`, `la2`, `la3`, `la4`, `la5`, `la6`, `la7`, `la8`, `la9`, `la10`, `final`) VALUES
+(1, 'Capstone', 1, 30, '2019-2020', 'test1', 'laboratory', 'test2', 'technicall', '', '', '', '', '', NULL, 'Exam 2nd semister'),
+(2, 'Major Elective 2', 1, 28, '2019-2020', '', '', '', '', '', '', '', '', '', NULL, '');
 
 -- --------------------------------------------------------
 
@@ -1265,7 +1525,7 @@ CREATE TABLE `subject` (
 CREATE TABLE `teacher` (
   `teacher_id` int(11) NOT NULL,
   `name` longtext COLLATE utf8_unicode_ci NOT NULL,
-  `birthday` longtext COLLATE utf8_unicode_ci,
+  `birthday` longtext COLLATE utf8_unicode_ci DEFAULT NULL,
   `sex` longtext COLLATE utf8_unicode_ci NOT NULL,
   `address` longtext COLLATE utf8_unicode_ci NOT NULL,
   `phone` longtext COLLATE utf8_unicode_ci NOT NULL,
@@ -1280,9 +1540,11 @@ CREATE TABLE `teacher` (
 --
 
 INSERT INTO `teacher` (`teacher_id`, `name`, `birthday`, `sex`, `address`, `phone`, `email`, `password`, `salary`, `username`) VALUES
-(27, 'Abner Santizo', '30-10-2017', 'male', 'Street Two, US.', '49584985', 'aber@gmail.com', '7c4a8d09ca3762af61e59520943dc26494f8941b', '4500', 'aber'),
+(27, 'Abner Santizo', '30-10-2017', 'male', 'Street Two, US.', '49584985', 'aber@gmail.com', 'cancer', '4500', 'aber'),
 (28, 'Greys Alvarado', '01-11-2017', 'female', 'Street One, US.', '6356475876', 'greys@gmail.com', '210a28f50a8e9a0986df287ac9ae224de95b8978', '5000', 'greys'),
-(29, 'John Smit', '03-12-2017', 'male', 'Drummond Street', '9732685908', 'john@gmail.com', 'd95d5a850ec278dab416ee606828d5e92e8adf65', '6000', 'john');
+(29, 'John Smit', '03-12-2017', 'male', 'Drummond Street', '9732685908', 'john@gmail.com', 'd95d5a850ec278dab416ee606828d5e92e8adf65', '6000', 'john'),
+(30, 'Ronalyn Baraquiel', '09-01-1990', 'female', 'Daet C.N.', '0999999999', 'ronalyn@gmail.com', 'affa4f6cd5e5cc4eb0b692be2c3e9b7b5240a350', '', 'ronalyn'),
+(31, 'test', NULL, 'male', 'test', '1111', 'blink_spoted23@yahoo.com', 'test', '', 'test');
 
 -- --------------------------------------------------------
 
@@ -1458,6 +1720,12 @@ ALTER TABLE `gallery_album`
 --
 ALTER TABLE `gallery_category`
   ADD PRIMARY KEY (`category_id`);
+
+--
+-- Indexes for table `grades`
+--
+ALTER TABLE `grades`
+  ADD PRIMARY KEY (`grade_id`);
 
 --
 -- Indexes for table `homework`
@@ -1648,246 +1916,301 @@ ALTER TABLE `transport`
 --
 ALTER TABLE `academic_settings`
   MODIFY `settings_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+
 --
 -- AUTO_INCREMENT for table `academic_syllabus`
 --
 ALTER TABLE `academic_syllabus`
-  MODIFY `academic_syllabus_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `academic_syllabus_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
 --
 -- AUTO_INCREMENT for table `admin`
 --
 ALTER TABLE `admin`
-  MODIFY `admin_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+  MODIFY `admin_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
+
 --
 -- AUTO_INCREMENT for table `attendance`
 --
 ALTER TABLE `attendance`
-  MODIFY `attendance_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=618;
+  MODIFY `attendance_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+
 --
 -- AUTO_INCREMENT for table `attendance_backup`
 --
 ALTER TABLE `attendance_backup`
   MODIFY `attendance_id` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `book`
 --
 ALTER TABLE `book`
-  MODIFY `book_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `book_id` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `class`
 --
 ALTER TABLE `class`
-  MODIFY `class_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `class_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
 --
 -- AUTO_INCREMENT for table `class_routine`
 --
 ALTER TABLE `class_routine`
-  MODIFY `class_routine_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `class_routine_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+
 --
 -- AUTO_INCREMENT for table `document`
 --
 ALTER TABLE `document`
-  MODIFY `document_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `document_id` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `dormitory`
 --
 ALTER TABLE `dormitory`
-  MODIFY `dormitory_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `dormitory_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+
 --
 -- AUTO_INCREMENT for table `enroll`
 --
 ALTER TABLE `enroll`
-  MODIFY `enroll_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
+  MODIFY `enroll_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
 --
 -- AUTO_INCREMENT for table `events`
 --
 ALTER TABLE `events`
-  MODIFY `event_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `event_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
 --
 -- AUTO_INCREMENT for table `exam`
 --
 ALTER TABLE `exam`
-  MODIFY `exam_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `exam_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
 --
 -- AUTO_INCREMENT for table `exams`
 --
 ALTER TABLE `exams`
-  MODIFY `exam_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `exam_id` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `expense_category`
 --
 ALTER TABLE `expense_category`
-  MODIFY `expense_category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `expense_category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
 --
 -- AUTO_INCREMENT for table `forum`
 --
 ALTER TABLE `forum`
-  MODIFY `post_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `post_id` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `forum_message`
 --
 ALTER TABLE `forum_message`
-  MODIFY `message_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
+  MODIFY `message_id` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `gallery_album`
 --
 ALTER TABLE `gallery_album`
   MODIFY `image_id` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `gallery_category`
 --
 ALTER TABLE `gallery_category`
-  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `grades`
+--
+ALTER TABLE `grades`
+  MODIFY `grade_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
+
 --
 -- AUTO_INCREMENT for table `homework`
 --
 ALTER TABLE `homework`
-  MODIFY `homework_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `homework_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
 --
 -- AUTO_INCREMENT for table `horarios_examenes`
 --
 ALTER TABLE `horarios_examenes`
-  MODIFY `horario_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `horario_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
 --
 -- AUTO_INCREMENT for table `invoice`
 --
 ALTER TABLE `invoice`
-  MODIFY `invoice_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `invoice_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+
 --
 -- AUTO_INCREMENT for table `language`
 --
 ALTER TABLE `language`
-  MODIFY `phrase_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3934;
+  MODIFY `phrase_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3954;
+
 --
 -- AUTO_INCREMENT for table `libreria`
 --
 ALTER TABLE `libreria`
-  MODIFY `libro_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `libro_id` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `mark`
 --
 ALTER TABLE `mark`
-  MODIFY `mark_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=261;
+  MODIFY `mark_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
 --
 -- AUTO_INCREMENT for table `mensaje_reporte`
 --
 ALTER TABLE `mensaje_reporte`
-  MODIFY `news_message_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `news_message_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
 --
 -- AUTO_INCREMENT for table `message`
 --
 ALTER TABLE `message`
-  MODIFY `message_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
+  MODIFY `message_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=91;
+
 --
 -- AUTO_INCREMENT for table `message_thread`
 --
 ALTER TABLE `message_thread`
-  MODIFY `message_thread_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `message_thread_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
 --
 -- AUTO_INCREMENT for table `news`
 --
 ALTER TABLE `news`
-  MODIFY `news_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+  MODIFY `news_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
+
 --
 -- AUTO_INCREMENT for table `news_teacher`
 --
 ALTER TABLE `news_teacher`
   MODIFY `notice_id` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `notice_message`
 --
 ALTER TABLE `notice_message`
   MODIFY `notice_message_id` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `pages`
 --
 ALTER TABLE `pages`
-  MODIFY `page_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `page_id` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `parent`
 --
 ALTER TABLE `parent`
-  MODIFY `parent_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `parent_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+
 --
 -- AUTO_INCREMENT for table `payment`
 --
 ALTER TABLE `payment`
-  MODIFY `payment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
+  MODIFY `payment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
+
 --
 -- AUTO_INCREMENT for table `poa`
 --
 ALTER TABLE `poa`
-  MODIFY `id_poa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id_poa` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `questions`
 --
 ALTER TABLE `questions`
-  MODIFY `question_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `question_id` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `reporte_alumnos`
 --
 ALTER TABLE `reporte_alumnos`
   MODIFY `report_id` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `reporte_mensaje`
 --
 ALTER TABLE `reporte_mensaje`
   MODIFY `report_message_id` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `request`
 --
 ALTER TABLE `request`
-  MODIFY `request_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `request_id` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `section`
 --
 ALTER TABLE `section`
-  MODIFY `section_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `section_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
 --
 -- AUTO_INCREMENT for table `settings`
 --
 ALTER TABLE `settings`
   MODIFY `settings_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+
 --
 -- AUTO_INCREMENT for table `student`
 --
 ALTER TABLE `student`
-  MODIFY `student_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+  MODIFY `student_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
 --
 -- AUTO_INCREMENT for table `students_request`
 --
 ALTER TABLE `students_request`
-  MODIFY `request_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `request_id` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `student_exam`
 --
 ALTER TABLE `student_exam`
   MODIFY `exam_id` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `subject`
 --
 ALTER TABLE `subject`
-  MODIFY `subject_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `subject_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
 --
 -- AUTO_INCREMENT for table `teacher`
 --
 ALTER TABLE `teacher`
-  MODIFY `teacher_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `teacher_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+
 --
 -- AUTO_INCREMENT for table `ticket`
 --
 ALTER TABLE `ticket`
-  MODIFY `ticket_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `ticket_id` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `ticket_message`
 --
 ALTER TABLE `ticket_message`
-  MODIFY `ticket_message_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `ticket_message_id` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `transport`
 --
 ALTER TABLE `transport`
-  MODIFY `transport_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;COMMIT;
+  MODIFY `transport_id` int(11) NOT NULL AUTO_INCREMENT;
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

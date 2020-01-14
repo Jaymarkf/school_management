@@ -1,4 +1,5 @@
-<?php $running_year = $this->db->get_where('settings' , array('type' => 'running_year'))->row()->description; ?>
+<?php
+$running_year = $this->db->get_where('settings' , array('type' => 'running_year'))->row()->description; ?>
 <div class="row bg-title">
     <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
         <h4 class="page-title"><?php echo get_phrase('Teachers');?></h4>
@@ -36,7 +37,7 @@
 
                   <td style="text-align: center;">
                   <?php $teacher_birthday = $row['birthday'];
-                      list ($day, $month, $year) = split("-", $teacher_birthday);
+                      list ($day, $month, $year) = explode("-", $teacher_birthday); /*f*cking split php 5. */
                         $now = date("m");
                       if ($now == $month):?>
                     <center><div class="badge badge-info">
