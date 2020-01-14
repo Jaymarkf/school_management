@@ -1324,7 +1324,7 @@ class Admin extends CI_Controller
         $this->load->view('backend/index', $page_data);
     }
 
-    function manage_attendance($class_id = '' , $section_id = '' , $timestamp = '')
+    function manage_attendance($class_id = '' , $section_id = '' , $timestamp = '',$subject_id ='')
     {
         if($this->session->userdata('admin_login')!=1)
             redirect(base_url() , 'refresh');
@@ -1338,6 +1338,7 @@ class Admin extends CI_Controller
             'section_id' => $section_id
         ))->row()->name;
         $page_data['section_id'] = $section_id;
+        $page_data['subject_id'] = $subject_id;
         $page_data['page_title'] = get_phrase('Attendance');
         $this->load->view('backend/index', $page_data);
     }
@@ -1362,6 +1363,7 @@ class Admin extends CI_Controller
         $data['year']       = $this->input->post('year');
         $data['timestamp']  = strtotime($this->input->post('timestamp'));
         $data['section_id'] = $this->input->post('section_id');
+        $data['subject_id'] = $this->input->post('subject_id');
         $query = $this->db->get_where('attendance' ,array(
             'class_id'=>$data['class_id'],
                 'section_id'=>$data['section_id'],
@@ -1383,7 +1385,7 @@ class Admin extends CI_Controller
                 $this->db->insert('attendance' , $attn_data);  
             }
         }
-        redirect(base_url().'index.php?admin/manage_attendance/'.$data['class_id'].'/'.$data['section_id'].'/'.$data['timestamp'],'refresh');
+        redirect(base_url().'index.php?admin/manage_attendance/'.$data['class_id'].'/'.$data['section_id'].'/'.$data['timestamp'].'/'.$data['subject_id'],'refresh');
     }
     function grade_selector(){
 	    $data['semester_id'] = $this->input->post('semester_id');
@@ -1431,17 +1433,22 @@ class Admin extends CI_Controller
     }
 
 
-    function attendance_update($class_id = '' , $section_id = '' , $timestamp = '')
+    function attendance_update($class_id = '' , $section_id = '' , $timestamp = '',$subject_id ='')
     {
         $running_year = $this->db->get_where('settings' , array('type' => 'running_year'))->row()->description;
+
         $attendance_of_students = $this->db->get_where('attendance' , array(
-            'class_id'=>$class_id,'section_id'=>$section_id,'year'=>$running_year,'timestamp'=>$timestamp))->result_array();
+            'class_id'=>$class_id,'section_id'=>$section_id,'year'=>$running_year,'timestamp'=>$timestamp,'subject_id' => $subject_id))->result_array();
+
+
         foreach($attendance_of_students as $row) {
             $attendance_status = $this->input->post('status_'.$row['attendance_id']);
+
             $this->db->where('attendance_id' , $row['attendance_id']);
-            $this->db->update('attendance' , array('status' => $attendance_status));
+            $this->db->update('attendance' , array('status' => $attendance_status,'subject_id' => $subject_id));
         }
-        redirect(base_url().'index.php?admin/manage_attendance/'.$class_id.'/'.$section_id.'/'.$timestamp , 'refresh');
+
+        redirect(base_url().'index.php?admin/manage_attendance/'.$class_id.'/'.$section_id.'/'.$timestamp.'/'.$subject_id , 'refresh');
     }
 
     function grade_update($class_id = '' , $section_id = '' ,$subject_id = '' ,$semester_id = '')
@@ -1450,7 +1457,8 @@ class Admin extends CI_Controller
 //die(print_r($this->input->post()));
         $stud  = $this->input->post('student_id');
         foreach ($stud as $index => $item) {
-            $count = $this->db->get_where('grades',array('student_id',$item));
+            $this->db->where('student_id',$item);
+            $count = $this->db->get('grades',array('student_id',$item));
             if($count->num_rows() < 1){
                 $data['semester'] = $this->input->post('semester');
                 $data['student_id'] = $item;
@@ -1490,7 +1498,7 @@ class Admin extends CI_Controller
          $this->load->view('backend/index',$page_data);
      }
 
-     function report_attendance_view($class_id = '' , $section_id = '', $month = '') 
+     function report_attendance_view($class_id = '' , $section_id = '', $month = '',$subject_id = '')
      {
          if($this->session->userdata('admin_login')!=1)
             redirect(base_url() , 'refresh');
@@ -1504,6 +1512,7 @@ class Admin extends CI_Controller
             'section_id' => $section_id
         ))->row()->name;
         $page_data['section_id'] = $section_id;
+        $page_data['subject_id'] = $subject_id;
         $page_data['page_title'] = get_phrase('Attendance-Report');
         $this->load->view('backend/index', $page_data);
      }
@@ -1599,7 +1608,8 @@ class Admin extends CI_Controller
         $data['year']       = $this->input->post('year');
         $data['month']  = $this->input->post('month');
         $data['section_id'] = $this->input->post('section_id');
-        redirect(base_url().'index.php?admin/report_attendance_view/'.$data['class_id'].'/'.$data['section_id'].'/'.$data['month'],'refresh');
+        $data['subject_id'] = $this->input->post('subject_id');
+        redirect(base_url().'index.php?admin/report_attendance_view/'.$data['class_id'].'/'.$data['section_id'].'/'.$data['month'].'/'.$data['subject_id'],'refresh');
     }
 
     function unit_content($class_id = '')

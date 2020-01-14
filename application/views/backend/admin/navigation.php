@@ -83,8 +83,6 @@
                              <li> <a href="<?php echo base_url(); ?>index.php?admin/enviar_noticia"><?php echo get_phrase('Send'); ?></a></li>
                         </ul>
                     </li>
-                    <li> <a href="<?php echo base_url(); ?>index.php?admin/files" class="waves-effect"><i class="ti-files"></i> <span class="hide-menu"><?php echo get_phrase('TeachersFiles'); ?></span></a>
-                    </li>
                     <li> <a href="<?php echo base_url(); ?>index.php?admin/events" class="waves-effect"><i class="fa fa-calendar"></i> <span class="hide-menu"><?php echo get_phrase('Events'); ?></span></a>
                     </li>
                     <li> <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-money"></i> <span class="hide-menu"><?php echo get_phrase('Accounting'); ?><span class="fa arrow"></span></span></a>

@@ -138,29 +138,35 @@
                             </td>
                             <td>
                                 <select class="form-control selectboxit" name="grade_id_<?php echo $row['student_id']; ?>">
-                                   <option value="1">1.00</option>
-                                   <option value="1.25">1.25</option>
-                                   <option value="1.50">1.50</option>
-                                   <option value="1.75">1.75</option>
-                                   <option value="2.00">2.00</option>
-                                   <option value="2.25">2.25</option>
-                                   <option value="2.50">2.50</option>
-                                   <option value="2.75">2.75</option>
-                                   <option value="3.00">3.00</option>
-                                   <option value="3.25">3.25</option>
-                                   <option value="3.50">3.50</option>
-                                   <option value="3.75">3.75</option>
-                                   <option value="4.00">4.00</option>
-                                   <option value="5.00">5.00</option>
+                                    <?php
+                                    $x = $this->db->get_where('grades',array('student_id'=>$row['student_id']))->row()->student_grade;
+                                    $grade = $this->db->get_where('grades',array('student_id'=>$row['student_id']))->row()->specific_grade;
+                                    $comments = $this->db->get_where('grades',array('student_id'=>$row['student_id']))->row()->comments;
+
+                                    ?>
+                                   <option value="1.00" <?php if($x == 1.00){echo 'selected';} ?> >1.00</option>
+                                   <option value="1.25"<?php if($x == 1.25){echo 'selected';} ?> >1.25</option>
+                                   <option value="1.50"<?php if($x == 1.50){echo 'selected';} ?> >1.50</option>
+                                   <option value="1.75"<?php if($x == 1.75){echo 'selected';} ?> >1.75</option>
+                                   <option value="2.00"<?php if($x == 2.00){echo 'selected';} ?> >2.00</option>
+                                   <option value="2.25"<?php if($x == 2.25){echo 'selected';} ?> >2.25</option>
+                                   <option value="2.50"<?php if($x == 2.50){echo 'selected';} ?> >2.50</option>
+                                   <option value="2.75"<?php if($x == 2.75){echo 'selected';} ?> >2.75</option>
+                                   <option value="3.00"<?php if($x == 3.00){echo 'selected';} ?> >3.00</option>
+                                   <option value="3.25"<?php if($x == 3.25){echo 'selected';} ?> >3.25</option>
+                                   <option value="3.50"<?php if($x == 3.50){echo 'selected';} ?> >3.50</option>
+                                   <option value="3.75"<?php if($x == 3.75){echo 'selected';} ?> >3.75</option>
+                                   <option value="4.00"<?php if($x == 4.00){echo 'selected';} ?> >4.00</option>
+                                   <option value="5.00"<?php if($x == 5.00){echo 'selected';} ?> >5.00</option>
                                 </select>
                             </td>
                             <td>
                                 <input type="text" name="specific_grade_id_<?php echo $row['student_id'];?>"
-                                       placeholder="Enter grade form 1-100" class="form-control"/>
+                                       placeholder="Enter grade form 1-100" class="form-control" value="<?php echo $grade; ?>"/>
                             </td>
                             <td>
                                 <input type="text" name="comments_id_<?php echo $row['student_id'];?>"
-                                       placeholder="Enter your comments" class="form-control"/>
+                                       placeholder="Enter your comments" class="form-control" value ="<?php echo $comments; ?>"/>
                             </td>
                         </tr>
                     <?php endforeach; ?>

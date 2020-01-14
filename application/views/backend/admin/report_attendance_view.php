@@ -50,6 +50,31 @@
             </div>
         </div>
     <?php endif; ?>
+    <div id="subject_holder">
+        <div class="col-md-3">
+            <div class="form-group">
+                <label class="control-label" style="margin-bottom: 5px;"><?php echo get_phrase('Subject');?></label>
+                <select name="subject_id" id="subject_id" class="form-control selectboxit">
+                    <?php $subjects = $this->db->get_where('subject', array('subject_id' => $subject_id))->result_array();
+                    if(!empty($subjects)){
+                        foreach ($subjects as $row): ?>
+                            <option value="<?php echo $row['subject_id']; ?>"
+                                <?php if ($subject_id == $row['subject_id']) echo 'selected'; ?>>
+                                <?php echo $row['name']; ?>
+                            </option>
+                        <?php endforeach;
+
+
+                    }
+
+                    ?>
+                </select>
+            </div>
+        </div>
+    </div>
+
+
+
     <div class="col-md-3">
         <div class="form-group">
             <label class="control-label" style="margin-bottom: 5px;"><?php echo get_phrase('Month');?></label>
@@ -137,7 +162,7 @@
                             for ($i = 1; $i <= $days; $i++) {
                                 $timestamp = strtotime($i . '-' . $month . '-' . $year[0]);
                                 $this->db->group_by('timestamp');
-                                $attendance = $this->db->get_where('attendance', array('section_id' => $section_id, 'class_id' => $class_id, 'year' => $running_year, 'timestamp' => $timestamp, 'student_id' => $row['student_id']))->result_array();
+                                $attendance = $this->db->get_where('attendance', array('section_id' => $section_id, 'class_id' => $class_id, 'year' => $running_year, 'timestamp' => $timestamp, 'student_id' => $row['student_id'],'subject_id'=>$subject_id))->result_array();
 
                                 foreach ($attendance as $row1):
                                     $month_dummy = date('d', $row1['timestamp']);
@@ -196,5 +221,13 @@
                 jQuery('#section_holder').html(response);
             }
         });
+        $.ajax({
+            url: '<?php echo base_url(); ?>index.php?admin/get_subjects/' + class_id,
+            success:function (response)
+            {
+                jQuery('#subject_holder').html(response);
+            }
+        });
+
     }
 </script>
