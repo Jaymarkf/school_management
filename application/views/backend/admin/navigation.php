@@ -92,20 +92,10 @@
                              <li> <a href="<?php echo base_url(); ?>index.php?admin/expense"><?php echo get_phrase('Expense'); ?></a></li>
                         </ul>
                     </li>
-
-                      <li> <a href="javascript:void(0);" class="waves-effect"><i class="icon-chart p-r-10"></i> <span class="hide-menu"> <?php echo get_phrase('SchoolReports'); ?><span class="fa arrow"></span></span></a>
-                        <ul class="nav nav-second-level">
-                            <li> <a href="<?php echo base_url(); ?>index.php?admin/report_list"><?php echo get_phrase('TeacherReports'); ?></a></li>
-                        </ul>
-                    </li>
-
-
                     <li> <a href="<?php echo base_url(); ?>index.php?admin/message" class="waves-effect"><i class="fa fa-envelope"></i> <span class="hide-menu"><?php echo get_phrase('Messages'); ?></span></a>
                     </li>
 
                     <li> <a href="<?php echo base_url(); ?>index.php?admin/system_settings" class="waves-effect"><i class="ti-settings"></i> <span class="hide-menu"><?php echo get_phrase('System-Settings'); ?></span></a> </li>
-
-                    <li> <a href="<?php echo base_url(); ?>index.php?admin/academic_settings" class="waves-effect"><i class="fa fa-graduation-cap"></i> <span class="hide-menu"><?php echo get_phrase('Academic-Settings'); ?></span></a> </li>
         </ul>
     </div>
 </div>

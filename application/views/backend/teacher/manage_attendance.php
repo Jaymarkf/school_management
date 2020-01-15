@@ -37,6 +37,22 @@
 		</div>
 	</div>
 	<?php endif;?>
+
+    <div class="col-md-3">
+        <div class="form-group">
+            <label class="control-label" style="margin-bottom: 5px;"><?php echo get_phrase('Subject'); ?></label>
+            <select class="form-control selectboxit" name="subject_id">
+       <?php
+        $subj = $this->db->get_where('subject',array('class_id' => $class_id))->result_array();
+       foreach ($subj as $index => $item) {
+                echo '<option value="'.$item['subject_id'].'">'.$item['name'].'</option>';
+            }
+        ?>
+                </select>
+
+        </div>
+    </div>
+
 	<input type="hidden" name="class_id" value="<?php echo $class_id;?>">
 	<input type="hidden" name="year" value="<?php echo $running_year;?>">
 

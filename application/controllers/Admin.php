@@ -770,7 +770,6 @@ class Admin extends CI_Controller
             redirect(base_url(), 'refresh');
         if ($param1 == 'create') {
             $data['name']         = $this->input->post('name');
-            $data['teacher_id']   = $this->input->post('teacher_id');
             $this->db->insert('class', $data);
             $class_id = $this->db->insert_id();
             $data2['class_id']  =   $class_id;
@@ -1163,6 +1162,7 @@ class Admin extends CI_Controller
             $data['time_start_min'] = $this->input->post('time_start_min');
             $data['time_end_min']   = $this->input->post('time_end_min');
             $data['day']            = $this->input->post('day');
+            $data['room_id'] = $this->input->post('room_id');
             $data['year']           = $this->db->get_where('settings' , array('type' => 'running_year'))->row()->description;
             $this->db->insert('class_routine', $data);
             redirect(base_url() . 'index.php?admin/class_routine_add/', 'refresh');

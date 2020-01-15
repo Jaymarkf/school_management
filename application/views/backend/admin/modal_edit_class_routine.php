@@ -37,6 +37,12 @@ $edit_data		=	$this->db->get_where('class_routine' , array('class_routine_id' =>
                         </select>
                     </div>
                 </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label"><?php echo get_phrase('Room');?></label>
+                <div class="col-sm-5">
+                    <input type="text" value="<?php echo $row['room_id']; ?>" name="room_id"  class="form-control" placeholder="Enter room"/>
+                </div>
+            </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label"><?php echo get_phrase('Start');?></label>
                     <div class="col-sm-9">

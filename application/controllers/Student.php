@@ -238,7 +238,7 @@ class Student extends CI_Controller
         $this->load->view('backend/index', $page_data);
     }
 
-    function horarios_de_examen($param1 = '', $param2 = '', $param3 = '')
+    function exam($param1 = '', $param2 = '', $param3 = '')
     {
         if ($this->session->userdata('student_login') != 1)
             redirect(base_url(), 'refresh');
@@ -249,7 +249,7 @@ class Student extends CI_Controller
                 'year' => $this->db->get_where('settings' , array('type' => 'running_year'))->row()->description
         ))->row()->class_id;
         $page_data['student_id'] = $student_profile->student_id;
-        $page_data['page_name']  = 'horarios_de_examen';
+        $page_data['page_name']  = 'exam';
         $page_data['page_title'] = get_phrase('Exam-Routine');
         $this->load->view('backend/index', $page_data);
     }
@@ -419,9 +419,9 @@ class Student extends CI_Controller
         $this->crud_model->create_note();
     }
 
-    function circulares($param1 = '', $param2 = '') 
+    function news_($param1 = '', $param2 = '') 
     {
-        $page_data['page_name'] = 'circulares';
+        $page_data['page_name'] = 'news_';
         $page_data['page_title'] = get_phrase('News');
         $this->load->view('backend/index', $page_data);
     }

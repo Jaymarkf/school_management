@@ -131,7 +131,7 @@ class Parents extends CI_Controller
         $this->load->view('backend/parent/marks_print_view', $page_data);
     }
 
-    function circulares($param1 = '', $param2 = '') 
+    function news_($param1 = '', $param2 = '') 
     {
         if ($param1 == 'mark_as_archive') {
             $this->db->where('news_code' , $param2);
@@ -143,7 +143,7 @@ class Parents extends CI_Controller
             $this->db->update('news' , array('news_status' => 1));
         }
 
-        $page_data['page_name'] = 'circulares';
+        $page_data['page_name'] = 'news_';
         $page_data['page_title'] = get_phrase('News');
         $this->load->view('backend/index', $page_data);
     }
@@ -226,13 +226,13 @@ class Parents extends CI_Controller
         redirect(base_url().'index.php?parents/report_attendance_view/'.$data['class_id'].'/'.$data['section_id'].'/'.$data['month'],'refresh');
     }
 
-    function horario_de_examenes($param1 = '', $param2 = '', $param3 = '')
+    function exam($param1 = '', $param2 = '', $param3 = '')
     {
         if ($this->session->userdata('parent_login') != 1)
             redirect(base_url(), 'refresh');
         
         $page_data['student_id'] = $param1;
-        $page_data['page_name']  = 'horario_de_examenes';
+        $page_data['page_name']  = 'exam';
         $page_data['page_title'] = get_phrase('Exam-Routine');
         $this->load->view('backend/index', $page_data);
     }
