@@ -1368,6 +1368,7 @@ class Admin extends CI_Controller
             'class_id'=>$data['class_id'],
                 'section_id'=>$data['section_id'],
                     'year'=>$data['year'],
+                    'subject_id' => $data['subject_id'],
                         'timestamp'=>$data['timestamp']));
 
         if($query->num_rows() < 1) 
@@ -1382,6 +1383,7 @@ class Admin extends CI_Controller
                 $attn_data['timestamp']  = $data['timestamp'];
                 $attn_data['section_id'] = $data['section_id'];
                 $attn_data['student_id'] = $row['student_id'];
+                $attn_data['subject_id'] = $data['subject_id'];
                 $this->db->insert('attendance' , $attn_data);  
             }
         }
