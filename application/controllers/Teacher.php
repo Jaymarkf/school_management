@@ -656,7 +656,7 @@ class Teacher extends CI_Controller
         redirect(base_url().'index.php?teacher/manage_attendance_view/'.$data['class_id'].'/'.$data['section_id'].'/'.$data['timestamp'].'/'.$data['subject_id'],'refresh');
     }
 
-    function attendance_update($class_id = '' , $section_id = '' , $timestamp = '')
+    function attendance_update($class_id = '' , $section_id = '' , $timestamp = '',$subject_id='')
     {
         $running_year = $this->db->get_where('settings' , array('type' => 'running_year'))->row()->description;
         $attendance_of_students = $this->db->get_where('attendance' , array(
@@ -668,7 +668,7 @@ class Teacher extends CI_Controller
             $this->db->where('attendance_id' , $row['attendance_id']);
             $this->db->update('attendance' , array('status' => $attendance_status));
         }
-        redirect(base_url().'index.php?teacher/manage_attendance_view/'.$class_id.'/'.$section_id.'/'.$timestamp , 'refresh');
+        redirect(base_url().'index.php?teacher/manage_attendance_view/'.$class_id.'/'.$section_id.'/'.$timestamp.'/'.$subject_id , 'refresh');
     }
     
     function study_material($task = "", $document_id = "")
