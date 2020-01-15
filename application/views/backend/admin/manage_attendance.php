@@ -111,7 +111,8 @@
                                 'class_id' => $class_id,
                                 'section_id' => $section_id,
                                 'year' => $running_year,
-                                'timestamp' => $timestamp
+                                'timestamp' => $timestamp,
+                                'subject_id' =>$subject_id
                             ))->result_array();
                     foreach ($attendance_of_students as $row):
                         ?>

@@ -638,7 +638,7 @@ class Teacher extends CI_Controller
                 'section_id'=>$data['section_id'],
                     'year'=>$data['year'],
                         'subject_id' => $data['subject_id'],
-            
+
         ));
         if($query->num_rows() < 1) {
             $students = $this->db->get_where('enroll' , array(
