@@ -36,13 +36,6 @@
                       </div>
                   </div>
                   <div class="form-group">
-                      <label  class="col-sm-3 control-label"><?php echo get_phrase('Paypal-Email');?></label>
-                      <div class="col-sm-9">
-                          <input type="text" class="form-control" name="paypal_email" 
-                              value="<?php echo $this->db->get_where('settings' , array('type' =>'paypal_email'))->row()->description;?>">
-                      </div>
-                  </div>
-                  <div class="form-group">
                       <label  class="col-sm-3 control-label"><?php echo get_phrase('Address');?></label>
                       <div class="col-sm-9">
                           <input type="text" class="form-control" name="address" 
