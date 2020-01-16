@@ -16,7 +16,7 @@
     <div class="col-md-3">
         <div class="form-group">
             <label class="control-label" style="margin-bottom: 5px;"><?php echo get_phrase('Semester');?></label>
-            <select name="class_id" class="form-control selectboxit" onchange="select_section(this.value)">
+            <select name="class_id" class="form-control selectboxit">
                 <option value=""><?php echo get_phrase('Select');?></option>
                 <option value="1"<?php if($semester_id=1){echo"selected";}?>>1</option>
                 <option value="2"<?php if($semester_id=1){echo"selected";}?>>2</option>
@@ -58,18 +58,24 @@
             </div>
         </div>
     </div>
-    <div id="section_holder">
+    <div id="subject_holder">
         <div class="col-md-3">
             <div class="form-group">
                 <label class="control-label" style="margin-bottom: 5px;"><?php echo get_phrase('Subject');?></label>
-                <select name="section_id" id="section_id" class="form-control selectboxit">
+                <select name="subject_id" id="subject_id" class="form-control selectboxit">
                     <?php $subjects = $this->db->get_where('subject', array('subject_id' => $subject_id))->result_array();
+                    if(!empty($subjects)){
                     foreach ($subjects as $row): ?>
                         <option value="<?php echo $row['subject_id']; ?>"
                             <?php if ($subject_id == $row['subject_id']) echo 'selected'; ?>>
                             <?php echo $row['name']; ?>
                         </option>
-                    <?php endforeach; ?>
+                    <?php endforeach;
+
+
+                        }
+
+                    ?>
                 </select>
             </div>
         </div>
@@ -89,7 +95,7 @@
     <div class="col-md-2"></div>
     <div class="col-md-8">
         <div class="white-box">
-            <?php echo form_open(base_url() . 'index.php?admin/attendance_update/' . $class_id . '/' . $section_id . '/' . $timestamp); ?>
+            <?php echo form_open(base_url() . 'index.php?admin/grade_update/' . $class_id . '/' . $section_id . '/' . $subject_id . '/' . $semester_id); ?>
             <div id="attendance_update">
                 <table class="table table-bordered">
                     <thead>
@@ -97,6 +103,9 @@
                         <th>No.</th>
                         <th style="text-align: center;"><?php echo get_phrase('Student');?></th>
                         <th style="text-align: center;"><?php echo get_phrase('Grade');?></th>
+                        <th style="text-align: center;"><?php echo get_phrase('Specific Grade');?></th>
+                        <th style="text-align: center;"><?php echo get_phrase('Comments (optional)');?></th>
+
                     </tr>
                     </thead>
                     <tbody>
@@ -115,15 +124,30 @@
                                 <?php echo $this->db->get_where('student', array('student_id' => $row['student_id']))->row()->name; ?>
                             </td>
                             <td>
-                                <?php echo $this->db->get_where('student', array('student_id' => $row['student_id']))->row()->name; ?>
+                                <select class="form-control selectboxit" name="status_<?php echo $row['student_id']; ?>">
+                                   <option value="1">1.00</option>
+                                   <option value="1.25">1.25</option>
+                                   <option value="1.50">1.50</option>
+                                   <option value="1.75">1.75</option>
+                                   <option value="2.00">2.00</option>
+                                   <option value="2.25">2.25</option>
+                                   <option value="2.50">2.50</option>
+                                   <option value="2.75">2.75</option>
+                                   <option value="3.00">3.00</option>
+                                   <option value="3.25">3.25</option>
+                                   <option value="3.50">3.50</option>
+                                   <option value="3.75">3.75</option>
+                                   <option value="4.00">4.00</option>
+                                   <option value="5.00">5.00</option>
+                                </select>
                             </td>
                             <td>
-                                <select class="form-control selectboxit" name="status_<?php echo $row['attendance_id']; ?>">
-                                    <option value="0" <?php if ($row['status'] == 0) echo 'selected'; ?>><?php echo get_phrase('Select');?></option>
-                                    <option value="1" <?php if ($row['status'] == 1) echo 'selected'; ?>><?php echo get_phrase('Present');?></option>
-                                    <option value="2" <?php if ($row['status'] == 2) echo 'selected'; ?>><?php echo get_phrase('Absent');?></option>
-                                    <option value="3" <?php if ($row['status'] == 3) echo 'selected'; ?>><?php echo get_phrase('Late');?></option>
-                                </select>
+                                <input type="text" name="student_id_<?php echo $row['student_id'];?>"
+                                       placeholder="Enter grade form 1-100" class="form-control"/>
+                            </td>
+                            <td>
+                                <input type="text" name="student_id_<?php echo $row['student_id'];?>"
+                                       placeholder="Enter your comments" class="form-control"/>
                             </td>
                         </tr>
                     <?php endforeach; ?>
@@ -147,8 +171,18 @@
             url: '<?php echo base_url(); ?>index.php?admin/get_section/' + class_id,
             success:function (response)
             {
+
                 jQuery('#section_holder').html(response);
             }
         });
+
+        $.ajax({
+            url: '<?php echo base_url(); ?>index.php?admin/get_subjects/' + class_id,
+            success:function (response)
+            {
+                jQuery('#subject_holder').html(response);
+            }
+        });
+
     }
 </script>

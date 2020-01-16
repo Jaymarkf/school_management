@@ -88,9 +88,7 @@
                 jQuery('#section_holder').html(response);
             }
         });
-    }
-    function select_subject(class_id)
-    {
+
 
         $.ajax({
             url: '<?php echo base_url(); ?>index.php?admin/get_subjects/' + class_id,
@@ -99,6 +97,9 @@
                 jQuery('#subject_holder').html(response);
             }
         });
+
+
+
     }
 
 </script>
