@@ -1412,9 +1412,9 @@ class Admin extends CI_Controller
 //                $this->db->insert('attendance' , $attn_data);
 //            }
 //
-        redirect(base_url().'index.php?admin/manage_grade/'.$data['class_id'].'/'.$data['section_id'].'/'.$data['semester_id'].'/'.$data['subject_id'],'refresh');
+        redirect(base_url().'index.php?admin/manage_grade/'.$data['class_id'].'/'.$data['section_id'].'/'.$data['subject_id'].'/'.$data['semester_id'],'refresh');
     }
-    function manage_grade($class_id = '' , $section_id = '' , $semester_id = '',$subject_id = '')
+    function manage_grade($class_id = '' , $section_id = '' ,$subject_id = '', $semester_id = '')
     {
         if($this->session->userdata('admin_login')!=1)
             redirect(base_url() , 'refresh');
@@ -1444,17 +1444,41 @@ class Admin extends CI_Controller
         redirect(base_url().'index.php?admin/manage_attendance/'.$class_id.'/'.$section_id.'/'.$timestamp , 'refresh');
     }
 
-    function grade_update($class_id = '' , $section_id = '' , $subject_id = '',$semester_id)
+    function grade_update($class_id = '' , $section_id = '' ,$subject_id = '' ,$semester_id = '')
     {
         $running_year = $this->db->get_where('settings' , array('type' => 'running_year'))->row()->description;
-        $attendance_of_students = $this->db->get_where('attendance' , array(
-            'class_id'=>$class_id,'section_id'=>$section_id,'year'=>$running_year,'timestamp'=>$timestamp))->result_array();
-        foreach($attendance_of_students as $row) {
-            $attendance_status = $this->input->post('status_'.$row['attendance_id']);
-            $this->db->where('attendance_id' , $row['attendance_id']);
-            $this->db->update('attendance' , array('status' => $attendance_status));
+//die(print_r($this->input->post()));
+        $stud  = $this->input->post('student_id');
+        foreach ($stud as $index => $item) {
+            $count = $this->db->get_where('grades',array('student_id',$item));
+            if($count->num_rows() < 1){
+                $data['semester'] = $this->input->post('semester');
+                $data['student_id'] = $item;
+                $data['class_id'] = $this->input->post('class_id');
+                $data['section_id'] = $this->input->post('section_id');
+                $data['subject_id'] = $this->input->post('subject_id');
+                $data['year'] = $running_year;
+                $data['student_grade'] = $this->input->post('grade_id_'.$item);
+                $data['specific_grade'] = $this->input->post('specific_grade_id_'.$item);
+                $data['comments'] = $this->input->post('comments_id_'.$item);
+                $this->db->insert('grades',$data);
+            }else{
+                $data['student_id'] = $item;
+                $data['semester'] = $this->input->post('semester');
+                $data['class_id'] = $this->input->post('class_id');
+                $data['section_id'] = $this->input->post('section_id');
+                $data['subject_id'] = $this->input->post('subject_id');
+                $data['year'] = $running_year;
+                $data['student_grade'] = $this->input->post('grade_id_'.$item);
+                $data['specific_grade'] = $this->input->post('specific_grade_id_'.$item);
+                $data['comments'] = $this->input->post('comments_id_'.$item);
+                $this->db->where('student_id',$item);
+                $this->db->update('grades',$data);
+            }
+
         }
-        redirect(base_url().'index.php?admin/grade_update/'.$class_id.'/'.$section_id.'/'.$timestamp , 'refresh');
+
+        redirect(base_url().'index.php?admin/manage_grade/'.$class_id.'/'.$section_id.'/'.$subject_id.'/'.$semester_id , 'refresh');
     }
 
 

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 16, 2020 at 08:14 PM
+-- Generation Time: Jan 16, 2020 at 10:07 PM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.2.26
 
@@ -23,12 +23,13 @@ SET time_zone = "+00:00";
 --
 
 -- --------------------------------------------------------
-create database pro_sms;
-use pro_sms;
+
 --
 -- Table structure for table `academic_settings`
 --
 
+create database pro_sms;
+use pro_sms;
 CREATE TABLE `academic_settings` (
   `settings_id` int(11) NOT NULL,
   `type` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
@@ -194,7 +195,8 @@ CREATE TABLE `ci_sessions` (
 --
 
 INSERT INTO `ci_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES
-('b9e33dmo0cgd9mfmcdfijjmja8', '::1', 1579201254, 0x5f5f63695f6c6173745f726567656e65726174657c693a313537393139333137313b61646d696e5f6c6f67696e7c733a313a2231223b61646d696e5f69647c733a313a2231223b6c6f67696e5f757365725f69647c733a313a2231223b6e616d657c733a31303a225374657665204a6f6273223b6c6f67696e5f747970657c733a353a2261646d696e223b);
+('b9e33dmo0cgd9mfmcdfijjmja8', '::1', 1579203135, 0x5f5f63695f6c6173745f726567656e65726174657c693a313537393230333133353b61646d696e5f6c6f67696e7c733a313a2231223b61646d696e5f69647c733a313a2231223b6c6f67696e5f757365725f69647c733a313a2231223b6e616d657c733a31303a225374657665204a6f6273223b6c6f67696e5f747970657c733a353a2261646d696e223b),
+('p74vst5p4nm3c3gh1dno5lu19r', '::1', 1579208756, 0x5f5f63695f6c6173745f726567656e65726174657c693a313537393230333133353b61646d696e5f6c6f67696e7c733a313a2231223b61646d696e5f69647c733a313a2231223b6c6f67696e5f757365725f69647c733a313a2231223b6e616d657c733a31303a225374657665204a6f6273223b6c6f67696e5f747970657c733a353a2261646d696e223b);
 
 -- --------------------------------------------------------
 
@@ -476,9 +478,10 @@ CREATE TABLE `grades` (
   `year` longtext NOT NULL,
   `class_id` int(11) DEFAULT NULL,
   `section_id` int(11) DEFAULT NULL,
+  `subject_id` int(11) NOT NULL,
   `student_id` int(11) DEFAULT NULL,
-  `student_grade` int(11) DEFAULT NULL,
-  `specific_grade` int(11) DEFAULT NULL,
+  `student_grade` varchar(11) DEFAULT NULL,
+  `specific_grade` varchar(11) DEFAULT NULL,
   `comments` longtext DEFAULT NULL,
   `status` int(11) NOT NULL DEFAULT 0 COMMENT '0-inactive, 1-active'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -2026,7 +2029,7 @@ ALTER TABLE `gallery_category`
 -- AUTO_INCREMENT for table `grades`
 --
 ALTER TABLE `grades`
-  MODIFY `grade_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `grade_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 
 --
 -- AUTO_INCREMENT for table `homework`
