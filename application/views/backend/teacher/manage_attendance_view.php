@@ -39,6 +39,19 @@
 		</div>
 	</div>
 	<?php endif;?>
+    <div class="col-md-3">
+        <div class="form-group">
+            <label class="control-label" style="margin-bottom: 5px;"><?php echo get_phrase('Subject'); ?></label>
+            <select class="form-control selectboxit" name="subject_id">
+                <?php
+                $subj = $this->db->get_where('subject',array('class_id' => $class_id))->result_array();
+                foreach ($subj as $index => $item) {
+                    echo '<option value="'.$item['subject_id'].'">'.$item['name'].'</option>';
+                }
+                ?>
+            </select>
+        </div>
+    </div>
 	<input type="hidden" name="class_id" value="<?php echo $class_id;?>">
 	<input type="hidden" name="year" value="<?php echo $running_year;?>">
 
@@ -52,7 +65,7 @@
 	<div class="col-md-2"></div>
 	<div class="col-md-12">
 	<div class="white-box">
-	<?php echo form_open(base_url() . 'index.php?teacher/attendance_update/'.$class_id.'/'.$section_id.'/'.$timestamp);?>
+	<?php echo form_open(base_url() . 'index.php?teacher/attendance_update/'.$class_id.'/'.$section_id.'/'.$timestamp.'/'.$subject_id);?>
 		<div id="attendance_update">
 			<table class="table table-bordered">
 				<thead>
@@ -68,7 +81,7 @@
 					$count = 1;
 					if($section_id != ''){
 						$attendance_of_students = $this->db->get_where('attendance' , array(
-							'class_id' => $class_id, 'section_id' => $section_id , 'year' => $running_year,'timestamp'=>$timestamp
+							'class_id' => $class_id, 'section_id' => $section_id , 'year' => $running_year,'timestamp'=>$timestamp,'subject_id'=>$subject_id
 						))->result_array();
 					}
 					foreach($attendance_of_students as $row):

@@ -19,25 +19,6 @@ foreach ( $edit_data as $row):
                             <input type="text" class="form-control" name="name" value="<?php echo $row['name'];?>"/>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label"><?php echo get_phrase('Teacher');?></label>
-                        <div class="col-sm-5">
-                            <select name="teacher_id" class="form-control">
-                                <option value=""><?php echo get_phrase('Select');?></option>
-                                <?php 
-                                $teachers = $this->db->get('teacher')->result_array();
-                                foreach($teachers as $row2):
-                                ?>
-                                    <option value="<?php echo $row2['teacher_id'];?>"
-                                        <?php if($row['teacher_id'] == $row2['teacher_id'])echo 'selected';?>>
-                                            <?php echo $row2['name'];?>
-                                    </option>
-                                <?php
-                                endforeach;
-                                ?>
-                            </select>
-                        </div>
-                    </div>
             		<div class="form-group">
 						<div class="col-sm-offset-3 col-sm-5">
 							<button type="submit" class="btn btn-info"><?php echo get_phrase('Update');?></button>

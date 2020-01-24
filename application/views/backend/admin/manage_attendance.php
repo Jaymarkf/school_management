@@ -30,7 +30,6 @@
         </div>
     </div>
 
-
 <div id="section_holder">
     <div class="col-md-3">
         <div class="form-group">
@@ -47,6 +46,27 @@
         </div>
     </div>
 </div>
+
+    <div id="subject_holder">
+        <div class="col-md-3">
+            <div class="form-group">
+                <label class="control-label" style="margin-bottom: 5px;"><?php echo get_phrase('Subject');?></label>
+                <select name="subject_id" id="subject_id" class="form-control selectboxit">
+                    <?php $subjects = $this->db->get_where('subject', array('subject_id' => $subject_id))->result_array();
+                    if(!empty($subjects)){
+                        foreach ($subjects as $row): ?>
+                            <option value="<?php echo $row['subject_id']; ?>"
+                                <?php if ($subject_id == $row['subject_id']) echo 'selected'; ?>>
+                                <?php echo $row['name']; ?>
+                            </option>
+                        <?php endforeach;
+                    }
+
+                    ?>
+                </select>
+            </div>
+        </div>
+    </div>
 
 <div class="col-md-3">
         <div class="form-group">
@@ -72,7 +92,8 @@
     <div class="col-md-2"></div>
     <div class="col-md-8">
     <div class="white-box">
-        <?php echo form_open(base_url() . 'index.php?admin/attendance_update/' . $class_id . '/' . $section_id . '/' . $timestamp); ?>
+
+        <?php echo form_open(base_url() . 'index.php?admin/attendance_update/' . $class_id . '/' . $section_id . '/' . $timestamp. '/' . $subject_id); ?>
         <div id="attendance_update">
             <table class="table table-bordered">
                 <thead>
@@ -89,7 +110,8 @@
                     $attendance_of_students = $this->db->get_where('attendance', array(
                                 'class_id' => $class_id,
                                 'year' => $running_year,
-                                'timestamp' => $timestamp
+                                'timestamp' => $timestamp,
+                                'subject_id' =>$subject_id
                             ))->result_array();
 
 
@@ -116,7 +138,7 @@
                 </tbody>
             </table>
         </div>
-
+<input type="hidden" name="subject_id" value="<?php echo $subject_id; ?>" />
         <center>
             <button type="submit" class="btn btn-info" id="submit_button">
                 <i class="entypo-check"></i> <?php echo get_phrase('Update');?>
@@ -134,6 +156,13 @@
             success:function (response)
             {
                 jQuery('#section_holder').html(response);
+            }
+        });
+        $.ajax({
+            url: '<?php echo base_url(); ?>index.php?admin/get_subjects/' + class_id,
+            success:function (response)
+            {
+                jQuery('#subject_holder').html(response);
             }
         });
     }

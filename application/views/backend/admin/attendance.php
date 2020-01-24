@@ -39,6 +39,18 @@
 		</div>
 	</div>
     </div>
+
+
+    <div id="subject_holder">
+        <div class="col-md-3">
+            <div class="form-group">
+                <label class="control-label" style="margin-bottom: 5px;"><?php echo get_phrase('Subject'); ?></label>
+                <select class="form-control selectboxit" name="subject_id">
+                    <option value=""><?php echo get_phrase('Select'); ?></option>
+                </select>
+            </div>
+        </div>
+    </div>
 	
         <div class="col-md-3">
 		<div class="form-group">
@@ -64,6 +76,14 @@
             success:function (response)
             {
                 jQuery('#section_holder').html(response);
+            }
+        });
+
+        $.ajax({
+            url: '<?php echo base_url(); ?>index.php?admin/get_subjects/' + class_id,
+            success:function (response)
+            {
+                jQuery('#subject_holder').html(response);
             }
         });
     }

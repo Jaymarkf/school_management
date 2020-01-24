@@ -30,7 +30,7 @@
                             <ul class="nav nav-third-level">
                             <?php $children_of_parent = $this->db->get_where('student' , array('parent_id' => $this->session->userdata('parent_id')))->result_array();
                             foreach ($children_of_parent as $row): ?>
-                                <li> <a href="<?php echo base_url(); ?>index.php?parents/horario_de_examenes/<?php echo $row['student_id']; ?>"><?php echo $row['name']; ?></a> </li>
+                                <li> <a href="<?php echo base_url(); ?>index.php?parents/exam/<?php echo $row['student_id']; ?>"><?php echo $row['name']; ?></a> </li>
                                 <?php endforeach; ?>
                             </ul>
                         </li>
@@ -46,7 +46,7 @@
                          <?php endforeach; ?>
                         </ul>
                     </li>
-                     <li> <a href="<?php echo base_url(); ?>index.php?parents/circulares" class="waves-effect"><i class="fa fa-file-text-o"></i> <span class="hide-menu"><?php echo get_phrase('News'); ?></span></a>
+                     <li> <a href="<?php echo base_url(); ?>index.php?parents/news_" class="waves-effect"><i class="fa fa-file-text-o"></i> <span class="hide-menu"><?php echo get_phrase('News'); ?></span></a>
                     </li>
                     <li> <a href="<?php echo base_url(); ?>index.php?parents/message" class="waves-effect"><i class="fa fa-envelope"></i> <span class="hide-menu"><?php echo get_phrase('Messages'); ?></span></a>
                     </li>

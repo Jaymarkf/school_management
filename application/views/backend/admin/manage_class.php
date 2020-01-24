@@ -33,7 +33,6 @@
                 <tr>
                   <th style="text-align: center;">#</th>
 				          <th style="text-align: center;"><?php echo get_phrase('Class');?></th>
-                  <th style="text-align: center;"><?php echo get_phrase('Titular-Teacher'); ?></th>
 			            <th style="text-align: center;"><?php echo get_phrase('Edit');?></th>
 			            <th style="text-align: center;"><?php echo get_phrase('Delete');?></th>
                 </tr>
@@ -43,10 +42,6 @@
                 <tr>
                 <td style="text-align: center;"><?php echo $count++;?></td>
             	  <td style="text-align: center;"><?php echo $row['name'];?></td>
-                <td style="text-align: center;"><?php
-                                    if($row['teacher_id'] != '' || $row['teacher_id'] != 0) 
-                                        echo $this->crud_model->get_type_name_by_id('teacher',$row['teacher_id']);
-                                ?></td>
               <td style="text-align: center;" class="text-nowrap"><a href="#" data-toggle="tooltip" onclick="showAjaxModal('<?php echo base_url();?>index.php?modal/popup/modal_edit_class/<?php echo $row['class_id'];?>');" data-original-title="Edit"> <i class="fa fa-edit text-info"></i> </a></td>
 
 			         <td style="text-align: center;" class="text-nowrap"><a href="#" data-toggle="tooltip" onclick="confirm_modal('<?php echo base_url();?>index.php?admin/manage_classes/delete/<?php echo $row['class_id'];?>');" data-original-title="Delete"> <i class="fa fa-close text-danger"></i> </a></td>
@@ -77,23 +72,23 @@
                     </div>
                     </div>
                   </div>
-
-                   <div class="form-group">
-                                <label class="col-sm-4 control-label"><?php echo get_phrase('Titular-Teacher'); ?></label>
-                                <div class="col-sm-5">
-                                    <select name="teacher_id" class="form-control" style="width:100%;">
-                                        <option value=""><?php echo get_phrase('Select'); ?></option>
-                                      <?php 
-                    $teachers = $this->db->get('teacher')->result_array();
-                    foreach($teachers as $row):
-                    ?>
-                                      <option value="<?php echo $row['teacher_id'];?>"><?php echo $row['name'];?></option>
-                                        <?php
-                    endforeach;
-                    ?>
-                                    </select>
-                                </div>
-                            </div>
+<!---->
+<!--                   <div class="form-group">-->
+<!--                                <label class="col-sm-4 control-label">--><?php //echo get_phrase('Titular-Teacher'); ?><!--</label>-->
+<!--                                <div class="col-sm-5">-->
+<!--                                    <select name="teacher_id" class="form-control" style="width:100%;">-->
+<!--                                        <option value="">--><?php //echo get_phrase('Select'); ?><!--</option>-->
+<!--                                      --><?php //
+//                    $teachers = $this->db->get('teacher')->result_array();
+//                    foreach($teachers as $row):
+//                    ?>
+<!--                                      <option value="--><?php //echo $row['teacher_id'];?><!--">--><?php //echo $row['name'];?><!--</option>-->
+<!--                                        --><?php
+//                    endforeach;
+//                    ?>
+<!--                                    </select>-->
+<!--                                </div>-->
+<!--                            </div>-->
 
         </div>
 						<div class="form-group">

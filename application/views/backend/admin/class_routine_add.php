@@ -50,6 +50,12 @@
                     </select>
                 </div>
             </div>
+        <div class="form-group">
+            <label class="col-sm-4 control-label"><?php echo get_phrase('Room'); ?></label>
+            <div class="col-sm-5">
+                <input type="text" class="form-control" name="room_id" placeholder="Enter Rooms" />
+            </div>
+        </div>
 
             <div class="form-group">
                 <label class="col-sm-3 control-label"><?php echo get_phrase('Start'); ?></label>

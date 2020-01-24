@@ -22,21 +22,17 @@
                         <ul class="nav nav-second-level">
                         <li> <a href="<?php echo base_url(); ?>index.php?<?php echo $account_type; ?>/class_routine"><?php echo get_phrase('Class-Routine'); ?></a> 
                         </li>
-                        <li> <a href="<?php echo base_url(); ?>index.php?<?php echo $account_type; ?>/horarios_de_examen"><?php echo get_phrase('Exam-Routine'); ?></a> 
+                        <li> <a href="<?php echo base_url(); ?>index.php?<?php echo $account_type; ?>/exam"><?php echo get_phrase('Exam-Routine'); ?></a>
                         </li>
                         </ul>
                     </li>
                         <li> <a href="<?php echo base_url(); ?>index.php?<?php echo $account_type; ?>/invoice" class="waves-effect"><i class="fa fa-money"></i> <span class="hide-menu"><?php echo get_phrase('Students-Payments'); ?></span></a>
                         </li>
                     </li>
-                     <li> <a href="<?php echo base_url(); ?>index.php?student/circulares" class="waves-effect"><i class="fa fa-file-text-o"></i> <span class="hide-menu"><?php echo get_phrase('News'); ?></span></a>
+                     <li> <a href="<?php echo base_url(); ?>index.php?student/news_" class="waves-effect"><i class="fa fa-file-text-o"></i> <span class="hide-menu"><?php echo get_phrase('News'); ?></span></a>
                     </li>
-
-                     <?php if($this->db->get_where('academic_settings' , array('type' =>'report_teacher'))->row()->description == 1):?>
-                    <li> <a href="<?php echo base_url(); ?>index.php?student/crear_reporte/" class="waves-effect"><i class="fa fa-plus-square-o"></i> <span class="hide-menu"><?php echo get_phrase('Teacher-Report'); ?></span></a>
+                    <li> <a href="#" class="waves-effect"><i class="fa fa-envelope"></i> <span class="hide-menu"><?php echo get_phrase('Voting'); ?></span></a>
                     </li>
-                     <?php endif; ?>
-
                     <li> <a href="<?php echo base_url(); ?>index.php?student/message" class="waves-effect"><i class="fa fa-envelope"></i> <span class="hide-menu"><?php echo get_phrase('Messages'); ?></span></a>
                     </li>
         </ul>
