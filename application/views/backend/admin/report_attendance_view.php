@@ -112,7 +112,7 @@
             <table class="table table-bordered" id="my_table">
                 <thead>
                     <tr>
-                        <td style="text-align: center;">
+                        <td style="text-align: center;width:500px !important;">
     <?php echo get_phrase('Students');?> <i class="entypo-down-thin"></i> | <?php echo get_phrase('Date');?> <i class="entypo-right-thin"></i>
                         </td>
     <?php
@@ -129,7 +129,7 @@
                             $students = $this->db->get_where('enroll', array('class_id' => $class_id, 'year' => $running_year, 'section_id' => $section_id))->result_array();
                             foreach ($students as $row): ?>
                         <tr>
-                            <td style="text-align: center;">
+                            <td style="text-align:center;font-size:12px;">
                             <?php echo $this->db->get_where('student', array('student_id' => $row['student_id']))->row()->name; ?>
                             </td>
                             <?php
