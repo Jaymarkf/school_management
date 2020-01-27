@@ -63,8 +63,6 @@
                                 <?php echo $row['name']; ?>
                             </option>
                         <?php endforeach;
-
-
                     }
 
                     ?>

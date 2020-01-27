@@ -1373,10 +1373,24 @@ class Admin extends CI_Controller
 
         if($query->num_rows() < 1) 
         {
-            $students = $this->db->get_where('enroll' , array(
-                'class_id' => $data['class_id'] , 'section_id' => $data['section_id'] , 'year' => $data['year']
-            ))->result_array();
-
+//            $students = $this->db->get_where('enroll' , array(
+//                'class_id' => $data['class_id'] , 'section_id' => $data['section_id'] , 'year' => $data['year']
+//            ))->result_array();
+            $q = ' (class_id = '.$data['class_id'].' and section_id = '.$data['section_id'].' and year = "'.$data['year']. '")
+            or
+             (class_id = '.$data['class_id'].' and section_id = 0 and year = "'.$data['year']. '")
+            ';
+//            die($q);
+            $this->db->where($q);
+            $students =  $this->db->get('enroll')->result_array();
+//          echo '<pre>';
+//          print_r($res);
+//          echo '</pre>';
+//           die();
+//          echo '<pre>';
+//          print_r($this->db->queries);
+//          echo '</pre>';
+//          die();
             foreach($students as $row) {
                 $attn_data['class_id']   = $data['class_id'];
                 $attn_data['year']       = $data['year'];
@@ -1384,9 +1398,29 @@ class Admin extends CI_Controller
                 $attn_data['section_id'] = $data['section_id'];
                 $attn_data['student_id'] = $row['student_id'];
                 $attn_data['subject_id'] = $data['subject_id'];
-                $this->db->insert('attendance' , $attn_data);  
+                $sub_id = $this->db->get_where('student_irregular_selected_subject', array('student_id' => $row['student_id']))->result_array();
+                foreach ($sub_id as $index => $item) {
+                    $arr_sub_id[] = explode(",",$item['selected_subject_concat_id']);
+                    if(in_array($data['subject_id'],$arr_sub_id[$index])){
+                        $attn_data['class_id']   = $data['class_id'];
+                        $attn_data['year']       = $data['year'];
+                        $attn_data['timestamp']  = $data['timestamp'];
+                        $attn_data['section_id'] = 0;
+                        $attn_data['student_id'] = $row['student_id'];
+                        $attn_data['subject_id'] = $data['subject_id'];
+                    }
+
+                }
+                    $this->db->insert('attendance',$attn_data);
+
             }
+
+
         }
+//        echo '<pre>';
+//        print_r($attn_data);
+//        echo '</pre>';
+//        die();
         redirect(base_url().'index.php?admin/manage_attendance/'.$data['class_id'].'/'.$data['section_id'].'/'.$data['timestamp'].'/'.$data['subject_id'],'refresh');
     }
     function grade_selector(){
@@ -2139,5 +2173,10 @@ class Admin extends CI_Controller
     {
         $page_data['search_key']    =   $this->input->post('search_key');
         $this->load->view('backend/admin/search_result', $page_data);
+    }
+    function printa($arr = array()){
+	    echo '<pre>';
+	    print_r($arr);
+	    echo '</pre>';
     }
 }
