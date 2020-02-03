@@ -120,7 +120,7 @@
     </div>
 </div>
 
-<?php if ($class_id != '' && $section_id != '' && $month != ''): ?>
+<?php if ($class_id != '' && $section_id != '' && $month != '' && $subject_id != ''): ?>
     <br>
     <div class="row">
         <div class="col-md-4"></div>
@@ -149,7 +149,17 @@
                 </thead>
                 <tbody>
                     <?php $data = array();
-                            $students = $this->db->get_where('enroll', array('class_id' => $class_id, 'year' => $running_year, 'section_id' => $section_id))->result_array();
+//                            $students = $this->db->get_where('enroll', array('class_id' => $class_id, 'year' => $running_year, 'section_id' => $section_id))->result_array();
+                    $qryd = '( class_id = '.$class_id.' and section_id = '.$section_id.' and year = "'.$running_year.'")
+                        or
+                         (class_id = '.$class_id.' and section_id = 0 and year = "'.$running_year. '")
+                        ';
+                    //die($q);
+                    $this->db->where($qryd);
+                    $students =  $this->db->get('enroll')->result_array();
+//                    echo  '<pre>';
+//                    print_r($students);
+//                    echo '</pre>';
                             foreach ($students as $row): ?>
                         <tr>
                             <td style="text-align:center;font-size:12px;">
@@ -160,14 +170,11 @@
                             for ($i = 1; $i <= $days; $i++) {
                                 $timestamp = strtotime($i . '-' . $month . '-' . $year[0]);
                                 $this->db->group_by('timestamp');
-                                $attendance = $this->db->get_where('attendance', array('section_id' => $section_id, 'class_id' => $class_id, 'year' => $running_year, 'timestamp' => $timestamp, 'student_id' => $row['student_id'],'subject_id'=>$subject_id))->result_array();
-
+                                $attendance = $this->db->get_where('attendance', array('class_id' => $class_id, 'year' => $running_year, 'timestamp' => $timestamp, 'student_id' => $row['student_id'],'subject_id'=>$subject_id))->result_array();
                                 foreach ($attendance as $row1):
                                     $month_dummy = date('d', $row1['timestamp']);
-                                   
                                     if ($i == $month_dummy)
                                     $status = $row1['status'];
-                                   
                                 endforeach;
                                 ?>
                                 <td style="text-align: center;">

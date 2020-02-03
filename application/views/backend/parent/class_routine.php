@@ -10,17 +10,23 @@
 </div>
 
 <?php $running_year = $this->db->get_where('settings' , array('type' => 'running_year'))->row()->description; ?>
-<?php 
+<?php
+    $irregular = 0;
+
     $child_of_parent = $this->db->get_where('enroll' , array(
         'student_id' => $student_id , 'year' => $running_year
     ))->result_array();
-    foreach ($child_of_parent as $row):
-        $class_id = $this->db->get_where('enroll' , array(
-            'student_id' => $row['student_id'] , 'year' => $running_year
-        ))->row()->class_id;
-        $section_id = $this->db->get_where('enroll' , array(
-            'student_id' => $row['student_id'] , 'year' => $running_year
-        ))->row()->section_id;
+    $student_status = $child_of_parent[0];
+    if($student_status['section_id'] == 0){
+        $irregular = 1;
+
+    }else{
+        $irregular = 0;
+    }
+        foreach ($child_of_parent as $row) :
+            $class_id = $this->db->get_where('enroll' , array('student_id' => $row['student_id'] , 'year' => $running_year))->row()->class_id;
+            $section_id = $this->db->get_where('enroll' , array('student_id' => $row['student_id'] , 'year' => $running_year))->row()->section_id;
+
 ?>
 <div class="label label-info pull-right" style="font-size: 14px; font-weight: 100;">
     <i class="entypo-user"></i> <?php echo $this->db->get_where('student' , array('student_id' => $row['student_id']))->row()->name;?>
@@ -55,7 +61,9 @@
                                 $this->db->order_by("time_start", "asc");
                                 $this->db->where('day' , $day);
                                 $this->db->where('class_id' , $class_id);
-                                $this->db->where('section_id' , $section_id);
+                                if($irregular == 0){
+                                    $this->db->where('section_id' , $section_id);
+                                }
                                 $this->db->where('year' , $running_year);
                                 $routines   =   $this->db->get('class_routine')->result_array();
                                 foreach($routines as $row2):
@@ -64,11 +72,22 @@
                                     <button class="btn btn-info">
                                         <?php echo $this->crud_model->get_subject_name_by_id($row2['subject_id']);?>
                                         <?php
-                                            if ($row2['time_start_min'] == 0 && $row2['time_end_min'] == 0) 
-                                                echo '('.$row2['time_start'].'-'.$row2['time_end'].')';
-                                            if ($row2['time_start_min'] != 0 || $row2['time_end_min'] != 0)
-                                                echo '('.$row2['time_start'].':'.$row2['time_start_min'].'-'.$row2['time_end'].':'.$row2['time_end_min'].')';
-                                        ?>
+                                        if ($row2['time_start_min'] == 0 && $row2['time_end_min'] == 0)
+                                            echo '('.$row2['time_start'].'-'.$row2['time_end'].' | Room-['.$row2['room_id'].'])';
+                                        if ($row2['time_start_min'] != 0 || $row2['time_end_min'] != 0)
+                                            if($row2['time_start'] > 12  ){
+                                                $row2['time_start'] = $row2['time_start'] - 12;
+                                                $mode = " PM";
+                                            }else{
+                                                $mode = " AM";
+                                            }
+                                        if($row2['time_end'] > 12  ){
+                                            $row2['time_end'] = $row2['time_end'] - 12;
+                                            $mode1 = " PM";
+                                        }else{
+                                            $mode1 = " AM";
+                                        }
+                                        echo '( '.$row2['time_start'].':'.$row2['time_start_min'].$mode.' to '.$row2['time_end'].':'.$row2['time_end_min'].$mode1.' | Room-['.$row2['room_id'].'])'; ?>
                                     </button>
                                 </div>
                                 <?php endforeach;?>

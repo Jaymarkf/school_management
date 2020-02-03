@@ -5,13 +5,13 @@
     </div>
     <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
         <ol class="breadcrumb">
-            <li><a href="<?php echo base_url();?>index.php?admin/admin_dashboard"><?php echo get_phrase('Dashboard'); ?></a></li><li class="active"><?php echo get_phrase('Attendance'); ?></li>
+            <li><a href="<?php echo base_url();?>index.php?teacher/admin_dashboard"><?php echo get_phrase('Dashboard'); ?></a></li><li class="active"><?php echo get_phrase('Attendance'); ?></li>
         </ol>
     </div>
 </div>
 
 
-<?php echo form_open(base_url() . 'index.php?admin/grade_selector/'); ?>
+<?php echo form_open(base_url() . 'index.php?teacher/grade_selector/'); ?>
 <div class="row">
     <div class="col-md-3">
         <div class="form-group">
@@ -101,7 +101,7 @@
     <div class="col-md-2"></div>
     <div class="col-md-8">
         <div class="white-box">
-            <?php echo form_open(base_url() . 'index.php?admin/grade_update/' . $class_id . '/' . $section_id . '/' . $subject_id . '/' . $semester_id); ?>
+            <?php echo form_open(base_url() . 'index.php?teacher/grade_update/' . $class_id . '/' . $section_id . '/' . $subject_id . '/' . $semester_id); ?>
             <div id="attendance_update">
                 <table class="table table-bordered">
                     <thead>
@@ -138,41 +138,48 @@
                                 <?php echo $this->db->get_where('student', array('student_id' => $row['student_id']))->row()->name; ?>
                             </td>
                             <td>
-                                <select class="form-control selectboxit" name="grade_id_<?php echo $row['student_id']; ?>" disabled>
+                                <select class="form-control selectboxit" name="grade_id_<?php echo $row['student_id']; ?>">
                                     <?php
                                     $x = $this->db->get_where('grades',array('student_id'=>$row['student_id']))->row()->student_grade;
                                     $grade = $this->db->get_where('grades',array('student_id'=>$row['student_id']))->row()->specific_grade;
                                     $comments = $this->db->get_where('grades',array('student_id'=>$row['student_id']))->row()->comments;
+
                                     ?>
-                                    <option value="1.00" <?php if($x == 1.00){echo 'selected';} ?> >1.00</option>
-                                    <option value="1.25"<?php if($x == 1.25){echo 'selected';} ?> >1.25</option>
-                                    <option value="1.50"<?php if($x == 1.50){echo 'selected';} ?> >1.50</option>
-                                    <option value="1.75"<?php if($x == 1.75){echo 'selected';} ?> >1.75</option>
-                                    <option value="2.00"<?php if($x == 2.00){echo 'selected';} ?> >2.00</option>
-                                    <option value="2.25"<?php if($x == 2.25){echo 'selected';} ?> >2.25</option>
-                                    <option value="2.50"<?php if($x == 2.50){echo 'selected';} ?> >2.50</option>
-                                    <option value="2.75"<?php if($x == 2.75){echo 'selected';} ?> >2.75</option>
-                                    <option value="3.00"<?php if($x == 3.00){echo 'selected';} ?> >3.00</option>
-                                    <option value="3.25"<?php if($x == 3.25){echo 'selected';} ?> >3.25</option>
-                                    <option value="3.50"<?php if($x == 3.50){echo 'selected';} ?> >3.50</option>
-                                    <option value="3.75"<?php if($x == 3.75){echo 'selected';} ?> >3.75</option>
-                                    <option value="4.00"<?php if($x == 4.00){echo 'selected';} ?> >4.00</option>
-                                    <option value="5.00"<?php if($x == 5.00){echo 'selected';} ?> >5.00</option>
+                                   <option value="1.00" <?php if($x == 1.00){echo 'selected';} ?> >1.00</option>
+                                   <option value="1.25"<?php if($x == 1.25){echo 'selected';} ?> >1.25</option>
+                                   <option value="1.50"<?php if($x == 1.50){echo 'selected';} ?> >1.50</option>
+                                   <option value="1.75"<?php if($x == 1.75){echo 'selected';} ?> >1.75</option>
+                                   <option value="2.00"<?php if($x == 2.00){echo 'selected';} ?> >2.00</option>
+                                   <option value="2.25"<?php if($x == 2.25){echo 'selected';} ?> >2.25</option>
+                                   <option value="2.50"<?php if($x == 2.50){echo 'selected';} ?> >2.50</option>
+                                   <option value="2.75"<?php if($x == 2.75){echo 'selected';} ?> >2.75</option>
+                                   <option value="3.00"<?php if($x == 3.00){echo 'selected';} ?> >3.00</option>
+                                   <option value="3.25"<?php if($x == 3.25){echo 'selected';} ?> >3.25</option>
+                                   <option value="3.50"<?php if($x == 3.50){echo 'selected';} ?> >3.50</option>
+                                   <option value="3.75"<?php if($x == 3.75){echo 'selected';} ?> >3.75</option>
+                                   <option value="4.00"<?php if($x == 4.00){echo 'selected';} ?> >4.00</option>
+                                   <option value="5.00"<?php if($x == 5.00){echo 'selected';} ?> >5.00</option>
                                 </select>
                             </td>
                             <td>
                                 <input type="text" name="specific_grade_id_<?php echo $row['student_id'];?>"
-                                       placeholder="Enter grade form 1-100" class="form-control" value="<?php echo $grade; ?>" disabled/>
+                                       placeholder="Enter grade form 1-100" class="form-control" value="<?php echo $grade; ?>"/>
                             </td>
                             <td>
                                 <input type="text" name="comments_id_<?php echo $row['student_id'];?>"
-                                       placeholder="Enter your comments" class="form-control" value ="<?php echo $comments; ?>" disabled/>
+                                       placeholder="Enter your comments" class="form-control" value ="<?php echo $comments; ?>"/>
                             </td>
                         </tr>
                     <?php endforeach; ?>
                     </tbody>
                 </table>
             </div>
+
+            <center>
+                <button type="submit" class="btn btn-info" id="submit_button">
+                    <i class="entypo-check"></i> <?php echo get_phrase('Update');?>
+                </button>
+            </center>
             <?php echo form_close(); ?>
         </div>
     </div>
@@ -181,7 +188,7 @@
 <script type="text/javascript">
     function select_section(class_id) {
         $.ajax({
-            url: '<?php echo base_url(); ?>index.php?admin/get_section/' + class_id,
+            url: '<?php echo base_url(); ?>index.php?teacher/get_section/' + class_id,
             success:function (response)
             {
 
@@ -190,7 +197,7 @@
         });
 
         $.ajax({
-            url: '<?php echo base_url(); ?>index.php?admin/get_subjects/' + class_id,
+            url: '<?php echo base_url(); ?>index.php?teacher/get_subjects/' + class_id,
             success:function (response)
             {
                 jQuery('#subject_holder').html(response);

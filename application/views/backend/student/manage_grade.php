@@ -11,7 +11,7 @@
 </div>
 
 
-<?php echo form_open(base_url() . 'index.php?admin/grade_selector/'); ?>
+<?php echo form_open(base_url() . 'index.php?student/grade_selector/'); ?>
 <div class="row">
     <div class="col-md-3">
         <div class="form-group">
@@ -30,7 +30,6 @@
             </select>
         </div>
     </div>
-
 
     <div class="col-md-3">
         <div class="form-group">
@@ -71,15 +70,15 @@
                 <select name="subject_id" id="subject_id" class="form-control selectboxit">
                     <?php $subjects = $this->db->get_where('subject', array('subject_id' => $subject_id))->result_array();
                     if(!empty($subjects)){
-                    foreach ($subjects as $row): ?>
-                        <option value="<?php echo $row['subject_id']; ?>"
-                            <?php if ($subject_id == $row['subject_id']) echo 'selected'; ?>>
-                            <?php echo $row['name']; ?>
-                        </option>
-                    <?php endforeach;
+                        foreach ($subjects as $row): ?>
+                            <option value="<?php echo $row['subject_id']; ?>"
+                                <?php if ($subject_id == $row['subject_id']) echo 'selected'; ?>>
+                                <?php echo $row['name']; ?>
+                            </option>
+                        <?php endforeach;
 
 
-                        }
+                    }
 
                     ?>
                 </select>
@@ -101,13 +100,10 @@
     <div class="col-md-2"></div>
     <div class="col-md-8">
         <div class="white-box">
-            <?php echo form_open(base_url() . 'index.php?admin/grade_update/' . $class_id . '/' . $section_id . '/' . $subject_id . '/' . $semester_id); ?>
             <div id="attendance_update">
                 <table class="table table-bordered">
                     <thead>
                     <tr>
-                        <th>No.</th>
-                        <th style="text-align: center;"><?php echo get_phrase('Student');?></th>
                         <th style="text-align: center;"><?php echo get_phrase('Grade');?></th>
                         <th style="text-align: center;"><?php echo get_phrase('Specific Grade');?></th>
                         <th style="text-align: center;"><?php echo get_phrase('Comments (optional)');?></th>
@@ -117,14 +113,15 @@
                     <tbody>
                     <?php
                     $count = 1;
-                   $temp_grade = $this->db->get_where('enroll', array(
+                    $temp_grade = $this->db->get_where('enroll', array(
                         'class_id' => $class_id,
                         'section_id' => $section_id,
                         'year' => $running_year,
+                        'student_id' => $this->session->userdata('student_id')
                     ))->result_array();
-//                    $this->db->select('*');
-//                    $this->db->from('enroll');
-//                    $this->db->where('');
+                    //                    $this->db->select('*');
+                    //                    $this->db->from('enroll');
+                    //                    $this->db->where('');
                     foreach ($temp_grade as $row):
                         ?>
                         <input type="hidden" name="student_id[]" value="<?php echo $row['student_id'];?>"/>
@@ -133,10 +130,6 @@
                         <input type="hidden" name="section_id" value="<?php echo $section_id; ?>"/>
                         <input type="hidden" name="subject_id" value="<?php echo $subject_id; ?>"/>
                         <tr>
-                            <td><?php echo $count++; ?></td>
-                            <td>
-                                <?php echo $this->db->get_where('student', array('student_id' => $row['student_id']))->row()->name; ?>
-                            </td>
                             <td>
                                 <select class="form-control selectboxit" name="grade_id_<?php echo $row['student_id']; ?>" disabled>
                                     <?php
@@ -173,7 +166,6 @@
                     </tbody>
                 </table>
             </div>
-            <?php echo form_close(); ?>
         </div>
     </div>
 </div>

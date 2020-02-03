@@ -1212,6 +1212,7 @@ class Admin extends CI_Controller
             $data['time_end_min']   = $this->input->post('time_end_min');
             $data['fecha']          = $this->input->post('fecha');
             $data['day']            = $this->input->post('day');
+            $data['room_id']            = $this->input->post('room_id');
             $data['year']           = $this->db->get_where('settings' , array('type' => 'running_year'))->row()->description;
             $this->db->insert('horarios_examenes', $data);
             redirect(base_url() . 'index.php?admin/add_exam_routine/', 'refresh');
@@ -1228,6 +1229,7 @@ class Admin extends CI_Controller
             $data['time_end_min']   = $this->input->post('time_end_min');
             $data['fecha']          = $this->input->post('fecha');
             $data['day']            = $this->input->post('day');
+            $data['room_id']            = $this->input->post('room_id');
             $data['year']           = $this->db->get_where('settings' , array('type' => 'running_year'))->row()->description;
             $this->db->where('horario_id', $param2);
             $this->db->update('horarios_examenes', $data);
@@ -1251,7 +1253,7 @@ class Admin extends CI_Controller
             redirect(base_url(), 'refresh');
         $page_data['page_name']  = 'looking_routine';
         $page_data['class_id']  =   $class_id;
-        $page_data['page_title'] = "Horarios de evaluaciones";
+        $page_data['page_title'] = "Exam Routine";
         $this->load->view('backend/index', $page_data);
     }
 
@@ -1429,7 +1431,6 @@ class Admin extends CI_Controller
         $data['section_id'] = $this->input->post('section_id');
         $data['subject_id'] = $this->input->post('subject_id');
         $data['year'] = $this->db->get_where('settings' , array('type' => 'running_year'))->row()->description;
-//
 //        $query = $this->db->get_where('attendance' ,array(
 //            'class_id'=>$data['class_id'],
 //            'section_id'=>$data['section_id'],
@@ -1448,8 +1449,8 @@ class Admin extends CI_Controller
 //                $attn_data['section_id'] = $data['section_id'];
 //                $attn_data['student_id'] = $row['student_id'];
 //                $this->db->insert('attendance' , $attn_data);
-//            }
-//
+//        }
+
         redirect(base_url().'index.php?admin/manage_grade/'.$data['class_id'].'/'.$data['section_id'].'/'.$data['subject_id'].'/'.$data['semester_id'],'refresh');
     }
     function manage_grade($class_id = '' , $section_id = '' ,$subject_id = '', $semester_id = '')
@@ -1467,23 +1468,22 @@ class Admin extends CI_Controller
         $page_data['page_title'] = get_phrase('Manage Grade');
         $this->load->view('backend/index', $page_data);
     }
-
-
     function attendance_update($class_id = '' , $section_id = '' , $timestamp = '',$subject_id ='')
     {
         $running_year = $this->db->get_where('settings' , array('type' => 'running_year'))->row()->description;
 
-        $attendance_of_students = $this->db->get_where('attendance' , array(
-            'class_id'=>$class_id,'section_id'=>$section_id,'year'=>$running_year,'timestamp'=>$timestamp,'subject_id' => $subject_id))->result_array();
-
-
+        $q = ' (class_id = '.$class_id.' and section_id = '.$section_id.' and year = "'.$running_year. '")
+            or
+             (class_id = '.$class_id.' and section_id = 0 and year = "'.$running_year. '")
+            ';
+        //die($q);
+        $this->db->where($q);
+        $attendance_of_students =  $this->db->get('attendance')->result_array();
         foreach($attendance_of_students as $row) {
             $attendance_status = $this->input->post('status_'.$row['attendance_id']);
-
             $this->db->where('attendance_id' , $row['attendance_id']);
             $this->db->update('attendance' , array('status' => $attendance_status,'subject_id' => $subject_id));
         }
-
         redirect(base_url().'index.php?admin/manage_attendance/'.$class_id.'/'.$section_id.'/'.$timestamp.'/'.$subject_id , 'refresh');
     }
 
