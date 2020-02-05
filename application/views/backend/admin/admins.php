@@ -1,7 +1,7 @@
 <?php
 	$is_owner = $this->db->get_where('admin' , array(
 		'admin_id' => $this->session->userdata('login_user_id')
-	))->row()->owner_status; 
+	))->row()->owner_status;
 	if ($is_owner == 1):
 ?>
 
@@ -31,7 +31,7 @@
             </li>
 		</ul>
 
-<div class="tab-content">
+            <div class="tab-content">
 		<div class="tab-pane box active" id="list">
           <div class="white-box">
             <div class="table-responsive">
@@ -47,7 +47,7 @@
                 </tr>
               </thead>
               <tbody>
-              <?php 
+              <?php
 		$admins	=	$this->db->get('admin' )->result_array();
 		foreach($admins as $row):
 		?>
@@ -84,7 +84,7 @@
             <h3 class="box-title m-b-0"><?php echo get_phrase('New');?></h3>
             <br><br>
 				<div class="padded">
-		     
+
 		     		 <div class="form-group">
                     <label class="col-sm-4 control-label"><?php echo get_phrase('Name');?></label>
                     <div class="col-sm-5">
@@ -114,7 +114,7 @@
                     </div>
                     </div>
                   </div>
-					
+
 					<div class="form-group">
                     <label class="col-sm-4 control-label"><?php echo get_phrase('Password');?></label>
                     <div class="col-sm-5">
@@ -126,7 +126,7 @@
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password text-success"></span>
                     </div>
                   </div>
-					
+
 					<div class="form-group">
                     <label class="col-sm-4 control-label"><?php echo get_phrase('Phone');?></label>
                     <div class="col-sm-5">
@@ -156,10 +156,10 @@
                             </select>
 						</div>
 					</div>
-					
+
 					<div class="form-group">
 						<label for="field-1" class="col-sm-4 control-label"><?php echo get_phrase('Photo');?></label>
-                        
+
 						<div class="col-sm-5">
 							<div class="fileinput fileinput-new" data-provides="fileinput">
 								<div class="fileinput-new thumbnail" style="width: 100px; height: 100px;" data-trigger="fileinput">
@@ -185,57 +185,10 @@
 						</div>
 						</div>
 						 <?php echo form_close();?>
-                    </form>                
-                </div>                
+                    </form>
+                </div>
 			</div>
-			 </div>                
+			 </div>
 			</div>
 </div>
 <?php endif;?>
-
-<script>
-    $(document).ready(function(){
-      $('#myTable').DataTable();
-      $(document).ready(function() {
-        var table = $('#example').DataTable({
-          "columnDefs": [
-          { "visible": false, "targets": 2 }
-          ],
-          "order": [[ 2, 'asc' ]],
-          "displayLength": 25,
-          "drawCallback": function ( settings ) {
-            var api = this.api();
-            var rows = api.rows( {page:'current'} ).nodes();
-            var last=null;
-            api.column(2, {page:'current'} ).data().each( function ( group, i ) {
-              if ( last !== group ) {
-                $(rows).eq( i ).before(
-                  '<tr class="group"><td colspan="5">'+group+'</td></tr>'
-                  );
-
-                last = group;
-              }
-            } );
-          }
-        } );
-    $('#example tbody').on( 'click', 'tr.group', function () {
-      var currentOrder = table.order()[0];
-      if ( currentOrder[0] === 2 && currentOrder[1] === 'asc' ) {
-        table.order( [ 2, 'desc' ] ).draw();
-      }
-      else {
-        table.order( [ 2, 'asc' ] ).draw();
-      }
-    });
-  });
-    });
-
-    $(".toggle-password").click(function () {
-        var input = $($(this).attr("toggle"));
-        if (input.attr("type") == "password") {
-            input.attr("type", "text");
-        } else {
-            input.attr("type", "password");
-        }
-    });
-  </script>

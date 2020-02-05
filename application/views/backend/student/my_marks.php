@@ -17,10 +17,10 @@
 <?php $student_info =   $this->db->get_where('enroll' , array('student_id' => $student_id , 'year' => $this->db->get_where('settings' , array('type' => 'running_year'))->row()->description))->result_array(); 
     foreach($student_info as $row): ?>
     <div class="col-md-12">
-                        <center><?php if(file_exists('uploads/student_image/'.$row['student_id'].'.jpg')):?>
+                        <center><?php if(file_exists('uploads/student_image/tmp/'.$row['student_id'].'.jpg')):?>
                 <img src="<?php echo $this->crud_model->get_image_url('student',$row['student_id']);?>" class="img-responsive"/>
             <?php endif;?>
-            <?php if(!file_exists('uploads/student_image/'.$student_id.'.jpg')):?>
+            <?php if(!file_exists('uploads/student_image/tmp/'.$student_id.'.jpg')):?>
                 <img src="assets/user.png" class="img-rounded img-responsive"/>
             <?php endif;?></center>
                         <div class="white-box">

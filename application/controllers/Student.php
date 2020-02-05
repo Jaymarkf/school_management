@@ -108,7 +108,6 @@ class Student extends CI_Controller
         {
             $this->crud_model->calendar_event_edit($param2);
         }
-
         $page_data['page_name']     = 'events';
         $page_data['page_title']    = get_phrase('Events');
         $this->load->view('backend/index', $page_data);
@@ -694,5 +693,27 @@ class Student extends CI_Controller
         $page_data['subject_id'] = $subject_id;
         $page_data['page_title'] = get_phrase('Manage Grade');
         $this->load->view('backend/index', $page_data);
+    }
+    function voting(){
+        if($this->session->userdata('student_login')!=1)
+            redirect(base_url() , 'refresh');
+        $page_data['page_name'] = 'voting';
+        $page_data['page_title'] = get_phrase('Voting');
+        $this->load->view('backend/index', $page_data);
+    }
+    function vote_process()
+    {
+        if ($this->session->userdata('student_login') != 1)
+            redirect(base_url(), 'refresh');
+        $student_candidate_id  = $this->input->post('candidate_id');
+        $student_voter_id  = $this->input->post('voter_id');
+        $position_id = $this->input->post('candidate_position_id');
+        $running_year = $this->input->post('running_year');
+        $data['candidate_student_id'] = $student_candidate_id;
+        $data['student_voter_id'] = $student_voter_id;
+        $data['position_id'] = $position_id;
+        $data['year'] = $running_year;
+        $this->db->insert('voting_process',$data);
+        redirect(base_url().'index.php?student/voting','refresh');
     }
 }

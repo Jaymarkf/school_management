@@ -577,11 +577,10 @@ class Admin extends CI_Controller
             if ($this->input->post('section_id') != '') {
                 $data2['section_id'] = $this->input->post('section_id');
             }
-            $data2['roll']           = $this->input->post('roll');
             $data2['date_added']     = strtotime(date("Y-m-d H:i:s"));
             $data2['year']           = $running_year;
             $this->db->insert('enroll', $data2);
-            move_uploaded_file($_FILES['userfile']['tmp_name'], 'uploads/student_image/' . $student_id . '.jpg');
+            move_uploaded_file($_FILES['userfile']['tmp_name'], 'uploads/student_image/tmp/' . $student_id . '.jpg');
             redirect(base_url() . 'index.php?admin/add_student/', 'refresh');
         }
         if ($param1 == 'do_update') 
@@ -596,8 +595,8 @@ class Admin extends CI_Controller
             $data['student_session'] = $this->input->post('student_session');
             $this->db->where('student_id', $param2);
             $this->db->update('student', $data);
-            move_uploaded_file($_FILES['userfile']['tmp_name'], 'uploads/student_image/' . $param2 . '.jpg');
-            $this->crud_model->clear_cache();
+           $test =  move_uploaded_file($_FILES['userfile']['tmp_name'], 'uploads/student_image/tmp/' . $param2 . '.jpg');
+           $this->crud_model->clear_cache();
             redirect(base_url() . 'index.php?admin/student_portal/' . $param2, 'refresh');
         }
     }
@@ -2174,6 +2173,40 @@ class Admin extends CI_Controller
         $page_data['search_key']    =   $this->input->post('search_key');
         $this->load->view('backend/admin/search_result', $page_data);
     }
+    function voting(){
+        if ($this->session->userdata('admin_login') != 1) {
+            $this->session->set_userdata('last_page', current_url());
+            redirect(base_url(), 'refresh');
+        }
+        $page_data['running_year'] =  $this->db->get_where('settings' , array('type' => 'running_year'))->row()->description;
+        $page_data['page_name']     =   'voting';
+        $page_data['page_title']    =   get_phrase('Voting');
+        $this->load->view('backend/index', $page_data);
+    }
+    function get_student_image($id){
+	    $page_data['student_id'] = $id;
+	    $this->load->view('backend/admin/get_student_image',$page_data);
+    }
+    function candidate_create(){
+        if ($this->session->userdata('admin_login') != 1) {
+            $this->session->set_userdata('last_page', current_url());
+            redirect(base_url(), 'refresh');
+        }
+
+	    $stud_id = $this->input->post('user');
+	    $student_name = $this->db->get_where('student',array('student_id' => $stud_id))->row()->name;
+
+	    $position = $this->input->post('position');
+	    $data['student_id'] = $stud_id;
+	    $data['name'] = $student_name;
+	    $data['position'] = $position;
+	    $exist = $this->db->get_where('candidate_info',array('student_id'=>$stud_id));
+	    if($exist->num_rows() < 1) {
+            $this->db->insert('candidate_info', $data);
+        }
+        redirect(base_url() . 'index.php?admin/voting');
+    }
+
     function printa($arr = array()){
 	    echo '<pre>';
 	    print_r($arr);
