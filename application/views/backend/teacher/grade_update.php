@@ -11,22 +11,15 @@
 </div>
 
 
-<?php echo form_open(base_url() . 'index.php?admin/grade_selector/'); ?>
+<?php echo form_open(base_url() . 'index.php?teacher/grade_selector/'); ?>
 <div class="row">
     <div class="col-md-3">
         <div class="form-group">
             <label class="control-label" style="margin-bottom: 5px;"><?php echo get_phrase('Semester');?></label>
-            <select name="semester_id" class="form-control selectboxit">
+            <select name="class_id" class="form-control selectboxit">
                 <option value=""><?php echo get_phrase('Select');?></option>
-                <?php
-                if($semester_id == 1){
-                    echo "<option value='1' selected>1</option>";
-                    echo "<option value='2'>2</option>";
-                }else{
-                    echo "<option value='1'>1</option>";
-                    echo "<option value='2' selected>2</option>";
-                }
-                ?>
+                <option value="1"<?php if($semester_id=1){echo"selected";}?>>1</option>
+                <option value="2"<?php if($semester_id=2){echo"selected";}?>>2</option>
             </select>
         </div>
     </div>
@@ -47,6 +40,7 @@
             </select>
         </div>
     </div>
+
 
     <div id="section_holder">
         <div class="col-md-3">
@@ -71,15 +65,15 @@
                 <select name="subject_id" id="subject_id" class="form-control selectboxit">
                     <?php $subjects = $this->db->get_where('subject', array('subject_id' => $subject_id))->result_array();
                     if(!empty($subjects)){
-                    foreach ($subjects as $row): ?>
-                        <option value="<?php echo $row['subject_id']; ?>"
-                            <?php if ($subject_id == $row['subject_id']) echo 'selected'; ?>>
-                            <?php echo $row['name']; ?>
-                        </option>
-                    <?php endforeach;
+                        foreach ($subjects as $row): ?>
+                            <option value="<?php echo $row['subject_id']; ?>"
+                                <?php if ($subject_id == $row['subject_id']) echo 'selected'; ?>>
+                                <?php echo $row['name']; ?>
+                            </option>
+                        <?php endforeach;
 
 
-                        }
+                    }
 
                     ?>
                 </select>
@@ -116,63 +110,59 @@
                     </thead>
                     <tbody>
                     <?php
-                    $count = 1;
-                   $temp_grade = $this->db->get_where('enroll', array(
+
+                    $temp_grade = $this->db->get_where('enroll', array(
                         'class_id' => $class_id,
                         'section_id' => $section_id,
                         'year' => $running_year,
                     ))->result_array();
-//                    $this->db->select('*');
-//                    $this->db->from('enroll');
-//                    $this->db->where('');
                     foreach ($temp_grade as $row):
                         ?>
-                        <input type="hidden" name="student_id[]" value="<?php echo $row['student_id'];?>"/>
-                        <input type="hidden" name="semester" value="<?php echo $semester_id; ?>"/>
-                        <input type="hidden" name="class_id" value="<?php echo $class_id; ?>"/>
-                        <input type="hidden" name="section_id" value="<?php echo $section_id; ?>"/>
-                        <input type="hidden" name="subject_id" value="<?php echo $subject_id; ?>"/>
+
                         <tr>
-                            <td><?php echo $count++; ?></td>
+                            <td><input type="text" name="student_id" value="<?php echo $row['student_id'];?>" disabled/></td>
                             <td>
                                 <?php echo $this->db->get_where('student', array('student_id' => $row['student_id']))->row()->name; ?>
+
                             </td>
                             <td>
-                                <select class="form-control selectboxit" name="grade_id_<?php echo $row['student_id']; ?>" disabled>
-                                    <?php
-                                    $x = $this->db->get_where('grades',array('student_id'=>$row['student_id']))->row()->student_grade;
-                                    $grade = $this->db->get_where('grades',array('student_id'=>$row['student_id']))->row()->specific_grade;
-                                    $comments = $this->db->get_where('grades',array('student_id'=>$row['student_id']))->row()->comments;
-                                    ?>
-                                    <option value="1.00" <?php if($x == 1.00){echo 'selected';} ?> >1.00</option>
-                                    <option value="1.25"<?php if($x == 1.25){echo 'selected';} ?> >1.25</option>
-                                    <option value="1.50"<?php if($x == 1.50){echo 'selected';} ?> >1.50</option>
-                                    <option value="1.75"<?php if($x == 1.75){echo 'selected';} ?> >1.75</option>
-                                    <option value="2.00"<?php if($x == 2.00){echo 'selected';} ?> >2.00</option>
-                                    <option value="2.25"<?php if($x == 2.25){echo 'selected';} ?> >2.25</option>
-                                    <option value="2.50"<?php if($x == 2.50){echo 'selected';} ?> >2.50</option>
-                                    <option value="2.75"<?php if($x == 2.75){echo 'selected';} ?> >2.75</option>
-                                    <option value="3.00"<?php if($x == 3.00){echo 'selected';} ?> >3.00</option>
-                                    <option value="3.25"<?php if($x == 3.25){echo 'selected';} ?> >3.25</option>
-                                    <option value="3.50"<?php if($x == 3.50){echo 'selected';} ?> >3.50</option>
-                                    <option value="3.75"<?php if($x == 3.75){echo 'selected';} ?> >3.75</option>
-                                    <option value="4.00"<?php if($x == 4.00){echo 'selected';} ?> >4.00</option>
-                                    <option value="5.00"<?php if($x == 5.00){echo 'selected';} ?> >5.00</option>
+                                <select class="form-control selectboxit" name="grade_id_<?php echo $row['student_id']; ?>">
+                                    <option value="1">1.00</option>
+                                    <option value="1.25">1.25</option>
+                                    <option value="1.50">1.50</option>
+                                    <option value="1.75">1.75</option>
+                                    <option value="2.00">2.00</option>
+                                    <option value="2.25">2.25</option>
+                                    <option value="2.50">2.50</option>
+                                    <option value="2.75">2.75</option>
+                                    <option value="3.00">3.00</option>
+                                    <option value="3.25">3.25</option>
+                                    <option value="3.50">3.50</option>
+                                    <option value="3.75">3.75</option>
+                                    <option value="4.00">4.00</option>
+                                    <option value="5.00">5.00</option>
                                 </select>
                             </td>
                             <td>
                                 <input type="text" name="specific_grade_id_<?php echo $row['student_id'];?>"
-                                       placeholder="Enter grade form 1-100" class="form-control" value="<?php echo $grade; ?>" disabled/>
+                                       placeholder="Enter grade form 1-100" class="form-control"/>
                             </td>
                             <td>
                                 <input type="text" name="comments_id_<?php echo $row['student_id'];?>"
-                                       placeholder="Enter your comments" class="form-control" value ="<?php echo $comments; ?>" disabled/>
+                                       placeholder="Enter your comments" class="form-control"/>
                             </td>
                         </tr>
+
                     <?php endforeach; ?>
                     </tbody>
                 </table>
             </div>
+
+            <center>
+                <button type="submit" class="btn btn-info" id="submit_button">
+                    <i class="entypo-check"></i> <?php echo get_phrase('Update');?>
+                </button>
+            </center>
             <?php echo form_close(); ?>
         </div>
     </div>

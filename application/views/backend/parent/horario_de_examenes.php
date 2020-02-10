@@ -12,6 +12,12 @@
 <?php $running_year = $this->db->get_where('settings' , array('type' => 'running_year'))->row()->description; ?>
 <?php 
     $child_of_parent = $this->db->get_where('enroll' , array('student_id' => $student_id , 'year' => $running_year))->result_array();
+$student_status = $child_of_parent[0];
+if($student_status['section_id'] == 0){
+    $irregular = 1;
+}else{
+    $irregular = 0;
+}
     foreach ($child_of_parent as $row):
         $class_id = $this->db->get_where('enroll' , array('student_id' => $row['student_id'] , 'year' => $running_year))->row()->class_id;
         $section_id = $this->db->get_where('enroll' , array('student_id' => $row['student_id'] , 'year' => $running_year))->row()->section_id;
@@ -49,7 +55,9 @@
                                 $this->db->order_by("time_start", "asc");
                                 $this->db->where('day' , $day);
                                 $this->db->where('class_id' , $class_id);
-                                $this->db->where('section_id' , $section_id);
+                                if($irregular == 0 ){
+                                    $this->db->where('section_id' , $section_id);
+                                }
                                 $this->db->where('year' , $running_year);
                                 $routines   =   $this->db->get('horarios_examenes')->result_array();
                                 foreach($routines as $row2):

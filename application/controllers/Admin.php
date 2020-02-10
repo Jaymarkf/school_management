@@ -577,11 +577,10 @@ class Admin extends CI_Controller
             if ($this->input->post('section_id') != '') {
                 $data2['section_id'] = $this->input->post('section_id');
             }
-            $data2['roll']           = $this->input->post('roll');
             $data2['date_added']     = strtotime(date("Y-m-d H:i:s"));
             $data2['year']           = $running_year;
             $this->db->insert('enroll', $data2);
-            move_uploaded_file($_FILES['userfile']['tmp_name'], 'uploads/student_image/' . $student_id . '.jpg');
+            move_uploaded_file($_FILES['userfile']['tmp_name'], 'uploads/student_image/tmp/' . $student_id . '.jpg');
             redirect(base_url() . 'index.php?admin/add_student/', 'refresh');
         }
         if ($param1 == 'do_update') 
@@ -596,8 +595,8 @@ class Admin extends CI_Controller
             $data['student_session'] = $this->input->post('student_session');
             $this->db->where('student_id', $param2);
             $this->db->update('student', $data);
-            move_uploaded_file($_FILES['userfile']['tmp_name'], 'uploads/student_image/' . $param2 . '.jpg');
-            $this->crud_model->clear_cache();
+           $test =  move_uploaded_file($_FILES['userfile']['tmp_name'], 'uploads/student_image/tmp/' . $param2 . '.jpg');
+           $this->crud_model->clear_cache();
             redirect(base_url() . 'index.php?admin/student_portal/' . $param2, 'refresh');
         }
     }
@@ -1212,6 +1211,7 @@ class Admin extends CI_Controller
             $data['time_end_min']   = $this->input->post('time_end_min');
             $data['fecha']          = $this->input->post('fecha');
             $data['day']            = $this->input->post('day');
+            $data['room_id']            = $this->input->post('room_id');
             $data['year']           = $this->db->get_where('settings' , array('type' => 'running_year'))->row()->description;
             $this->db->insert('horarios_examenes', $data);
             redirect(base_url() . 'index.php?admin/add_exam_routine/', 'refresh');
@@ -1228,6 +1228,7 @@ class Admin extends CI_Controller
             $data['time_end_min']   = $this->input->post('time_end_min');
             $data['fecha']          = $this->input->post('fecha');
             $data['day']            = $this->input->post('day');
+            $data['room_id']            = $this->input->post('room_id');
             $data['year']           = $this->db->get_where('settings' , array('type' => 'running_year'))->row()->description;
             $this->db->where('horario_id', $param2);
             $this->db->update('horarios_examenes', $data);
@@ -1251,7 +1252,7 @@ class Admin extends CI_Controller
             redirect(base_url(), 'refresh');
         $page_data['page_name']  = 'looking_routine';
         $page_data['class_id']  =   $class_id;
-        $page_data['page_title'] = "Horarios de evaluaciones";
+        $page_data['page_title'] = "Exam Routine";
         $this->load->view('backend/index', $page_data);
     }
 
@@ -1373,10 +1374,24 @@ class Admin extends CI_Controller
 
         if($query->num_rows() < 1) 
         {
-            $students = $this->db->get_where('enroll' , array(
-                'class_id' => $data['class_id'] , 'section_id' => $data['section_id'] , 'year' => $data['year']
-            ))->result_array();
-
+//            $students = $this->db->get_where('enroll' , array(
+//                'class_id' => $data['class_id'] , 'section_id' => $data['section_id'] , 'year' => $data['year']
+//            ))->result_array();
+            $q = ' (class_id = '.$data['class_id'].' and section_id = '.$data['section_id'].' and year = "'.$data['year']. '")
+            or
+             (class_id = '.$data['class_id'].' and section_id = 0 and year = "'.$data['year']. '")
+            ';
+//            die($q);
+            $this->db->where($q);
+            $students =  $this->db->get('enroll')->result_array();
+//          echo '<pre>';
+//          print_r($res);
+//          echo '</pre>';
+//           die();
+//          echo '<pre>';
+//          print_r($this->db->queries);
+//          echo '</pre>';
+//          die();
             foreach($students as $row) {
                 $attn_data['class_id']   = $data['class_id'];
                 $attn_data['year']       = $data['year'];
@@ -1384,9 +1399,29 @@ class Admin extends CI_Controller
                 $attn_data['section_id'] = $data['section_id'];
                 $attn_data['student_id'] = $row['student_id'];
                 $attn_data['subject_id'] = $data['subject_id'];
-                $this->db->insert('attendance' , $attn_data);  
+                $sub_id = $this->db->get_where('student_irregular_selected_subject', array('student_id' => $row['student_id']))->result_array();
+                foreach ($sub_id as $index => $item) {
+                    $arr_sub_id[] = explode(",",$item['selected_subject_concat_id']);
+                    if(in_array($data['subject_id'],$arr_sub_id[$index])){
+                        $attn_data['class_id']   = $data['class_id'];
+                        $attn_data['year']       = $data['year'];
+                        $attn_data['timestamp']  = $data['timestamp'];
+                        $attn_data['section_id'] = 0;
+                        $attn_data['student_id'] = $row['student_id'];
+                        $attn_data['subject_id'] = $data['subject_id'];
+                    }
+
+                }
+                    $this->db->insert('attendance',$attn_data);
+
             }
+
+
         }
+//        echo '<pre>';
+//        print_r($attn_data);
+//        echo '</pre>';
+//        die();
         redirect(base_url().'index.php?admin/manage_attendance/'.$data['class_id'].'/'.$data['section_id'].'/'.$data['timestamp'].'/'.$data['subject_id'],'refresh');
     }
     function grade_selector(){
@@ -1395,7 +1430,6 @@ class Admin extends CI_Controller
         $data['section_id'] = $this->input->post('section_id');
         $data['subject_id'] = $this->input->post('subject_id');
         $data['year'] = $this->db->get_where('settings' , array('type' => 'running_year'))->row()->description;
-//
 //        $query = $this->db->get_where('attendance' ,array(
 //            'class_id'=>$data['class_id'],
 //            'section_id'=>$data['section_id'],
@@ -1414,8 +1448,8 @@ class Admin extends CI_Controller
 //                $attn_data['section_id'] = $data['section_id'];
 //                $attn_data['student_id'] = $row['student_id'];
 //                $this->db->insert('attendance' , $attn_data);
-//            }
-//
+//        }
+
         redirect(base_url().'index.php?admin/manage_grade/'.$data['class_id'].'/'.$data['section_id'].'/'.$data['subject_id'].'/'.$data['semester_id'],'refresh');
     }
     function manage_grade($class_id = '' , $section_id = '' ,$subject_id = '', $semester_id = '')
@@ -1433,23 +1467,22 @@ class Admin extends CI_Controller
         $page_data['page_title'] = get_phrase('Manage Grade');
         $this->load->view('backend/index', $page_data);
     }
-
-
     function attendance_update($class_id = '' , $section_id = '' , $timestamp = '',$subject_id ='')
     {
         $running_year = $this->db->get_where('settings' , array('type' => 'running_year'))->row()->description;
 
-        $attendance_of_students = $this->db->get_where('attendance' , array(
-            'class_id'=>$class_id,'section_id'=>$section_id,'year'=>$running_year,'timestamp'=>$timestamp,'subject_id' => $subject_id))->result_array();
-
-
+        $q = ' (class_id = '.$class_id.' and section_id = '.$section_id.' and year = "'.$running_year. '")
+            or
+             (class_id = '.$class_id.' and section_id = 0 and year = "'.$running_year. '")
+            ';
+        //die($q);
+        $this->db->where($q);
+        $attendance_of_students =  $this->db->get('attendance')->result_array();
         foreach($attendance_of_students as $row) {
             $attendance_status = $this->input->post('status_'.$row['attendance_id']);
-
             $this->db->where('attendance_id' , $row['attendance_id']);
             $this->db->update('attendance' , array('status' => $attendance_status,'subject_id' => $subject_id));
         }
-
         redirect(base_url().'index.php?admin/manage_attendance/'.$class_id.'/'.$section_id.'/'.$timestamp.'/'.$subject_id , 'refresh');
     }
 
@@ -2139,5 +2172,44 @@ class Admin extends CI_Controller
     {
         $page_data['search_key']    =   $this->input->post('search_key');
         $this->load->view('backend/admin/search_result', $page_data);
+    }
+    function voting(){
+        if ($this->session->userdata('admin_login') != 1) {
+            $this->session->set_userdata('last_page', current_url());
+            redirect(base_url(), 'refresh');
+        }
+        $page_data['running_year'] =  $this->db->get_where('settings' , array('type' => 'running_year'))->row()->description;
+        $page_data['page_name']     =   'voting';
+        $page_data['page_title']    =   get_phrase('Voting');
+        $this->load->view('backend/index', $page_data);
+    }
+    function get_student_image($id){
+	    $page_data['student_id'] = $id;
+	    $this->load->view('backend/admin/get_student_image',$page_data);
+    }
+    function candidate_create(){
+        if ($this->session->userdata('admin_login') != 1) {
+            $this->session->set_userdata('last_page', current_url());
+            redirect(base_url(), 'refresh');
+        }
+
+	    $stud_id = $this->input->post('user');
+	    $student_name = $this->db->get_where('student',array('student_id' => $stud_id))->row()->name;
+
+	    $position = $this->input->post('position');
+	    $data['student_id'] = $stud_id;
+	    $data['name'] = $student_name;
+	    $data['position'] = $position;
+	    $exist = $this->db->get_where('candidate_info',array('student_id'=>$stud_id));
+	    if($exist->num_rows() < 1) {
+            $this->db->insert('candidate_info', $data);
+        }
+        redirect(base_url() . 'index.php?admin/voting');
+    }
+
+    function printa($arr = array()){
+	    echo '<pre>';
+	    print_r($arr);
+	    echo '</pre>';
     }
 }

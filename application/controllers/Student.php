@@ -108,7 +108,6 @@ class Student extends CI_Controller
         {
             $this->crud_model->calendar_event_edit($param2);
         }
-
         $page_data['page_name']     = 'events';
         $page_data['page_title']    = get_phrase('Events');
         $this->load->view('backend/index', $page_data);
@@ -627,5 +626,94 @@ class Student extends CI_Controller
         $page_data['page_title'] = get_phrase('ClassForum');
         $page_data['student_id']   = $student_id;
         $this->load->view('backend/index', $page_data);
+    }
+    function grades(){
+        if ($this->session->userdata('student_login') != 1)
+            redirect(base_url(), 'refresh');
+        $page_data['page_name']  = 'grades';
+        $page_data['page_title'] = get_phrase('Student-Grade');
+        $this->load->view('backend/index', $page_data);
+    }
+    function grade_update($class_id = '' , $section_id = '' ,$subject_id = '' ,$semester_id = '')
+    {
+        $running_year = $this->db->get_where('settings' , array('type' => 'running_year'))->row()->description;
+//die(print_r($this->input->post()));
+        $stud  = $this->input->post('student_id');
+        foreach ($stud as $index => $item) {
+            $this->db->where('student_id',$item);
+            $count = $this->db->get('grades',array('student_id',$item));
+            if($count->num_rows() < 1){
+                $data['semester'] = $this->input->post('semester');
+                $data['student_id'] = $item;
+                $data['class_id'] = $this->input->post('class_id');
+                $data['section_id'] = $this->input->post('section_id');
+                $data['subject_id'] = $this->input->post('subject_id');
+                $data['year'] = $running_year;
+                $data['student_grade'] = $this->input->post('grade_id_'.$item);
+                $data['specific_grade'] = $this->input->post('specific_grade_id_'.$item);
+                $data['comments'] = $this->input->post('comments_id_'.$item);
+                $this->db->insert('grades',$data);
+            }else{
+                $data['student_id'] = $item;
+                $data['semester'] = $this->input->post('semester');
+                $data['class_id'] = $this->input->post('class_id');
+                $data['section_id'] = $this->input->post('section_id');
+                $data['subject_id'] = $this->input->post('subject_id');
+                $data['year'] = $running_year;
+                $data['student_grade'] = $this->input->post('grade_id_'.$item);
+                $data['specific_grade'] = $this->input->post('specific_grade_id_'.$item);
+                $data['comments'] = $this->input->post('comments_id_'.$item);
+                $this->db->where('student_id',$item);
+                $this->db->update('grades',$data);
+            }
+
+        }
+
+        redirect(base_url().'index.php?student/manage_grade/'.$class_id.'/'.$section_id.'/'.$subject_id.'/'.$semester_id , 'refresh');
+    }
+    function grade_selector(){
+        $data['semester_id'] = $this->input->post('semester_id');
+        $data['class_id']   = $this->input->post('class_id');
+        $data['section_id'] = $this->input->post('section_id');
+        $data['subject_id'] = $this->input->post('subject_id');
+        $data['year'] = $this->db->get_where('settings' , array('type' => 'running_year'))->row()->description;
+        redirect(base_url().'index.php?student/manage_grade/'.$data['class_id'].'/'.$data['section_id'].'/'.$data['subject_id'].'/'.$data['semester_id'],'refresh');
+    }
+    function manage_grade($class_id = '' , $section_id = '' ,$subject_id = '', $semester_id = '')
+    {
+        if($this->session->userdata('student_login')!=1)
+            redirect(base_url() , 'refresh');
+        $class_name = $this->db->get_where('class' , array(
+            'class_id' => $class_id
+        ))->row()->name;
+        $page_data['class_id'] = $class_id;
+        $page_data['semester_id'] = $semester_id;
+        $page_data['page_name'] = 'manage_grade';
+        $page_data['section_id'] = $section_id;
+        $page_data['subject_id'] = $subject_id;
+        $page_data['page_title'] = get_phrase('Manage Grade');
+        $this->load->view('backend/index', $page_data);
+    }
+    function voting(){
+        if($this->session->userdata('student_login')!=1)
+            redirect(base_url() , 'refresh');
+        $page_data['page_name'] = 'voting';
+        $page_data['page_title'] = get_phrase('Voting');
+        $this->load->view('backend/index', $page_data);
+    }
+    function vote_process()
+    {
+        if ($this->session->userdata('student_login') != 1)
+            redirect(base_url(), 'refresh');
+        $student_candidate_id  = $this->input->post('candidate_id');
+        $student_voter_id  = $this->input->post('voter_id');
+        $position_id = $this->input->post('candidate_position_id');
+        $running_year = $this->input->post('running_year');
+        $data['candidate_student_id'] = $student_candidate_id;
+        $data['student_voter_id'] = $student_voter_id;
+        $data['position_id'] = $position_id;
+        $data['year'] = $running_year;
+        $this->db->insert('voting_process',$data);
+        redirect(base_url().'index.php?student/voting','refresh');
     }
 }

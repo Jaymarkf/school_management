@@ -77,18 +77,20 @@ CREATE TABLE `attendance` (
   `class_id` int(11) NOT NULL,
   `section_id` int(11) NOT NULL,
   `student_id` int(11) NOT NULL,
+  `subject_id` int(11) NOT NULL,
   `status` int(11) NOT NULL DEFAULT '0' COMMENT '0(undefined) 1(present) 2(absent)',
   PRIMARY KEY (`attendance_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 TRUNCATE `attendance`;
-INSERT INTO `attendance` (`attendance_id`, `timestamp`, `year`, `class_id`, `section_id`, `student_id`, `status`) VALUES
-(1,	'1577376000',	'2016-2017',	1,	1,	2,	1),
-(2,	'1575129600',	'2016-2017',	1,	1,	2,	1),
-(3,	'1577376000',	'2019-2020',	1,	1,	3,	1),
-(4,	'1577894400',	'2019-2020',	1,	2,	4,	2),
-(5,	'1577808000',	'2019-2020',	1,	2,	4,	1),
-(6,	'1578240000',	'2019-2020',	1,	2,	4,	1);
+INSERT INTO `attendance` (`attendance_id`, `timestamp`, `year`, `class_id`, `section_id`, `student_id`, `subject_id`, `status`) VALUES
+(22,	'1580112000',	'2020-2021',	1,	2,	8,	1,	0),
+(23,	'1580112000',	'2020-2021',	1,	0,	11,	1,	0),
+(24,	'1580112000',	'2020-2021',	1,	0,	12,	1,	0),
+(25,	'1580284800',	'2020-2021',	1,	2,	8,	1,	1),
+(26,	'1580284800',	'2020-2021',	1,	0,	11,	1,	1),
+(27,	'1580284800',	'2020-2021',	1,	0,	12,	1,	3),
+(28,	'1577865600',	'2020-2021',	1,	2,	8,	0,	0);
 
 DROP TABLE IF EXISTS `attendance_backup`;
 CREATE TABLE `attendance_backup` (
@@ -119,6 +121,22 @@ CREATE TABLE `book` (
 
 TRUNCATE `book`;
 
+DROP TABLE IF EXISTS `candidate_info`;
+CREATE TABLE `candidate_info` (
+  `candidate_info_id` int(11) NOT NULL AUTO_INCREMENT,
+  `student_id` int(11) NOT NULL,
+  `name` longtext NOT NULL,
+  `position` int(11) NOT NULL,
+  PRIMARY KEY (`candidate_info_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+TRUNCATE `candidate_info`;
+INSERT INTO `candidate_info` (`candidate_info_id`, `student_id`, `name`, `position`) VALUES
+(3,	11,	'ireg',	4),
+(4,	8,	'jaymark1',	3),
+(5,	12,	'uv',	3),
+(6,	14,	'f',	6);
+
 DROP TABLE IF EXISTS `ci_sessions`;
 CREATE TABLE `ci_sessions` (
   `id` varchar(40) COLLATE utf8_unicode_ci NOT NULL,
@@ -131,84 +149,48 @@ CREATE TABLE `ci_sessions` (
 
 TRUNCATE `ci_sessions`;
 INSERT INTO `ci_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES
-('062395fb62ba3d8b9b7bc76f48342070a64e335d',	'::1',	1577937262,	'__ci_last_regenerate|i:1577937247;teacher_login|s:1:\"1\";teacher_id|s:2:\"27\";login_user_id|s:2:\"27\";name|s:13:\"Abner Santizo\";login_type|s:7:\"teacher\";'),
-('1583dfdd6cdb7ce95f1ba3ce67a7891cf8fd5c25',	'::1',	1577934504,	'__ci_last_regenerate|i:1577934326;student_login|s:1:\"1\";student_id|s:1:\"2\";login_user_id|s:1:\"2\";name|s:6:\"cancer\";login_type|s:7:\"student\";'),
-('1b217802cae88ef27d526837f811b432e791cd66',	'::1',	1578383018,	'__ci_last_regenerate|i:1578375050;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";name|s:10:\"Steve Jobs\";login_type|s:5:\"admin\";'),
-('1b61f260541cd98595f0b7dd402239eeac35462f',	'::1',	1577414644,	'__ci_last_regenerate|i:1577414511;student_login|s:1:\"1\";student_id|s:1:\"3\";login_user_id|s:1:\"3\";name|s:7:\"cancer1\";login_type|s:7:\"student\";'),
-('1cef3b397768f1a9143ac6cab0a9585fbe9d1986',	'::1',	1577419226,	'__ci_last_regenerate|i:1577418942;student_login|s:1:\"1\";student_id|s:1:\"3\";login_user_id|s:1:\"3\";name|s:7:\"cancer1\";login_type|s:7:\"student\";'),
-('1f431dffbf7a266a80281264982174279f2c0ad9',	'::1',	1577938778,	'__ci_last_regenerate|i:1577938778;teacher_login|s:1:\"1\";teacher_id|s:2:\"27\";login_user_id|s:2:\"27\";name|s:13:\"Abner Santizo\";login_type|s:7:\"teacher\";'),
-('20a30050949b1c17a3561c8b3955ee34511dfe5e',	'::1',	1577421415,	'__ci_last_regenerate|i:1577421119;teacher_login|s:1:\"1\";teacher_id|s:2:\"27\";login_user_id|s:2:\"27\";name|s:13:\"Abner Santizo\";login_type|s:7:\"teacher\";'),
-('242bed604804c51e14698b3a8df604b1567c0e1c',	'::1',	1577420933,	'__ci_last_regenerate|i:1577420815;teacher_login|s:1:\"1\";teacher_id|s:2:\"27\";login_user_id|s:2:\"27\";name|s:13:\"Abner Santizo\";login_type|s:7:\"teacher\";'),
-('25f83e8b5328d714e2e737cb1e0868ba698fc3ca',	'::1',	1577411417,	'__ci_last_regenerate|i:1577411127;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";name|s:10:\"Steve Jobs\";login_type|s:5:\"admin\";'),
-('284a8e5ffd79c9c79a167143bed241027a926445',	'::1',	1577950960,	'__ci_last_regenerate|i:1577950660;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";name|s:10:\"Steve Jobs\";login_type|s:5:\"admin\";'),
-('29e7a2c6c8c2e21875f5fd976bf34328c52e8637',	'::1',	1577422535,	'__ci_last_regenerate|i:1577422276;parent_login|s:1:\"1\";parent_id|s:2:\"31\";login_user_id|s:2:\"31\";name|s:4:\"noel\";login_type|s:6:\"parent\";'),
-('30f7fe8d60321555ca87b5979d0451da498dcc06',	'::1',	1577931284,	'__ci_last_regenerate|i:1577931231;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";name|s:10:\"Steve Jobs\";login_type|s:5:\"admin\";'),
-('313937e0099d412bafab9a7bc3037e201ac4e32b',	'::1',	1577424781,	'__ci_last_regenerate|i:1577424515;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";name|s:10:\"Steve Jobs\";login_type|s:5:\"admin\";'),
-('31a0ac2cace5037d135ed23d4b123f57125dbf4a',	'::1',	1578388808,	'__ci_last_regenerate|i:1578388653;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";name|s:10:\"Steve Jobs\";login_type|s:5:\"admin\";'),
-('33988d154427f1c75db360ad633fe2e84f3d2d93',	'127.0.0.1',	1507877817,	'__ci_last_regenerate|i:1507877557;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";name|s:10:\"Steve Jobs\";login_type|s:5:\"admin\";'),
-('34728773ab91de334fea519c5cbdfabdc216d7c7',	'::1',	1577952225,	'__ci_last_regenerate|i:1577951972;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";name|s:10:\"Steve Jobs\";login_type|s:5:\"admin\";'),
-('373adf55f0ff582f35f54d6a758969776ba65807',	'::1',	1577936910,	'__ci_last_regenerate|i:1577936910;teacher_login|s:1:\"1\";teacher_id|s:2:\"27\";login_user_id|s:2:\"27\";name|s:13:\"Abner Santizo\";login_type|s:7:\"teacher\";'),
-('375e7de0f98428f61d1a1d575a4c4508193ce3e0',	'::1',	1577423567,	'__ci_last_regenerate|i:1577423521;parent_login|s:1:\"1\";parent_id|s:2:\"31\";login_user_id|s:2:\"31\";name|s:4:\"noel\";login_type|s:6:\"parent\";'),
-('37c33e8d305d5102ca21b76cc5021fad038f9c80',	'::1',	1577954877,	'__ci_last_regenerate|i:1577954778;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";name|s:10:\"Steve Jobs\";login_type|s:5:\"admin\";'),
-('39c53b79118190ed7af1b718da5b3c3087f1e35c',	'::1',	1577942996,	'__ci_last_regenerate|i:1577942809;teacher_login|s:1:\"1\";teacher_id|s:2:\"27\";login_user_id|s:2:\"27\";name|s:13:\"Abner Santizo\";login_type|s:7:\"teacher\";'),
-('3c2df095f3ff79cab19a2f0476160a8ac39a8ef8',	'::1',	1577950113,	'__ci_last_regenerate|i:1577950018;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";name|s:10:\"Steve Jobs\";login_type|s:5:\"admin\";'),
-('3dffd5fab4f424c0e7a80e60dfdf92e56342754d',	'127.0.0.1',	1507878516,	'__ci_last_regenerate|i:1507878240;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";name|s:10:\"Steve Jobs\";login_type|s:5:\"admin\";'),
-('3f6e55158d3f923e224690a00947d659498a757b',	'::1',	1577413465,	'__ci_last_regenerate|i:1577413181;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";name|s:10:\"Steve Jobs\";login_type|s:5:\"admin\";'),
-('4215a1fb34328f846373f34c59f1a56e41bc060c',	'::1',	1577948958,	'__ci_last_regenerate|i:1577948436;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";name|s:10:\"Steve Jobs\";login_type|s:5:\"admin\";'),
-('5a5436ae655d6bcbe80e987e260d0c8d5935dc73',	'::1',	1577951027,	'__ci_last_regenerate|i:1577950966;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";name|s:10:\"Steve Jobs\";login_type|s:5:\"admin\";'),
-('6504eaf4634a8d7024eef8d29e1f7c745454d5c7',	'::1',	1578300555,	'__ci_last_regenerate|i:1578300508;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";name|s:10:\"Steve Jobs\";login_type|s:5:\"admin\";'),
-('65e39d566123b3cf5229c251d11aae57f99e674d',	'::1',	1577952731,	'__ci_last_regenerate|i:1577952281;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";name|s:10:\"Steve Jobs\";login_type|s:5:\"admin\";'),
-('6a5f1760ad43b43dd10f060e28c7b1fd58e5c20f',	'::1',	1577949958,	'__ci_last_regenerate|i:1577949711;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";name|s:10:\"Steve Jobs\";login_type|s:5:\"admin\";'),
-('70710402b70154fee4d9a73ce3509fcdf2988aa4',	'::1',	1577345421,	'__ci_last_regenerate|i:1577345306;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";name|s:10:\"Steve Jobs\";login_type|s:5:\"admin\";'),
-('74faa882785816a1bbccfea578d01da7e4fc5853',	'::1',	1577951906,	'__ci_last_regenerate|i:1577951665;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";name|s:10:\"Steve Jobs\";login_type|s:5:\"admin\";'),
-('759ddacb5eefe7939b25d5bbfb94fcff048e4232',	'::1',	1577419553,	'__ci_last_regenerate|i:1577419274;student_login|s:1:\"1\";student_id|s:1:\"3\";login_user_id|s:1:\"3\";name|s:7:\"cancer1\";login_type|s:7:\"student\";'),
-('7b815961bc34627ef073df12275a84c9e22f5030',	'::1',	1578539375,	'__ci_last_regenerate|i:1578539359;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";name|s:10:\"Steve Jobs\";login_type|s:5:\"admin\";'),
-('85bfa4731f2db5f9502885023686296554997b94',	'::1',	1577953794,	'__ci_last_regenerate|i:1577953493;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";name|s:10:\"Steve Jobs\";login_type|s:5:\"admin\";'),
-('884c374da17777e61d3f6e3772c6ac418342a5ed',	'::1',	1577420311,	'__ci_last_regenerate|i:1577420311;student_login|s:1:\"1\";student_id|s:1:\"3\";login_user_id|s:1:\"3\";name|s:7:\"cancer1\";login_type|s:7:\"student\";'),
-('8859012f7eff6db2bf9ea0776e3d3e86719a1a99',	'::1',	1577930065,	'__ci_last_regenerate|i:1577929863;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";name|s:10:\"Steve Jobs\";login_type|s:5:\"admin\";'),
-('8a03b9c21102ba3c9eb7d81d89badb382643c259',	'::1',	1577418216,	'__ci_last_regenerate|i:1577418216;student_login|s:1:\"1\";student_id|s:1:\"3\";login_user_id|s:1:\"3\";name|s:7:\"cancer1\";login_type|s:7:\"student\";'),
-('9427ba49f047eb9e5fcaa80a4b186fe10b936919',	'::1',	1577946632,	'__ci_last_regenerate|i:1577946412;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";name|s:10:\"Steve Jobs\";login_type|s:5:\"admin\";'),
-('953b12ee7b4221bd23963bdd0b6bcbd283c21517',	'::1',	1578300648,	'__ci_last_regenerate|i:1578300641;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";name|s:10:\"Steve Jobs\";login_type|s:5:\"admin\";'),
-('97e64057117c57c1f446a3641b0455263c76edcd',	'::1',	1577954242,	'__ci_last_regenerate|i:1577954126;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";name|s:10:\"Steve Jobs\";login_type|s:5:\"admin\";'),
-('99e014e461bf73161e8f012fcbf67048803ea6c2',	'::1',	1577951637,	'__ci_last_regenerate|i:1577951353;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";name|s:10:\"Steve Jobs\";login_type|s:5:\"admin\";'),
-('9bc221da765f2079e483361dd0f787eaaaef7b75',	'::1',	1577949365,	'__ci_last_regenerate|i:1577949079;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";name|s:10:\"Steve Jobs\";login_type|s:5:\"admin\";'),
-('9bd227ba85dd705760c4a0693aaaade8daa9a4ae',	'::1',	1577411126,	'__ci_last_regenerate|i:1577410729;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";name|s:10:\"Steve Jobs\";login_type|s:5:\"admin\";'),
-('a10ebb1a20f40b8d680eefaae4e35cbd56cbfaba',	'127.0.0.1',	1507877156,	'__ci_last_regenerate|i:1507876861;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";name|s:10:\"Steve Jobs\";login_type|s:5:\"admin\";'),
-('a2bde3bc6d3f9704c2c62155a8b0ae011107d29d',	'::1',	1577422267,	'__ci_last_regenerate|i:1577421974;parent_login|s:1:\"1\";parent_id|s:2:\"31\";login_user_id|s:2:\"31\";name|s:4:\"noel\";login_type|s:6:\"parent\";'),
-('a32e558d82745ad90c89e1a86c64d75afe055d1e',	'127.0.0.1',	1507878562,	'__ci_last_regenerate|i:1507878562;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";name|s:10:\"Steve Jobs\";login_type|s:5:\"admin\";'),
-('a365dc68aab59d03b765241f09586ed5faa59106',	'::1',	1577412889,	'__ci_last_regenerate|i:1577412605;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";name|s:10:\"Steve Jobs\";login_type|s:5:\"admin\";'),
-('ac847a76c787ce0589fc708a8bf834b97cafcf1e',	'::1',	1577423236,	'__ci_last_regenerate|i:1577423027;parent_login|s:1:\"1\";parent_id|s:2:\"31\";login_user_id|s:2:\"31\";name|s:4:\"noel\";login_type|s:6:\"parent\";'),
-('b4d06fd6ecce5fae1f7ce8a2314df6961d1cf52a',	'::1',	1577949687,	'__ci_last_regenerate|i:1577949382;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";name|s:10:\"Steve Jobs\";login_type|s:5:\"admin\";'),
-('b702c62b139408328971ee528923c7adca30d837',	'127.0.0.1',	1507878231,	'__ci_last_regenerate|i:1507877937;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";name|s:10:\"Steve Jobs\";login_type|s:5:\"admin\";'),
-('b86884363c4f8221dbe1c9e5338c04ef6d468b3a',	'::1',	1577431545,	'__ci_last_regenerate|i:1577431263;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";name|s:10:\"Steve Jobs\";login_type|s:5:\"admin\";'),
-('bf9dc7d3e2c48123ea5f97e851b83385e84fe047',	'::1',	1577954769,	'__ci_last_regenerate|i:1577954473;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";name|s:10:\"Steve Jobs\";login_type|s:5:\"admin\";'),
-('c1644cf5e41310a6bb20bfa6e373f4992b4f9c01',	'::1',	1577932811,	'__ci_last_regenerate|i:1577932663;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";name|s:10:\"Steve Jobs\";login_type|s:5:\"admin\";'),
-('cb49b5cd46e290b13257786e61bca2252ac67165',	'::1',	1577932273,	'__ci_last_regenerate|i:1577932040;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";name|s:10:\"Steve Jobs\";login_type|s:5:\"admin\";'),
-('cd32bc2440698a72e9fa2868c8c99bb7a363b4e1',	'::1',	1577940708,	'__ci_last_regenerate|i:1577940428;teacher_login|s:1:\"1\";teacher_id|s:2:\"27\";login_user_id|s:2:\"27\";name|s:13:\"Abner Santizo\";login_type|s:7:\"teacher\";'),
-('cea680ce989e46d1f3b5d7a7076d40ac036ecf31',	'::1',	1577945646,	'__ci_last_regenerate|i:1577945453;'),
-('d2e93e87cc32f4fb190d0cc3d4f9487e54475055',	'127.0.0.1',	1507877442,	'__ci_last_regenerate|i:1507877169;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";name|s:10:\"Steve Jobs\";login_type|s:5:\"admin\";'),
-('d536d4bcbc6eea7a27f77aeefbf23caa9f876213',	'::1',	1577412512,	'__ci_last_regenerate|i:1577412300;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";name|s:10:\"Steve Jobs\";login_type|s:5:\"admin\";'),
-('d646f6c277ccaf7ec27593d5042714e2e561d99d',	'::1',	1577935191,	'__ci_last_regenerate|i:1577935149;teacher_login|s:1:\"1\";teacher_id|s:2:\"27\";login_user_id|s:2:\"27\";name|s:13:\"Abner Santizo\";login_type|s:7:\"teacher\";'),
-('db28dfd7e004917c8a365148620f2776271b05d1',	'::1',	1577422934,	'__ci_last_regenerate|i:1577422651;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";name|s:10:\"Steve Jobs\";login_type|s:5:\"admin\";'),
-('djtm9hsen0qmffbr7cm1k0grs4',	'::1',	1578299898,	'__ci_last_regenerate|i:1578297839;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";name|s:10:\"Steve Jobs\";login_type|s:5:\"admin\";'),
-('e39fa24bb82ce5bd8090379c6643925a12e7055f',	'::1',	1577425474,	'__ci_last_regenerate|i:1577425439;student_login|s:1:\"1\";student_id|s:1:\"3\";login_user_id|s:1:\"3\";name|s:7:\"cancer1\";login_type|s:7:\"student\";'),
-('e3a0b9225e54f97cb310f13dd2f178150d8eaad7',	'::1',	1577943329,	'__ci_last_regenerate|i:1577943307;parent_login|s:1:\"1\";parent_id|s:2:\"31\";login_user_id|s:2:\"31\";name|s:4:\"noel\";login_type|s:6:\"parent\";'),
-('e461cdb1ea67400919ded0cecc697a20f8c15649',	'::1',	1577931816,	'__ci_last_regenerate|i:1577931547;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";name|s:10:\"Steve Jobs\";login_type|s:5:\"admin\";'),
-('e6c6cde87a3065a6ac3a7af24fda699b2b6bc952',	'::1',	1577941021,	'__ci_last_regenerate|i:1577941021;teacher_login|s:1:\"1\";teacher_id|s:2:\"27\";login_user_id|s:2:\"27\";name|s:13:\"Abner Santizo\";login_type|s:7:\"teacher\";'),
-('e7cfb5a169c43559bde0f5475d0a2f8f7e74e340',	'::1',	1577944304,	'__ci_last_regenerate|i:1577944015;parent_login|s:1:\"1\";parent_id|s:2:\"31\";login_user_id|s:2:\"31\";name|s:4:\"noel\";login_type|s:6:\"parent\";'),
-('ea4e66a5757b33158a05123a44944ccf9a98c31c',	'::1',	1577932633,	'__ci_last_regenerate|i:1577932351;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";name|s:10:\"Steve Jobs\";login_type|s:5:\"admin\";'),
-('ed09be2454af811feebbf3605ce1d266c5ee62b5',	'::1',	1577933827,	'__ci_last_regenerate|i:1577933827;student_login|s:1:\"1\";student_id|s:1:\"2\";login_user_id|s:1:\"2\";name|s:6:\"cancer\";login_type|s:7:\"student\";'),
-('ed638f1ea2c9e9a9265b54f442c1dfabdb4f4324',	'::1',	1577346906,	'__ci_last_regenerate|i:1577346865;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";name|s:10:\"Steve Jobs\";login_type|s:5:\"admin\";'),
-('f0873675d7d73d5204661891189fd79baafe18f2',	'::1',	1577933238,	'__ci_last_regenerate|i:1577933164;student_login|s:1:\"1\";student_id|s:1:\"2\";login_user_id|s:1:\"2\";name|s:6:\"cancer\";login_type|s:7:\"student\";'),
-('f327402f269df0c5901c27231b822ce748066e3f',	'::1',	1577411782,	'__ci_last_regenerate|i:1577411505;student_login|s:1:\"1\";student_id|s:1:\"1\";login_user_id|s:1:\"1\";name|s:4:\"koko\";login_type|s:7:\"student\";'),
-('f3f0ada538c665ce9cad3910c51bccf677f1b6c2',	'::1',	1577954113,	'__ci_last_regenerate|i:1577953820;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";name|s:10:\"Steve Jobs\";login_type|s:5:\"admin\";'),
-('f770a2e361ad6aae330c29f8535cb2ac2ee34b6d',	'::1',	1577419985,	'__ci_last_regenerate|i:1577419777;student_login|s:1:\"1\";student_id|s:1:\"3\";login_user_id|s:1:\"3\";name|s:7:\"cancer1\";login_type|s:7:\"student\";'),
-('f84940d70c764a96ebde17d16f32f3eb0c744a40',	'::1',	1577946798,	'__ci_last_regenerate|i:1577946798;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";name|s:10:\"Steve Jobs\";login_type|s:5:\"admin\";'),
-('fa061f5f6167c3b7c7f1ef7e7b342e85ccb0794f',	'::1',	1577424488,	'__ci_last_regenerate|i:1577424194;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";name|s:10:\"Steve Jobs\";login_type|s:5:\"admin\";'),
-('fdc7dbd4612065329d97cc29f388dff98729031d',	'::1',	1577412109,	'__ci_last_regenerate|i:1577411815;student_login|s:1:\"1\";student_id|s:1:\"1\";login_user_id|s:1:\"1\";name|s:4:\"koko\";login_type|s:7:\"student\";'),
-('fe0d9e26e6af4b8f7de6358a0ab1b8767aa75162',	'::1',	1577433003,	'__ci_last_regenerate|i:1577432742;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";name|s:10:\"Steve Jobs\";login_type|s:5:\"admin\";'),
-('fe794659dd323f208a1fa8969ad089cc7a2641c9',	'::1',	1577950631,	'__ci_last_regenerate|i:1577950359;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";name|s:10:\"Steve Jobs\";login_type|s:5:\"admin\";'),
-('ff49e7b2a472d21b1d20d375d7c7c1ce42b10a5d',	'::1',	1577953158,	'__ci_last_regenerate|i:1577952963;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";name|s:10:\"Steve Jobs\";login_type|s:5:\"admin\";');
+('05a13218adafd4a21ae4a3f741b569014c21da2c',	'::1',	1579834211,	'__ci_last_regenerate|i:1579834211;'),
+('0922d772d40c60078dd0f959fe3cc0f9ce478fcd',	'::1',	1579223682,	'__ci_last_regenerate|i:1579223682;'),
+('161bc4ae0481c3be73e59291b2f23139a9150e7c',	'::1',	1579856752,	'__ci_last_regenerate|i:1579854774;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";name|s:10:\"Steve Jobs\";login_type|s:5:\"admin\";'),
+('28c21b09810869dd8fd30083fe8455764ed9b4c6',	'::1',	1580455978,	'__ci_last_regenerate|i:1580434404;student_login|s:1:\"1\";student_id|s:2:\"12\";login_user_id|s:2:\"12\";name|s:2:\"uv\";login_type|s:7:\"student\";'),
+('29a8329216e3917600c553c29b6309bc5970180e',	'::1',	1580695833,	'__ci_last_regenerate|i:1580695833;'),
+('35a912694c9e21f372a4ac74deeaf85602277a74',	'::1',	1579572056,	'__ci_last_regenerate|i:1579571574;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";name|s:10:\"Steve Jobs\";login_type|s:5:\"admin\";'),
+('39a2c110cb32603e894cbcdc5951ebc9da84ee25',	'::1',	1581043447,	'__ci_last_regenerate|i:1581041231;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";name|s:10:\"Steve Jobs\";login_type|s:5:\"admin\";'),
+('3b1cb2cd796d1d7244d00bdbc7e277b1b50291ee',	'::1',	1580892332,	'__ci_last_regenerate|i:1580890652;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";name|s:10:\"Steve Jobs\";login_type|s:5:\"admin\";'),
+('42d3cb073573d660e38062c99b1744c4217ddb60',	'::1',	1578994477,	'__ci_last_regenerate|i:1578989829;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";name|s:10:\"Steve Jobs\";login_type|s:5:\"admin\";'),
+('43ca7511cadb1aa044e87a4ee21b180291df5465',	'::1',	1579231521,	'__ci_last_regenerate|i:1579223682;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";name|s:10:\"Steve Jobs\";login_type|s:5:\"admin\";'),
+('460e6017e4b0fd2b2612b5ab7c601b5250d15774',	'::1',	1578989812,	'__ci_last_regenerate|i:1578980828;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";name|s:10:\"Steve Jobs\";login_type|s:5:\"admin\";'),
+('4c729881071f23747fda8dc3298479edd8069062',	'::1',	1579076078,	'__ci_last_regenerate|i:1579076073;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";name|s:10:\"Steve Jobs\";login_type|s:5:\"admin\";'),
+('4fc458f0e11239fceed75446838d82cd3f83951b',	'::1',	1579598344,	'__ci_last_regenerate|i:1579590519;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";name|s:10:\"Steve Jobs\";login_type|s:5:\"admin\";'),
+('534771b9500b73369e21d665568e19222d84868f',	'::1',	1578989392,	'__ci_last_regenerate|i:1578989273;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";name|s:10:\"Steve Jobs\";login_type|s:5:\"admin\";'),
+('554c64e64530745abbae18b2d1bc30a8b298656d',	'::1',	1580118141,	'__ci_last_regenerate|i:1580113543;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";name|s:10:\"Steve Jobs\";login_type|s:5:\"admin\";'),
+('5a1687186d65f38c44595ba319245787ff145918',	'::1',	1580189104,	'__ci_last_regenerate|i:1580181227;student_login|s:1:\"1\";student_id|s:2:\"12\";login_user_id|s:2:\"12\";name|s:2:\"uv\";login_type|s:7:\"student\";'),
+('6c361b867df3a66adf95c4b77da7a663d7a10b23',	'::1',	1581064583,	'__ci_last_regenerate|i:1581064064;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";name|s:10:\"Steve Jobs\";login_type|s:5:\"admin\";'),
+('6dba1c8f3e24e87a0222e11c13ff9b5269ff1d31',	'::1',	1579506028,	'__ci_last_regenerate|i:1579497152;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";name|s:10:\"Steve Jobs\";login_type|s:5:\"admin\";'),
+('6de13504067b5d1ba71fae9e59cfae0ae8febc7b',	'::1',	1581060837,	'__ci_last_regenerate|i:1581054047;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";name|s:10:\"Steve Jobs\";login_type|s:5:\"admin\";'),
+('75ff5d3efae12a8fdf175ae97e8ad4cff6a750ec',	'::1',	1580808897,	'__ci_last_regenerate|i:1580807232;student_login|s:1:\"1\";student_id|s:2:\"14\";login_user_id|s:2:\"14\";name|s:1:\"f\";login_type|s:7:\"student\";'),
+('7a5b9956oumm4ftif01n8ij4s4',	'::1',	1579766884,	'__ci_last_regenerate|i:1579758484;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";name|s:10:\"Steve Jobs\";login_type|s:5:\"admin\";'),
+('882c0b57391bf1fcf87683fc48067e4cdbf0829a',	'::1',	1580797914,	'__ci_last_regenerate|i:1580789668;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";name|s:10:\"Steve Jobs\";login_type|s:5:\"admin\";'),
+('93d1b7dd806fd28268824e8d7ed4c15116371d9d',	'::1',	1579487819,	'__ci_last_regenerate|i:1579486773;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";name|s:10:\"Steve Jobs\";login_type|s:5:\"admin\";'),
+('93dd6d8a87d1be2796c28e3917afe44f87c06972',	'::1',	1579326236,	'__ci_last_regenerate|i:1579326058;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";name|s:10:\"Steve Jobs\";login_type|s:5:\"admin\";'),
+('945364ff14950b3f2651b849690a5b0cd509f681',	'::1',	1580724218,	'__ci_last_regenerate|i:1580721122;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";name|s:10:\"Steve Jobs\";login_type|s:5:\"admin\";'),
+('9b200f5e94a89f2c59b6e03e0cd1e2b418fd9f28',	'::1',	1580876954,	'__ci_last_regenerate|i:1580867149;student_login|s:1:\"1\";student_id|s:2:\"14\";login_user_id|s:2:\"14\";name|s:1:\"f\";login_type|s:7:\"student\";'),
+('a40b3ca721d4ebe6543168e2d2888f31cf446cce',	'::1',	1579746243,	'__ci_last_regenerate|i:1579745206;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";name|s:10:\"Steve Jobs\";login_type|s:5:\"admin\";'),
+('b9e33dmo0cgd9mfmcdfijjmja8',	'::1',	1579203135,	'__ci_last_regenerate|i:1579203135;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";name|s:10:\"Steve Jobs\";login_type|s:5:\"admin\";'),
+('c28dc7978c1f5bd7199dfdfce97d5eada706556a',	'::1',	1580462273,	'__ci_last_regenerate|i:1580461302;teacher_login|s:1:\"1\";teacher_id|s:2:\"30\";login_user_id|s:2:\"30\";name|s:17:\"Ronalyn Baraquiel\";login_type|s:7:\"teacher\";'),
+('c3865555567b9328a4938970412858ab6ab44dab',	'::1',	1581304622,	'__ci_last_regenerate|i:1581296988;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";name|s:10:\"Steve Jobs\";login_type|s:5:\"admin\";'),
+('c4301805320263b09ffb94a03730bb78b69953e3',	'::1',	1580374540,	'__ci_last_regenerate|i:1580374530;student_login|s:1:\"1\";student_id|s:2:\"12\";login_user_id|s:2:\"12\";name|s:2:\"uv\";login_type|s:7:\"student\";'),
+('cc779502881c50901f69cee5a143cfc1848fa9e6',	'::1',	1580205642,	'__ci_last_regenerate|i:1580203395;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";name|s:10:\"Steve Jobs\";login_type|s:5:\"admin\";'),
+('ce3d57084521adb8d6d06707c5e68d2f1d12039b',	'::1',	1579836743,	'__ci_last_regenerate|i:1579835420;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";name|s:10:\"Steve Jobs\";login_type|s:5:\"admin\";'),
+('d67584147e2c272fca888c6abe8aef0303890ae5',	'::1',	1580711786,	'__ci_last_regenerate|i:1580703041;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";name|s:10:\"Steve Jobs\";login_type|s:5:\"admin\";'),
+('eeab352cf7903d19f4f04ba5ff702fe5731c44e3',	'::1',	1580889116,	'__ci_last_regenerate|i:1580881135;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";name|s:10:\"Steve Jobs\";login_type|s:5:\"admin\";'),
+('ephut8pb705vtqf6eo7eq2t4h4',	'::1',	1580784081,	'__ci_last_regenerate|i:1580780292;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";name|s:10:\"Steve Jobs\";login_type|s:5:\"admin\";'),
+('f424bd4af7e3dd282a86e9ba047a4320e6d0f7ea',	'::1',	1580721119,	'__ci_last_regenerate|i:1580712117;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";name|s:10:\"Steve Jobs\";login_type|s:5:\"admin\";'),
+('f559eb03011c5b1c63d7b27dcbe07babf0e237c3',	'::1',	1579508470,	'__ci_last_regenerate|i:1579506295;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";name|s:10:\"Steve Jobs\";login_type|s:5:\"admin\";'),
+('fb36376fedb59d3f4303535324c3a523091f9073',	'::1',	1579590180,	'__ci_last_regenerate|i:1579581437;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";name|s:10:\"Steve Jobs\";login_type|s:5:\"admin\";'),
+('fd4ed96d1cf93a06c5cd45f6ddaa654c24128a12',	'::1',	1579237945,	'__ci_last_regenerate|i:1579233698;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";name|s:10:\"Steve Jobs\";login_type|s:5:\"admin\";'),
+('p74vst5p4nm3c3gh1dno5lu19r',	'::1',	1579208756,	'__ci_last_regenerate|i:1579203135;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";name|s:10:\"Steve Jobs\";login_type|s:5:\"admin\";'),
+('tgrvmtdg0imulfi1qsamcigd21',	'::1',	1580373627,	'__ci_last_regenerate|i:1580364857;student_login|s:1:\"1\";student_id|s:2:\"12\";login_user_id|s:2:\"12\";name|s:2:\"uv\";login_type|s:7:\"student\";');
 
 DROP TABLE IF EXISTS `class`;
 CREATE TABLE `class` (
@@ -221,8 +203,10 @@ CREATE TABLE `class` (
 
 TRUNCATE `class`;
 INSERT INTO `class` (`class_id`, `name`, `name_numeric`, `teacher_id`) VALUES
-(1,	'BSIT',	'',	27),
-(2,	'ACT',	'',	29);
+(1,	'BSIT-191',	'',	0),
+(2,	'ACT',	'',	29),
+(3,	'BSIT 2ND YEAR',	'',	0),
+(4,	'fff',	'',	0);
 
 DROP TABLE IF EXISTS `class_routine`;
 CREATE TABLE `class_routine` (
@@ -230,6 +214,7 @@ CREATE TABLE `class_routine` (
   `class_id` int(11) NOT NULL,
   `section_id` int(11) NOT NULL,
   `subject_id` int(11) NOT NULL,
+  `room_id` longtext COLLATE utf8_unicode_ci NOT NULL,
   `time_start` int(11) NOT NULL,
   `time_end` int(11) NOT NULL,
   `time_start_min` int(11) NOT NULL,
@@ -240,9 +225,12 @@ CREATE TABLE `class_routine` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 TRUNCATE `class_routine`;
-INSERT INTO `class_routine` (`class_routine_id`, `class_id`, `section_id`, `subject_id`, `time_start`, `time_end`, `time_start_min`, `time_end_min`, `day`, `year`) VALUES
-(14,	1,	2,	1,	7,	9,	0,	0,	'Monday',	'2019-2020'),
-(15,	1,	2,	2,	8,	9,	0,	30,	'Monday',	'2019-2020');
+INSERT INTO `class_routine` (`class_routine_id`, `class_id`, `section_id`, `subject_id`, `room_id`, `time_start`, `time_end`, `time_start_min`, `time_end_min`, `day`, `year`) VALUES
+(14,	1,	2,	1,	'',	7,	9,	0,	0,	'Monday',	'2019-2020'),
+(15,	1,	2,	2,	'',	8,	9,	0,	30,	'Monday',	'2019-2020'),
+(16,	1,	2,	1,	'102',	15,	16,	10,	20,	'Monday',	'2019-2020'),
+(17,	1,	2,	1,	'101',	13,	15,	10,	25,	'Sunday',	'2020-2021'),
+(18,	1,	2,	2,	'102',	14,	17,	10,	20,	'Thursday',	'2020-2021');
 
 DROP TABLE IF EXISTS `document`;
 CREATE TABLE `document` (
@@ -279,20 +267,24 @@ CREATE TABLE `enroll` (
   `enroll_code` longtext COLLATE utf8_unicode_ci NOT NULL,
   `student_id` int(11) NOT NULL,
   `class_id` int(11) NOT NULL,
-  `section_id` int(11) DEFAULT NULL,
-  `roll` int(11) NOT NULL DEFAULT '0',
+  `section_id` int(11) NOT NULL DEFAULT '0',
   `date_added` longtext COLLATE utf8_unicode_ci NOT NULL,
   `year` longtext COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`enroll_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 TRUNCATE `enroll`;
-INSERT INTO `enroll` (`enroll_id`, `enroll_code`, `student_id`, `class_id`, `section_id`, `roll`, `date_added`, `year`) VALUES
-(1,	'4023374',	2,	1,	1,	11,	'1577413447',	'2016-2017'),
-(2,	'56d4f76',	3,	1,	1,	102,	'1577414486',	'2019-2020'),
-(3,	'b9a55eb',	4,	1,	2,	0,	'1577950359',	'2019-2020'),
-(4,	'c2a1adb',	5,	1,	4,	1,	'1578370643',	'2019-2020'),
-(5,	'ef06f1c',	6,	2,	3,	2,	'1578373282',	'2019-2020');
+INSERT INTO `enroll` (`enroll_id`, `enroll_code`, `student_id`, `class_id`, `section_id`, `date_added`, `year`) VALUES
+(1,	'4023374',	2,	1,	1,	'1577413447',	'2016-2017'),
+(2,	'56d4f76',	3,	1,	1,	'1577414486',	'2019-2020'),
+(3,	'b9a55eb',	4,	1,	2,	'1577950359',	'2019-2020'),
+(4,	'c2a1adb',	5,	1,	4,	'1578370643',	'2019-2020'),
+(5,	'ef06f1c',	6,	2,	3,	'1578373282',	'2019-2020'),
+(6,	'b4a8139',	7,	1,	2,	'1578802892',	'2019-2020'),
+(7,	'6cebd2d',	8,	1,	2,	'1579066814',	'2020-2021'),
+(8,	'b84da0c',	11,	1,	0,	'1579583520',	'2020-2021'),
+(9,	'17aab29',	12,	1,	0,	'1579583590',	'2020-2021'),
+(10,	'44c6f41',	14,	1,	4,	'1580781948',	'2020-2021');
 
 DROP TABLE IF EXISTS `events`;
 CREATE TABLE `events` (
@@ -411,6 +403,28 @@ TRUNCATE `gallery_category`;
 INSERT INTO `gallery_category` (`category_id`, `description`, `embed`, `title`) VALUES
 (1,	'',	'front image na makikita sa video ',	'');
 
+DROP TABLE IF EXISTS `grades`;
+CREATE TABLE `grades` (
+  `grade_id` int(11) NOT NULL AUTO_INCREMENT,
+  `semester` int(2) NOT NULL,
+  `year` longtext NOT NULL,
+  `class_id` int(11) DEFAULT NULL,
+  `section_id` int(11) DEFAULT NULL,
+  `subject_id` int(11) NOT NULL,
+  `student_id` int(11) DEFAULT NULL,
+  `student_grade` varchar(11) DEFAULT NULL,
+  `specific_grade` varchar(11) DEFAULT NULL,
+  `comments` longtext,
+  `status` int(11) NOT NULL DEFAULT '0' COMMENT '0-inactive, 1-active',
+  PRIMARY KEY (`grade_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+TRUNCATE `grades`;
+INSERT INTO `grades` (`grade_id`, `semester`, `year`, `class_id`, `section_id`, `subject_id`, `student_id`, `student_grade`, `specific_grade`, `comments`, `status`) VALUES
+(7,	1,	'2019-2020',	1,	2,	1,	4,	'2.00',	'111',	'fff',	0),
+(8,	1,	'2019-2020',	1,	2,	1,	7,	'1.75',	'111',	'aaa',	0),
+(9,	1,	'2020-2021',	1,	2,	1,	8,	'1.00',	'11',	'222',	0);
+
 DROP TABLE IF EXISTS `homework`;
 CREATE TABLE `homework` (
   `homework_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -443,15 +457,17 @@ CREATE TABLE `horarios_examenes` (
   `time_start_min` int(11) NOT NULL,
   `time_end_min` int(11) NOT NULL,
   `day` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `room_id` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `year` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `fecha` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`horario_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 TRUNCATE `horarios_examenes`;
-INSERT INTO `horarios_examenes` (`horario_id`, `class_id`, `section_id`, `subject_id`, `time_start`, `time_end`, `time_start_min`, `time_end_min`, `day`, `year`, `fecha`) VALUES
-(2,	1,	4,	1,	17,	18,	30,	30,	'Friday',	'2019-2020',	'03-01-2020'),
-(3,	1,	2,	1,	17,	18,	30,	30,	'Friday',	'2019-2020',	'03-01-2020');
+INSERT INTO `horarios_examenes` (`horario_id`, `class_id`, `section_id`, `subject_id`, `time_start`, `time_end`, `time_start_min`, `time_end_min`, `day`, `room_id`, `year`, `fecha`) VALUES
+(2,	1,	4,	1,	17,	18,	30,	30,	'Friday',	'',	'2019-2020',	'03-01-2020'),
+(3,	1,	2,	1,	17,	18,	30,	30,	'Friday',	'',	'2019-2020',	'03-01-2020'),
+(4,	1,	2,	1,	17,	20,	15,	40,	'Monday',	'102',	'2020-2021',	'01-01-2020');
 
 DROP TABLE IF EXISTS `invoice`;
 CREATE TABLE `invoice` (
@@ -475,7 +491,8 @@ TRUNCATE `invoice`;
 INSERT INTO `invoice` (`invoice_id`, `student_id`, `title`, `description`, `amount`, `amount_paid`, `due`, `creation_timestamp`, `payment_timestamp`, `payment_method`, `payment_details`, `status`, `year`) VALUES
 (40,	0,	'wer',	'asdfasdf',	55,	'555',	'-500',	1577635200,	'',	'',	'',	'unpaid',	'2016-2017'),
 (41,	0,	'ID',	'bayad sa iD',	300,	'50',	'250',	1577116800,	'',	'',	'',	'unpaid',	'2016-2017'),
-(42,	2,	'ID',	'bayad sa ID',	100,	'80',	'20',	1576684800,	'',	'',	'',	'unpaid',	'2016-2017');
+(42,	2,	'ID',	'bayad sa ID',	100,	'80',	'20',	1576684800,	'',	'',	'',	'unpaid',	'2016-2017'),
+(43,	7,	'Diploma',	'diploma',	100,	'100',	'0',	1577865600,	'',	'',	'',	'unpaid',	'2019-2020');
 
 DROP TABLE IF EXISTS `language`;
 CREATE TABLE `language` (
@@ -870,7 +887,40 @@ INSERT INTO `language` (`phrase_id`, `phrase`, `english`, `spanish`, `portuguse`
 (3940,	'Sfffend',	'',	'',	NULL,	NULL,	NULL,	NULL,	''),
 (3941,	'asdadadsd',	'',	'',	NULL,	NULL,	NULL,	NULL,	''),
 (3942,	'Input Grade',	'',	'',	NULL,	NULL,	NULL,	NULL,	''),
-(3943,	'Input-Grades',	'',	'',	NULL,	NULL,	NULL,	NULL,	'');
+(3943,	'Input-Grades',	'',	'',	NULL,	NULL,	NULL,	NULL,	''),
+(3944,	'Grades',	'',	'',	NULL,	NULL,	NULL,	NULL,	''),
+(3945,	'Manage Grades',	'',	'',	NULL,	NULL,	NULL,	NULL,	''),
+(3946,	'Student-Grade',	'',	'',	NULL,	NULL,	NULL,	NULL,	''),
+(3947,	'Manage Attendance',	'',	'',	NULL,	NULL,	NULL,	NULL,	''),
+(3948,	'Manage Grade',	'',	'',	NULL,	NULL,	NULL,	NULL,	''),
+(3949,	'Grade',	'',	'',	NULL,	NULL,	NULL,	NULL,	''),
+(3950,	'WEW',	'',	'',	NULL,	NULL,	NULL,	NULL,	''),
+(3951,	'wwwww',	'',	'',	NULL,	NULL,	NULL,	NULL,	''),
+(3952,	'Specific Grade',	'',	'',	NULL,	NULL,	NULL,	NULL,	''),
+(3953,	'Comments (optional)',	'',	'',	NULL,	NULL,	NULL,	NULL,	''),
+(3954,	'Assigned-Teacher',	'',	'',	NULL,	NULL,	NULL,	NULL,	''),
+(3955,	'Room',	'',	'',	NULL,	NULL,	NULL,	NULL,	''),
+(3956,	'Voting',	'',	'',	NULL,	NULL,	NULL,	NULL,	''),
+(3957,	'Regular',	'',	'',	NULL,	NULL,	NULL,	NULL,	''),
+(3958,	'Irregular',	'',	'',	NULL,	NULL,	NULL,	NULL,	''),
+(3959,	'Select-Status',	'',	'',	NULL,	NULL,	NULL,	NULL,	''),
+(3960,	'View Grades',	'',	'',	NULL,	NULL,	NULL,	NULL,	''),
+(3961,	'View My Grades',	'',	'',	NULL,	NULL,	NULL,	NULL,	''),
+(3962,	'Specific-Grade',	'',	'',	NULL,	NULL,	NULL,	NULL,	''),
+(3963,	'Register Candidate',	'',	'',	NULL,	NULL,	NULL,	NULL,	''),
+(3964,	'Position',	'',	'',	NULL,	NULL,	NULL,	NULL,	''),
+(3965,	'Register',	'',	'',	NULL,	NULL,	NULL,	NULL,	''),
+(3966,	'President',	'',	'',	NULL,	NULL,	NULL,	NULL,	''),
+(3967,	'Vice President',	'',	'',	NULL,	NULL,	NULL,	NULL,	''),
+(3968,	'Secretary',	'',	'',	NULL,	NULL,	NULL,	NULL,	''),
+(3969,	'Auditor',	'',	'',	NULL,	NULL,	NULL,	NULL,	''),
+(3970,	'Treasurer',	'',	'',	NULL,	NULL,	NULL,	NULL,	''),
+(3971,	'Sgt & Arms',	'',	'',	NULL,	NULL,	NULL,	NULL,	''),
+(3972,	'Muse',	'',	'',	NULL,	NULL,	NULL,	NULL,	''),
+(3973,	'Escort',	'',	'',	NULL,	NULL,	NULL,	NULL,	''),
+(3974,	'Vote',	'',	'',	NULL,	NULL,	NULL,	NULL,	''),
+(3975,	'vote unavailable',	'',	'',	NULL,	NULL,	NULL,	NULL,	''),
+(3976,	'Winner of the year',	'',	'',	NULL,	NULL,	NULL,	NULL,	'');
 
 DROP TABLE IF EXISTS `libreria`;
 CREATE TABLE `libreria` (
@@ -1067,9 +1117,9 @@ CREATE TABLE `parent` (
 
 TRUNCATE `parent`;
 INSERT INTO `parent` (`parent_id`, `name`, `email`, `password`, `phone`, `address`, `profession`, `username`) VALUES
-(28,	'Adan Miller',	'adan@gmail.com',	'5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8',	'07737719200',	'60 Eastbourne Rd',	'Enginner',	'adan'),
+(28,	'Adan Miller',	'adan@gmail.com',	'adan',	'07737719200',	'60 Eastbourne Rd',	'Enginner',	'adan'),
 (29,	'Alexander Morgan',	'alexander@gmail.com',	'7c4a8d09ca3762af61e59520943dc26494f8941b',	'50241181902',	'26 Nith Street',	'Enginner',	'alexander'),
-(30,	'Isabel Jobs',	'isabel@gmail.com',	'a8803f9ed887f2bdaff770a533cf2f251187a94f',	'54833724',	'26 Stroud Rd',	'Architect',	'isabel'),
+(30,	'Isabel Jobs',	'isabel@gmail.com',	'isabel',	'54833724',	'26 Stroud Rd',	'Architect',	'isabel'),
 (31,	'noel',	'noel@gmail.com',	'cancer',	'099099897',	'manila',	'',	'noel'),
 (32,	'Teresa',	'teresa@gmail.com',	'2eb1f74718222b9cab10e7d8b0120535f7a7ad72',	'0999998444',	'Jose Panganiban C.N.',	'',	'Teresa');
 
@@ -1093,7 +1143,8 @@ TRUNCATE `payment`;
 INSERT INTO `payment` (`payment_id`, `expense_category_id`, `title`, `payment_type`, `invoice_id`, `student_id`, `method`, `description`, `amount`, `timestamp`, `year`) VALUES
 (49,	0,	'wer',	'income',	40,	0,	'1',	'asdfasdf',	'555',	'1577635200',	'2016-2017'),
 (50,	0,	'ID',	'income',	41,	0,	'1',	'bayad sa iD',	'50',	'1577116800',	'2016-2017'),
-(51,	0,	'ID',	'income',	42,	2,	'1',	'bayad sa ID',	'80',	'1576684800',	'2016-2017');
+(51,	0,	'ID',	'income',	42,	2,	'1',	'bayad sa ID',	'80',	'1576684800',	'2016-2017'),
+(52,	0,	'Diploma',	'income',	43,	7,	'1',	'diploma',	'100',	'1577865600',	'2019-2020');
 
 DROP TABLE IF EXISTS `poa`;
 CREATE TABLE `poa` (
@@ -1181,7 +1232,9 @@ TRUNCATE `section`;
 INSERT INTO `section` (`section_id`, `name`, `class_id`, `teacher_id`) VALUES
 (2,	'IT51',	1,	0),
 (3,	'A11',	2,	0),
-(4,	'IT61',	1,	29);
+(4,	'IT61',	1,	29),
+(5,	'A',	3,	NULL),
+(6,	'A',	4,	NULL);
 
 DROP TABLE IF EXISTS `settings`;
 CREATE TABLE `settings` (
@@ -1206,7 +1259,7 @@ INSERT INTO `settings` (`settings_id`, `type`, `description`) VALUES
 (15,	'ad',	''),
 (16,	'skin_colour',	'danger'),
 (18,	'domain',	'google.com'),
-(21,	'running_year',	'2019-2020'),
+(21,	'running_year',	'2020-2021'),
 (22,	'facebook_url',	'https://www.facebook.com/'),
 (23,	'twitter_url',	'https://www.twitter.com/'),
 (24,	'google_url',	'https://www.google.com/'),
@@ -1235,17 +1288,24 @@ CREATE TABLE `student` (
   `date` longtext COLLATE utf8_unicode_ci NOT NULL,
   `board` int(11) NOT NULL DEFAULT '0',
   `student_code` longtext COLLATE utf8_unicode_ci NOT NULL,
+  `student_status` int(11) DEFAULT NULL,
   PRIMARY KEY (`student_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 TRUNCATE `student`;
-INSERT INTO `student` (`student_id`, `name`, `birthday`, `sex`, `address`, `phone`, `email`, `password`, `parent_id`, `dormitory_id`, `transport_id`, `student_session`, `username`, `aditional_subjects_id`, `date`, `board`, `student_code`) VALUES
-(1,	'koko',	'30-21-2019',	'male',	'manila',	'0101010101',	'dadd@dadd.com',	'1234',	1,	1,	1,	1,	'koko',	'',	'',	1,	'101'),
-(2,	'cancer',	'25-11-2019',	'female',	'sss',	'1111',	'daddydadduy22@gmail.com',	'cancer',	28,	0,	0,	1,	'cancer',	'',	'1577449140',	0,	''),
-(3,	'cancer_cancer',	'09-12-2019',	'male',	'asdf',	'123123',	'blink_spoted23@yahoo.com',	'cancer1',	31,	21,	NULL,	1,	'cancer_cancer',	'',	'1577449140',	0,	''),
-(4,	'Patricia S. Cabrera',	'29-12-1995',	'female',	'Jose Panganiban C.N.',	'0999999999',	'patriciacabrera@gmail.com',	'pat',	32,	0,	0,	1,	'Cabrera',	'',	'1577967600',	0,	''),
-(5,	'sad',	'29-12-1995',	'male',	'asdfasdf',	'111',	'blink_spoted23@yahoo.com',	'sad',	31,	21,	NULL,	1,	'sad',	'',	'1578399600',	0,	''),
-(6,	'sample',	'06-01-2020',	'male',	'afasdf',	'23123',	'daddydadduy22@gmail.com',	'sample',	31,	NULL,	NULL,	1,	'sample',	'',	'1578399600',	0,	'');
+INSERT INTO `student` (`student_id`, `name`, `birthday`, `sex`, `address`, `phone`, `email`, `password`, `parent_id`, `dormitory_id`, `transport_id`, `student_session`, `username`, `aditional_subjects_id`, `date`, `board`, `student_code`, `student_status`) VALUES
+(1,	'koko',	'30-21-2019',	'male',	'manila',	'0101010101',	'dadd@dadd.com',	'1234',	1,	1,	1,	1,	'koko',	'',	'',	1,	'101',	NULL),
+(2,	'cancer',	'25-11-2019',	'female',	'sss',	'1111',	'daddydadduy22@gmail.com',	'cancer',	28,	0,	0,	1,	'cancer',	'',	'1577449140',	0,	'',	NULL),
+(3,	'cancer_cancer',	'09-12-2019',	'male',	'asdf',	'123123',	'blink_spoted23@yahoo.com',	'cancer1',	31,	21,	NULL,	1,	'cancer_cancer',	'',	'1577449140',	0,	'',	NULL),
+(4,	'Patricia S. Cabrera',	'29-12-1995',	'female',	'Jose Panganiban C.N.',	'0999999999',	'patriciacabrera@gmail.com',	'pat',	32,	0,	0,	1,	'Cabrera',	'',	'1577967600',	0,	'',	NULL),
+(5,	'sad',	'29-12-1995',	'male',	'asdfasdf',	'111',	'blink_spoted23@yahoo.com',	'sad',	31,	21,	NULL,	1,	'sad',	'',	'1578399600',	0,	'',	NULL),
+(6,	'sample',	'06-01-2020',	'male',	'afasdf',	'23123',	'daddydadduy22@gmail.com',	'sample',	31,	NULL,	NULL,	1,	'sample',	'',	'1578399600',	0,	'',	NULL),
+(7,	'Jaymark',	'31-12-2019',	'male',	'fff',	'111',	'albertespiritu14@yahoo.com',	'jaymark',	30,	NULL,	NULL,	1,	'jayson',	'',	'1578856800',	0,	'',	NULL),
+(8,	'jaymark1',	'15-01-2020',	'male',	'aaa',	'111',	'daddydadduy22@gmail.com',	'jaymark1',	30,	NULL,	NULL,	1,	'jaymark1',	'',	'1579062000',	0,	'',	NULL),
+(11,	'ireg',	'20-01-2020',	'male',	'asdfasdf',	'222',	'daddydadduy22@gmail.com',	'ireg',	29,	NULL,	NULL,	1,	'ireg',	'',	'1579580400',	0,	'',	2),
+(12,	'testing',	'01-01-2020',	'female',	'222',	'222',	'daddydadduy22@gmail.com',	'uv',	28,	NULL,	NULL,	1,	'uv',	'',	'1579580400',	0,	'',	2),
+(13,	'jessica',	'29-12-1995',	'female',	'bulacan',	'0101010101',	'daddydadduy22@gmail.com',	'jessica',	28,	NULL,	NULL,	1,	'jessica',	'',	'1580703600',	0,	'',	NULL),
+(14,	'f',	'30-11-1995',	'male',	's',	'1111',	'blink_spoted23@yahoo.com',	'f',	29,	NULL,	NULL,	1,	'f',	'',	'1580790000',	0,	'',	NULL);
 
 DROP TABLE IF EXISTS `students_request`;
 CREATE TABLE `students_request` (
@@ -1277,6 +1337,19 @@ CREATE TABLE `student_exam` (
 
 TRUNCATE `student_exam`;
 
+DROP TABLE IF EXISTS `student_irregular_selected_subject`;
+CREATE TABLE `student_irregular_selected_subject` (
+  `selected_subject_id` int(11) NOT NULL AUTO_INCREMENT,
+  `student_id` int(11) NOT NULL,
+  `selected_subject_concat_id` longtext NOT NULL,
+  PRIMARY KEY (`selected_subject_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+TRUNCATE `student_irregular_selected_subject`;
+INSERT INTO `student_irregular_selected_subject` (`selected_subject_id`, `student_id`, `selected_subject_concat_id`) VALUES
+(1,	11,	'1,3'),
+(2,	12,	'1,2');
+
 DROP TABLE IF EXISTS `subject`;
 CREATE TABLE `subject` (
   `subject_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -1301,7 +1374,8 @@ CREATE TABLE `subject` (
 TRUNCATE `subject`;
 INSERT INTO `subject` (`subject_id`, `name`, `class_id`, `teacher_id`, `year`, `la1`, `la2`, `la3`, `la4`, `la5`, `la6`, `la7`, `la8`, `la9`, `la10`, `final`) VALUES
 (1,	'Capstone',	1,	30,	'2019-2020',	'test1',	'laboratory',	'test2',	'technicall',	'',	'',	'',	'',	'',	NULL,	'Exam 2nd semister'),
-(2,	'Major Elective 2',	1,	28,	'2019-2020',	'',	'',	'',	'',	'',	'',	'',	'',	'',	NULL,	'');
+(2,	'Major Elective 2',	1,	28,	'2019-2020',	'',	'',	'',	'',	'',	'',	'',	'',	'',	NULL,	''),
+(3,	'ME1',	3,	31,	'2019-2020',	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL);
 
 DROP TABLE IF EXISTS `teacher`;
 CREATE TABLE `teacher` (
@@ -1323,7 +1397,7 @@ INSERT INTO `teacher` (`teacher_id`, `name`, `birthday`, `sex`, `address`, `phon
 (27,	'Abner Santizo',	'30-10-2017',	'male',	'Street Two, US.',	'49584985',	'aber@gmail.com',	'cancer',	'4500',	'aber'),
 (28,	'Greys Alvarado',	'01-11-2017',	'female',	'Street One, US.',	'6356475876',	'greys@gmail.com',	'210a28f50a8e9a0986df287ac9ae224de95b8978',	'5000',	'greys'),
 (29,	'John Smit',	'03-12-2017',	'male',	'Drummond Street',	'9732685908',	'john@gmail.com',	'd95d5a850ec278dab416ee606828d5e92e8adf65',	'6000',	'john'),
-(30,	'Ronalyn Baraquiel',	'09-01-1990',	'female',	'Daet C.N.',	'0999999999',	'ronalyn@gmail.com',	'affa4f6cd5e5cc4eb0b692be2c3e9b7b5240a350',	'',	'ronalyn'),
+(30,	'Ronalyn Baraquiel',	'09-01-1990',	'female',	'Daet C.N.',	'0999999999',	'ronalyn@gmail.com',	'ronalyn',	'',	'ronalyn'),
 (31,	'test',	NULL,	'male',	'test',	'1111',	'blink_spoted23@yahoo.com',	'test',	'',	'test');
 
 DROP TABLE IF EXISTS `ticket`;
@@ -1370,4 +1444,48 @@ CREATE TABLE `transport` (
 
 TRUNCATE `transport`;
 
--- 2020-01-09 04:07:36
+DROP TABLE IF EXISTS `voting_position`;
+CREATE TABLE `voting_position` (
+  `position_id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` longtext NOT NULL,
+  PRIMARY KEY (`position_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+TRUNCATE `voting_position`;
+INSERT INTO `voting_position` (`position_id`, `name`) VALUES
+(0,	'President'),
+(1,	'Vice President'),
+(2,	'Secretary'),
+(3,	'Auditor'),
+(4,	'Treasurer'),
+(5,	'Sgt & Arms'),
+(6,	'Muse'),
+(7,	'Escort');
+
+DROP TABLE IF EXISTS `voting_process`;
+CREATE TABLE `voting_process` (
+  `candidate_id` int(11) NOT NULL AUTO_INCREMENT,
+  `candidate_student_id` int(11) NOT NULL,
+  `student_voter_id` int(11) NOT NULL,
+  `position_id` int(11) NOT NULL,
+  `year` longtext NOT NULL,
+  PRIMARY KEY (`candidate_id`),
+  KEY `position_id` (`position_id`),
+  CONSTRAINT `voting_process_ibfk_1` FOREIGN KEY (`position_id`) REFERENCES `voting_position` (`position_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+TRUNCATE `voting_process`;
+INSERT INTO `voting_process` (`candidate_id`, `candidate_student_id`, `student_voter_id`, `position_id`, `year`) VALUES
+(5,	11,	14,	4,	'2020-2021'),
+(6,	12,	14,	3,	'2020-2021'),
+(7,	4,	2,	0,	''),
+(8,	6,	15,	5,	''),
+(9,	6,	6,	5,	''),
+(10,	5,	5,	2,	''),
+(11,	7,	8,	2,	''),
+(13,	24,	5,	6,	''),
+(14,	11,	11,	3,	''),
+(16,	12,	72,	3,	''),
+(17,	11,	12,	4,	'2020-2021');
+
+-- 2020-02-10 03:58:44

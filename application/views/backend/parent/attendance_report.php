@@ -16,11 +16,9 @@
 <div class="col-md-3">
             <div class="form-group">
                    <?php $children_of_parent = $this->db->get_where('student' , array('parent_id' => $this->session->userdata('parent_id')))->result_array();
-                            foreach ($children_of_parent as $row): 
-
-    $class_id = $this->db->get_where('enroll' , array('student_id' => $row['student_id'] , 'year' => $this->db->get_where('settings' , array('type' => 'running_year'))->row()->description))->row()->class_id;
-
-  $section_id = $this->db->get_where('enroll' , array('student_id' => $row['student_id'] , 'year' => $this->db->get_where('settings' , array('type' => 'running_year'))->row()->description))->row()->section_id;
+                            foreach ($children_of_parent as $row):
+                                $class_id = $this->db->get_where('enroll' , array('student_id' => $row['student_id'] , 'year' => $this->db->get_where('settings' , array('type' => 'running_year'))->row()->description))->row()->class_id;
+                                $section_id = $this->db->get_where('enroll' , array('student_id' => $row['student_id'] , 'year' => $this->db->get_where('settings' , array('type' => 'running_year'))->row()->description))->row()->section_id;
                                 ?>
                     <input type="hidden" name="class_id" value="<?php echo $class_id; ?>">
                     <?php endforeach; ?>

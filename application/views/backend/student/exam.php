@@ -12,8 +12,32 @@
 </div>
 
 <?php
-    $section_id = $this->db->get_where('enroll' , array('student_id' => $student_id,'class_id' => $class_id,
-    'year' => $running_year))->row()->section_id;?>
+$section_id = '';
+$irreg = 0;
+$qry = $this->db->get_where('enroll' , array(
+    'student_id' => $student_id,
+    'class_id' => $class_id,
+    'year' => $running_year
+))->result_array();
+
+$student_enroll = $qry[0];
+if($student_enroll['section_id'] == 0 ){
+    $irreg = 1;
+//            echo $student_enroll['student_id'];
+//        $get_subject = $this->db->get_where('student_irregular_selected_subject',array('student_id' => $student_enroll['student_id']))->row()->selected_subject_concat_id;
+//        $subject_id = explode(',',$get_subject);
+//        foreach ($subject_id as $item) {
+//            $subject_ids = $item;
+//        }
+}else{
+    $irreg = 0;
+    $section_id = $this->db->get_where('enroll' , array(
+        'student_id' => $student_id,
+        'class_id' => $class_id,
+        'year' => $running_year
+    ))->row()->section_id;
+}
+?>
 <hr/>
 <div class="row">    
     <div class="col-md-12">
@@ -24,7 +48,6 @@
          <?php echo get_phrase('Section'); ?> - <?php echo $this->db->get_where('section' , array('section_id' => $section_id))->row()->name;?>
     </div>
 </div>
-
 <div class="panel-body">
 <table cellpadding="0" cellspacing="0" border="0"  class="table table-bordered">
                     <tbody>
@@ -45,7 +68,9 @@
                                 $this->db->order_by("time_start", "asc");
                                 $this->db->where('day' , $day);
                                 $this->db->where('class_id' , $class_id);
-                                $this->db->where('section_id' , $section_id);
+                                if($irreg == 0 ){
+                                    $this->db->where('section_id' , $section_id);
+                                }
                                 $this->db->where('year' , $running_year);
                                 $routines   =   $this->db->get('horarios_examenes')->result_array();
                                 foreach($routines as $row2):
@@ -54,10 +79,23 @@
                                     <button class="btn btn-info">
                 <?php echo $this->crud_model->get_subject_name_by_id($row2['subject_id']);?>
                 <?php
-                if ($row2['time_start_min'] == 0 && $row2['time_end_min'] == 0) 
-                echo '('.$row2['time_start'].'-'.$row2['time_end'].')';
+                if ($row2['time_start_min'] == 0 && $row2['time_end_min'] == 0)
+                    echo '('.$row2['time_start'].'-'.$row2['time_end'].' | Room-['.$row2['room_id'].'])';
                 if ($row2['time_start_min'] != 0 || $row2['time_end_min'] != 0)
-                echo '('.$row2['time_start'].':'.$row2['time_start_min'].' a '.$row2['time_end'].':'.$row2['time_end_min'].' Date: '.$row2['fecha'].')'; ?>
+                    if($row2['time_start'] > 12  ){
+                        $row2['time_start'] = $row2['time_start'] - 12;
+                        $mode = " PM";
+                    }else{
+                        $mode = " AM";
+                    }
+                if($row2['time_end'] > 12  ){
+                    $row2['time_end'] = $row2['time_end'] - 12;
+                    $mode1 = " PM";
+                }else{
+                    $mode1 = " AM";
+                }
+                echo '( '.$row2['time_start'].':'.$row2['time_start_min'].$mode.' to '.$row2['time_end'].':'.$row2['time_end_min'].$mode1.' | Room-['.$row2['room_id'].'] ~ Date: '.$row2['fecha'].')';
+                ?>
                                     </button>
                                 </div>
                                 <?php endforeach;?>

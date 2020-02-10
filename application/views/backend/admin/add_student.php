@@ -67,7 +67,18 @@
                           </select>
 						</div> 
 					</div>
-					
+
+                    <div class="form-group">
+                        <label for="field-2" class="col-sm-3 control-label"><?php echo get_phrase('Status'); ?></label>
+                        <div class="col-sm-5">
+                            <select name="status_id" class="form-control status_id" id="status_id">
+                                <option value=""><?php echo get_phrase('Select-Status'); ?></option>
+                                <option value="1"><?php echo get_phrase('Regular'); ?></option>
+                                <option value="2"><?php echo get_phrase('Irregular'); ?></option>
+                            </select>
+                        </div>
+                    </div>
+
 					<div class="form-group">
 						<label for="field-2" class="col-sm-3 control-label"><?php echo get_phrase('Class'); ?></label>
 						<div class="col-sm-5">
@@ -82,10 +93,10 @@
 								endforeach;
 							  ?>
                           </select>
-						</div> 
+						</div>
 					</div>
 
-					<div class="form-group">
+					<div class="form-group" id="stat_section">
 						<label for="field-2" class="col-sm-3 control-label"><?php echo get_phrase('Section'); ?></label>
 		                    <div class="col-sm-5">
 		                        <select name="section_id" class="form-control" id="section_selector_holder">
@@ -93,14 +104,18 @@
 			                    </select>
 			                </div>
 					</div>
-					
-					<div class="form-group">
-						<label for="field-2" class="col-sm-3 control-label"><?php echo get_phrase('Roll'); ?></label>
-						<div class="col-sm-5">
-							<input type="text" class="form-control" name="roll" value="" >
-						</div> 
-					</div>
-					
+
+
+                <div class="form-group" id="ireg_status_holder" style="display:none;">
+                    <label for="field-2" class="col-sm-3 control-label"><?php echo get_phrase('Subject'); ?></label>
+                    <div class="col-sm-5">
+                        <select multiple size="0" class="form-control subject_selector_holder" name="subject_selected[]">
+
+                        </select>
+                    </div>
+                </div>
+
+
 					<div class="form-group">
 						<label for="field-2" class="col-sm-3 control-label"><?php echo get_phrase('Birthday'); ?></label>
 						<div class="col-sm-5">
@@ -198,7 +213,38 @@
                 jQuery('#section_selector_holder').html(response);
             }
         });
+
+
+        $.ajax({
+            url: '<?php echo base_url();?>index.php?admin/get_class_subject/' + class_id ,
+            success: function(response)
+            {
+                jQuery('.subject_selector_holder').html(response);
+
+                $('.subject_selector_holder').attr('size',8);
+            }
+        });
+
+
+
+
     }
 
+    $(document).ready(function(){
+        $("select.status_id").change(function(){
+            var status = $(this).children("option:selected").val();
+            if(status == 1){
+                $('#stat_section').css('display','block');
+                $('#ireg_status_holder').css('display','none');
 
+            }else if(status==2){
+                $('#stat_section').css('display','none');
+                $('#ireg_status_holder').css('display','block');
+
+            }else{
+                $('#stat_section').css('display','none');
+                $('#stat_section').css('display','none');
+            }
+        });
+    });
 </script>

@@ -44,6 +44,11 @@
                               <?php endforeach; ?>
                         </ul>
                     </li>
+                    <li> <a href="javascript:void(0);" class="waves-effect"><i class="ti-id-badge"></i> <span class="hide-menu"><?php echo get_phrase('Grades'); ?><span class="fa arrow"></span></span></a>
+                        <ul class="nav nav-third-level">
+                            <li> <a href="<?php echo base_url(); ?>index.php?teacher/grades"><?php echo get_phrase('Manage Grades'); ?></a></li>
+                        </ul>
+                    </li>
                      <li> <a href="javascript:void(0)" class="waves-effect"><i data-icon="F" class="ti-alarm-clock"></i> <span class="hide-menu"><?php echo get_phrase('Schedules'); ?><span class="fa arrow"></span></span></a>
                         <ul class="nav nav-second-level">
                         <li> <a href="javascript:void(0)" class="waves-effect"><?php echo get_phrase('Class-Routine'); ?><span class="fa arrow"></span></a>
@@ -60,7 +65,7 @@
                             <?php
                 $classes = $this->db->get('class')->result_array();
                 foreach ($classes as $row):?>
-                                <li> <a href="<?php echo base_url(); ?>index.php?teacher/viendo_horarios/<?php echo $row['class_id']; ?>"><?php echo $row['name']; ?></a> </li>
+                                <li> <a href="<?php echo base_url(); ?>index.php?teacher/exam_routine/<?php echo $row['class_id']; ?>"><?php echo $row['name']; ?></a> </li>
                                 <?php endforeach; ?>
                             </ul>
                         </li>

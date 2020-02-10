@@ -16,10 +16,10 @@
 <?php $student_info	=	$this->db->get_where('enroll' , array('student_id' => $student_id , 'year' => $this->db->get_where('settings' , array('type' => 'running_year'))->row()->description))->result_array(); 
     foreach($student_info as $row): ?>
     <div class="col-md-4">
-                        <center><?php if(file_exists('uploads/student_image/'.$student_id.'.jpg')):?>
+                        <center><?php if(file_exists('uploads/student_image/tmp/'.$student_id.'.jpg')):?>
 				<img src="<?php echo $this->crud_model->get_image_url('student',$row['student_id']);?>" class="img-responsive"/>
 			<?php endif;?>
-			<?php if(!file_exists('uploads/student_image/'.$student_id.'.jpg')):?>
+			<?php if(!file_exists('uploads/student_image/tmp/'.$student_id.'.jpg')):?>
 				<img src="assets/user.png" class="img-rounded img-responsive"/>
 			<?php endif;?></center>
                         <div class="white-box">
@@ -233,7 +233,7 @@ foreach ($edit_data as $row3):
                         <?php 
                             $subjects = $this->db->get_where('subject' , array('class_id' => $class_id , 'year' => $running_year
                             ))->result_array();
-                            foreach ($subjects as $row3): ?>
+                            foreach ($subjects as $row3):?>
                             <tr>
                                 <td style="text-align: center;"><?php echo $row3['name'];?></td>
                                 <td style="text-align: center;"><?php echo $this->crud_model->get_type_name_by_id('teacher', $row3['teacher_id']); ?></td>
