@@ -559,6 +559,9 @@ class Admin extends CI_Controller
             'type' => 'running_year'
         ))->row()->description;
         if ($param1 == 'create') {
+            if(isset($_POST['subject_selected'])){
+                unset($_POST['section_id']);
+            }
             $data['name']           = $this->input->post('name');
             $data['username']           = $this->input->post('username');
             $data['birthday']       = $this->input->post('birthday');
@@ -579,6 +582,19 @@ class Admin extends CI_Controller
             }
             $data2['date_added']     = strtotime(date("Y-m-d H:i:s"));
             $data2['year']           = $running_year;
+            $t = $this->input->post('subject_selected');
+            if(isset($t)){
+                $data2['selected_subject'] = implode(',',$t);
+            }else{
+                $getsubject = $this->db->get_where('subject',array('class_id' => $data2['class_id']))->result_array();
+                $temp = '';
+                foreach ($getsubject as $index => $item) {
+                    $temp[] .= $item['subject_id'];
+                }
+                $data2['selected_subject'] = implode(',',$temp);
+            }
+
+
             $this->db->insert('enroll', $data2);
             move_uploaded_file($_FILES['userfile']['tmp_name'], 'uploads/student_image/tmp/' . $student_id . '.jpg');
             redirect(base_url() . 'index.php?admin/add_student/', 'refresh');
@@ -595,8 +611,8 @@ class Admin extends CI_Controller
             $data['student_session'] = $this->input->post('student_session');
             $this->db->where('student_id', $param2);
             $this->db->update('student', $data);
-           $test =  move_uploaded_file($_FILES['userfile']['tmp_name'], 'uploads/student_image/tmp/' . $param2 . '.jpg');
-           $this->crud_model->clear_cache();
+            move_uploaded_file($_FILES['userfile']['tmp_name'], 'uploads/student_image/tmp/' . $param2 . '.jpg');
+            $this->crud_model->clear_cache();
             redirect(base_url() . 'index.php?admin/student_portal/' . $param2, 'refresh');
         }
     }
@@ -1371,7 +1387,6 @@ class Admin extends CI_Controller
                     'year'=>$data['year'],
                     'subject_id' => $data['subject_id'],
                         'timestamp'=>$data['timestamp']));
-
         if($query->num_rows() < 1) 
         {
 //            $students = $this->db->get_where('enroll' , array(
@@ -1387,7 +1402,7 @@ class Admin extends CI_Controller
 //          echo '<pre>';
 //          print_r($res);
 //          echo '</pre>';
-//           die();
+//          die();
 //          echo '<pre>';
 //          print_r($this->db->queries);
 //          echo '</pre>';
@@ -1471,10 +1486,10 @@ class Admin extends CI_Controller
     {
         $running_year = $this->db->get_where('settings' , array('type' => 'running_year'))->row()->description;
 
-        $q = ' (class_id = '.$class_id.' and section_id = '.$section_id.' and year = "'.$running_year. '")
-            or
-             (class_id = '.$class_id.' and section_id = 0 and year = "'.$running_year. '")
-            ';
+        $q = ' (class_id = '.$class_id.' and section_id = '.$section_id.' and year = "'.$running_year. '" and timestamp = "'.$timestamp.'" and subject_id = "'.$subject_id.'")
+                            or
+                            (class_id = '.$class_id.' and section_id = 0 and year = "'.$running_year. '" and timestamp = "'.$timestamp.'" and subject_id = "'.$subject_id.'")
+                            ';
         //die($q);
         $this->db->where($q);
         $attendance_of_students =  $this->db->get('attendance')->result_array();
@@ -1936,6 +1951,15 @@ class Admin extends CI_Controller
             $data['description'] = $this->input->post('running_year');
             $this->db->where('type' , 'running_year');
             $this->db->update('settings' , $data);
+
+            $data['description'] = $this->input->post('ads_switch');
+            $this->db->where('type','ads_switch');
+            $this->db->update('settings',$data);
+
+            $data['description'] = $this->input->post('advertise_message');
+            $this->db->where('type','advertise');
+            $this->db->update('settings',$data);
+
         
             redirect(base_url() . 'index.php?admin/system_settings/', 'refresh');
         }

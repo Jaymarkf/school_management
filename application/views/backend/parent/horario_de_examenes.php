@@ -52,11 +52,14 @@ if($student_status['section_id'] == 0){
                             <td width="100"><?php echo strtoupper($day);?></td>
                             <td>
                                 <?php
-                                $this->db->order_by("time_start", "asc");
-                                $this->db->where('day' , $day);
-                                $this->db->where('class_id' , $class_id);
                                 if($irregular == 0 ){
+                                    $this->db->order_by("time_start", "asc");
+                                    $this->db->where('day' , $day);
+                                    $this->db->where('class_id' , $class_id);
                                     $this->db->where('section_id' , $section_id);
+                                }else{
+                                    $this->db->order_by("time_start", "asc");
+                                    $this->db->where('day' , $day);
                                 }
                                 $this->db->where('year' , $running_year);
                                 $routines   =   $this->db->get('horarios_examenes')->result_array();

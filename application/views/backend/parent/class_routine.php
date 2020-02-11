@@ -22,6 +22,7 @@
 
     }else{
         $irregular = 0;
+
     }
         foreach ($child_of_parent as $row) :
             $class_id = $this->db->get_where('enroll' , array('student_id' => $row['student_id'] , 'year' => $running_year))->row()->class_id;
@@ -58,12 +59,16 @@
                             <td width="100"><?php echo strtoupper($day);?></td>
                             <td>
                                 <?php
-                                $this->db->order_by("time_start", "asc");
-                                $this->db->where('day' , $day);
-                                $this->db->where('class_id' , $class_id);
-                                if($irregular == 0){
+                                if($irregular == 0 ){
+                                    $this->db->order_by("time_start", "asc");
+                                    $this->db->where('day' , $day);
+                                    $this->db->where('class_id' , $class_id);
                                     $this->db->where('section_id' , $section_id);
+                                }else{
+                                    $this->db->order_by("time_start", "asc");
+                                    $this->db->where('day' , $day);
                                 }
+
                                 $this->db->where('year' , $running_year);
                                 $routines   =   $this->db->get('class_routine')->result_array();
                                 foreach($routines as $row2):

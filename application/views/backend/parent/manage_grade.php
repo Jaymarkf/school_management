@@ -12,6 +12,7 @@
 
 
 <?php echo form_open(base_url() . 'index.php?parents/grade_selector/'); ?>
+<input type="hidden" name="student_id" value="<?php echo $student_id; ?>"/>
 <div class="row">
     <div class="col-md-3">
         <div class="form-group">
@@ -114,17 +115,13 @@
                     <tbody>
                     <?php
                     $count = 1;
-                    $temp_grade = $this->db->get_where('enroll', array(
-                        'class_id' => $class_id,
-                        'section_id' => $section_id,
-                        'year' => $running_year,
-                    ))->result_array();
-                    //                    $this->db->select('*');
-                    //                    $this->db->from('enroll');
-                    //                    $this->db->where('');
-                    foreach ($temp_grade as $row):
+                    $q = '(class_id = '.$class_id.' and section_id = '.$section_id.' and year = "'.$running_year. '" and find_in_set("'.$subject_id.'",selected_subject) and student_id = '.$student_id.')
+                            or
+                            (class_id = '.$class_id.' and section_id = 0 and year = "'.$running_year. '"  and find_in_set("'.$subject_id.'",selected_subject) and student_id = '.$student_id.')';
+                    $this->db->where($q);
+                    $temp_grade = $this->db->get('enroll')->result_array();
                         ?>
-                        <input type="hidden" name="student_id[]" value="<?php echo $row['student_id'];?>"/>
+                        <input type="hidden" name="student_id[]" value="<?php echo $student_id;?>"/>
                         <input type="hidden" name="semester" value="<?php echo $semester_id; ?>"/>
                         <input type="hidden" name="class_id" value="<?php echo $class_id; ?>"/>
                         <input type="hidden" name="section_id" value="<?php echo $section_id; ?>"/>
@@ -133,9 +130,9 @@
                             <td>
                                 <select class="form-control selectboxit" name="grade_id_<?php echo $row['student_id']; ?>" disabled>
                                     <?php
-                                    $x = $this->db->get_where('grades',array('student_id'=>$row['student_id']))->row()->student_grade;
-                                    $grade = $this->db->get_where('grades',array('student_id'=>$row['student_id']))->row()->specific_grade;
-                                    $comments = $this->db->get_where('grades',array('student_id'=>$row['student_id']))->row()->comments;
+                                    $x = $this->db->get_where('grades',array('student_id' => $student_id,'section_id' => $section_id,'class_id' => $class_id,'subject_id' => $subject_id))->row()->student_grade;
+                                    $grade = $this->db->get_where('grades',array('student_id' => $student_id,'section_id' => $section_id,'class_id' => $class_id,'subject_id' => $subject_id))->row()->specific_grade;
+                                    $comments = $this->db->get_where('grades',array('student_id' => $student_id,'section_id' => $section_id,'class_id' => $class_id,'subject_id' => $subject_id))->row()->comments;
                                     ?>
                                     <option value="1.00" <?php if($x == 1.00){echo 'selected';} ?> >1.00</option>
                                     <option value="1.25"<?php if($x == 1.25){echo 'selected';} ?> >1.25</option>
@@ -154,15 +151,16 @@
                                 </select>
                             </td>
                             <td>
-                                <input type="text" name="specific_grade_id_<?php echo $row['student_id'];?>"
+                                <input type="text" name="specific_grade_id_<?php echo $student_id;?>"
                                        placeholder="Enter grade form 1-100" class="form-control" value="<?php echo $grade; ?>" disabled/>
                             </td>
                             <td>
-                                <input type="text" name="comments_id_<?php echo $row['student_id'];?>"
+                                <input type="text" name="comments_id_<?php echo $student_id;?>"
                                        placeholder="Enter your comments" class="form-control" value ="<?php echo $comments; ?>" disabled/>
                             </td>
                         </tr>
-                    <?php endforeach; ?>
+                    <?php
+                    ?>
                     </tbody>
                 </table>
             </div>

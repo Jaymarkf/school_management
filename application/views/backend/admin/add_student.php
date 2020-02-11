@@ -109,13 +109,23 @@
                 <div class="form-group" id="ireg_status_holder" style="display:none;">
                     <label for="field-2" class="col-sm-3 control-label"><?php echo get_phrase('Subject'); ?></label>
                     <div class="col-sm-5">
-                        <select multiple size="0" class="form-control subject_selector_holder" name="subject_selected[]">
-
+                        <select multiple size="0" class="form-control subject_selector_holder">
                         </select>
                     </div>
+                    <br>
+                    <div class="row">
+                        <div class="btn btn-success btn-sm" id="sub_get">Get Subject</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="text-center">
+                                <select multiple size="0" class="form-control" id="all_data" name="subject_selected[]" style="width:500px !important;margin:0px auto !important;">
+                                </select>
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
-
-
 					<div class="form-group">
 						<label for="field-2" class="col-sm-3 control-label"><?php echo get_phrase('Birthday'); ?></label>
 						<div class="col-sm-5">
@@ -165,7 +175,6 @@
 					</div>
 					<div class="form-group">
 						<label for="field-1" class="col-sm-3 control-label"><?php echo get_phrase('Photo'); ?></label>
-                        
 						<div class="col-sm-5">
 							<div class="fileinput fileinput-new" data-provides="fileinput">
 								<div class="fileinput-new thumbnail" style="width: 100px; height: 100px;" data-trigger="fileinput">
@@ -214,7 +223,6 @@
             }
         });
 
-
         $.ajax({
             url: '<?php echo base_url();?>index.php?admin/get_class_subject/' + class_id ,
             success: function(response)
@@ -224,12 +232,7 @@
                 $('.subject_selector_holder').attr('size',8);
             }
         });
-
-
-
-
     }
-
     $(document).ready(function(){
         $("select.status_id").change(function(){
             var status = $(this).children("option:selected").val();
@@ -244,6 +247,15 @@
             }else{
                 $('#stat_section').css('display','none');
                 $('#stat_section').css('display','none');
+            }
+        });
+        $('#sub_get').click(function (e) {
+            $('.subject_selector_holder').find('option:selected').clone().appendTo('#all_data');
+
+        });
+        $('form').submit(function(){
+            if(!$('#all_data').val()){
+                $('#all_data option').prop("selected", true);
             }
         });
     });

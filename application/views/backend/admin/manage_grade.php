@@ -87,16 +87,12 @@
         </div>
     </div>
     <input type="hidden" name="year" value="<?php echo $running_year; ?>">
-
     <div class="col-md-3" style="margin-top: 20px;">
         <button type="submit" class="btn btn-info"><?php echo get_phrase('View');?></button>
     </div>
-
 </div>
 <?php echo form_close(); ?>
-
 <hr />
-
 <div class="row">
     <div class="col-md-2"></div>
     <div class="col-md-8">
@@ -111,17 +107,22 @@
                         <th style="text-align: center;"><?php echo get_phrase('Grade');?></th>
                         <th style="text-align: center;"><?php echo get_phrase('Specific Grade');?></th>
                         <th style="text-align: center;"><?php echo get_phrase('Comments (optional)');?></th>
-
                     </tr>
                     </thead>
                     <tbody>
                     <?php
                     $count = 1;
-                   $temp_grade = $this->db->get_where('enroll', array(
-                        'class_id' => $class_id,
-                        'section_id' => $section_id,
-                        'year' => $running_year,
-                    ))->result_array();
+//                   $temp_grade = $this->db->get_where('enroll', array(
+//                        'class_id' => $class_id,
+//                        'section_id' => $section_id,
+//                        'year' => $running_year,
+//                    ))->result_array();
+                    $q = '(class_id = '.$class_id.' and section_id = '.$section_id.' and year = "'.$running_year. '" and find_in_set("'.$subject_id.'",selected_subject))
+                            or
+                            (class_id = '.$class_id.' and section_id = 0 and year = "'.$running_year. '"  and find_in_set("'.$subject_id.'",selected_subject))
+                            ';
+                    $this->db->where($q);
+                    $temp_grade = $this->db->get('enroll')->result_array();
 //                    $this->db->select('*');
 //                    $this->db->from('enroll');
 //                    $this->db->where('');
@@ -140,9 +141,9 @@
                             <td>
                                 <select class="form-control selectboxit" name="grade_id_<?php echo $row['student_id']; ?>" disabled>
                                     <?php
-                                    $x = $this->db->get_where('grades',array('student_id'=>$row['student_id']))->row()->student_grade;
-                                    $grade = $this->db->get_where('grades',array('student_id'=>$row['student_id']))->row()->specific_grade;
-                                    $comments = $this->db->get_where('grades',array('student_id'=>$row['student_id']))->row()->comments;
+                                    $x = $this->db->get_where('grades',array('student_id' => $row['student_id'],'section_id' => $section_id,'class_id' => $class_id,'subject_id' => $subject_id))->row()->student_grade;
+                                    $grade = $this->db->get_where('grades',array('student_id' => $row['student_id'],'section_id' => $section_id,'class_id' => $class_id,'subject_id' => $subject_id))->row()->specific_grade;
+                                    $comments = $this->db->get_where('grades',array('student_id' => $row['student_id'],'section_id' => $section_id,'class_id' => $class_id,'subject_id' => $subject_id))->row()->comments;
                                     ?>
                                     <option value="1.00" <?php if($x == 1.00){echo 'selected';} ?> >1.00</option>
                                     <option value="1.25"<?php if($x == 1.25){echo 'selected';} ?> >1.25</option>

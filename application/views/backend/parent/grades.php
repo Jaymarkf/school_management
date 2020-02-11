@@ -12,6 +12,7 @@
 
 
 <?php echo form_open(base_url() . 'index.php?parents/grade_selector/');?>
+<input type="hidden" name="student_id" value="<?php echo $student_id; ?>"/>
 <div class="row">
     <div class="col-md-3">
         <div class="form-group">
