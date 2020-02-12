@@ -150,10 +150,10 @@
                 <tbody>
                     <?php $data = array();
 //                            $students = $this->db->get_where('enroll', array('class_id' => $class_id, 'year' => $running_year, 'section_id' => $section_id))->result_array();
-                    $qryd = '( class_id = '.$class_id.' and section_id = '.$section_id.' and year = "'.$running_year.'")
-                        or
-                         (class_id = '.$class_id.' and section_id = 0 and year = "'.$running_year. '")
-                        ';
+                    $qryd = '(class_id = '.$class_id.' and section_id = '.$section_id.' and year = "'.$running_year. '" and find_in_set("'.$subject_id.'",selected_subject))
+                            or
+                            (class_id = '.$class_id.' and section_id = 0 and year = "'.$running_year. '"  and find_in_set("'.$subject_id.'",selected_subject))
+                            ';
                     //die($q);
                     $this->db->where($qryd);
                     $students =  $this->db->get('enroll')->result_array();
