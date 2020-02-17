@@ -127,11 +127,11 @@
         <div class="col-md-4"></div>
     </div>
     <hr />
-    <div class="row">
+    <div id="wew" class="row">
         <div class="col-md-12">
          <center><p><i class="fa fa-check-circle" style="color: #00a651;"></i> <?php echo get_phrase('Present');?>&nbsp;&nbsp;&nbsp;<i class="fa fa-times-circle" style="color: #ee4749;"></i> <?php echo get_phrase('Absent');?>&nbsp;&nbsp;&nbsp;<i class="fa fa-certificate" style="color: #fec42d;"></i>Late</p></center>
          <hr>
-         <div class="table-responsive">
+         <div class="table-responsive" id="tbd">
             <table class="table table-bordered" id="my_table">
                 <thead>
                     <tr>
@@ -192,18 +192,18 @@
     <?php ?>
                 </tbody>
             </table>
+
         </div>
     </div>
+        <a class="btn btn-success btn-lg" id="btnprint">PRINT</a>
     </div>
     </div>
 <?php endif; ?>
 
 <script type="text/javascript">
     $(document).ready(function() {
-        if($.isFunction($.fn.selectBoxIt))
-        {
-            $("select.selectboxit").each(function(i, el)
-            {
+        if ($.isFunction($.fn.selectBoxIt)) {
+            $("select.selectboxit").each(function (i, el) {
                 var $this = $(el),
                     opts = {
                         showFirstOption: attrDefault($this, 'first-option', true),
@@ -215,7 +215,70 @@
                 $this.selectBoxIt(opts);
             });
         }
-    }); 
+
+
+
+
+    });
+
+    $('#btnprint').click(function(){
+
+        var elem = $('#tbd');
+        PrintElem(elem);
+        Popup(data);
+    });
+    function PrintElem(elem)
+    {
+        Popup($(elem).html());
+    }
+    function Popup(data)
+    {
+        var getsection = '<?php echo $this->db->get_where("section",array("section_id"=>$section_id))->row()->name; ?>';
+        var getsubject = '<?php echo $this->db->get_where("subject",array("subject_id"=>$subject_id))->row()->name; ?>';
+        var getclass = '<?php echo $this->db->get_where("class",array("class_id"=>$class_id))->row()->name; ?>';
+
+      var a = '<link rel=\"stylesheet\" href=\"https:\/\/maxcdn.bootstrapcdn.com\/bootstrap\/3.4.1\/css\/bootstrap.min.css\"><style>' +
+          '@media print {' +
+          'body {-webkit-print-color-adjust: exact;}' +
+          '}<\/style>';
+      var b = '<script src=\"https:\/\/ajax.googleapis.com\/ajax\/libs\/jquery\/3.4.1\/jquery.min.js\"><\/script>';
+      var c = '<script src=\"https:\/\/maxcdn.bootstrapcdn.com\/bootstrap\/3.4.1\/js\/bootstrap.min.js\"><\/script>';
+
+
+        var mywindow = window.open('', 'my div', 'height=400,width=700');
+        mywindow.document.write('<html><head><title></title>');
+        mywindow.document.write('<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">'+a+b+c+'</head><body>');
+        mywindow.document.write('<br><br><br><br>' +
+            '<div class=\"row\">' +
+            '<div class=\"col-md-6\">' +
+            '<center><p>Date: ________________<\p><\/center>' +
+            '<\/div>' +
+
+            '<div class=\"col-md-6\">' +
+            '<center><p><label>Class: &nbsp;&nbsp</label>'+getclass+'<\p><\/center>' +
+            '' +
+            '<\/div>' +
+            '<\/div>' +
+            '' +
+            '<div class=\"row\">' +
+            '<div class=\"col-md-6\">' +
+            '<center><p><label>Section: &nbsp;&nbsp</label>'+getsection+'<\p><\/center>' +
+            '<\/div>' +
+
+            '<div class=\"col-md-6\">' +
+            '<center><p><label>Subject: &nbsp;&nbsp</label>'+getsubject+'<\p><\/center>' +
+            '' +
+            '<\/div>' +
+            '<\/div>' +
+            '<div class=\"row\">' +
+            '' +
+            '<center><p><i class=\"fa fa-check-circle\" style=\"color: #00a651;\">Present&nbsp;&nbsp;&nbsp;<\/i><i class=\"fa fa-times-circle\" style=\"color: #ee4749;\"><\/i>Absent&nbsp;&nbsp;&nbsp;<i class=\"fa fa-certificate\" style=\"color: #fec42d;\"><\/i>Late<\/p></\center>' +
+            '<\/div><div class=\"container-fluid\" style=\"width:1200px;\">'+data+'<\/div>');
+        mywindow.document.write('</body></html>');
+        mywindow.document.close();
+        mywindow.print();
+
+    }
 </script>
 <script type="text/javascript">
     function select_section(class_id) {

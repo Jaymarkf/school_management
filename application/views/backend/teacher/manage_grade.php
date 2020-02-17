@@ -131,6 +131,7 @@
                         <input type="hidden" name="class_id" value="<?php echo $class_id; ?>"/>
                         <input type="hidden" name="section_id" value="<?php echo $section_id; ?>"/>
                         <input type="hidden" name="subject_id" value="<?php echo $subject_id; ?>"/>
+
                         <tr>
                             <td><?php echo $count++; ?></td>
                             <td>
@@ -139,9 +140,24 @@
                             <td>
                                 <select class="form-control selectboxit" name="grade_id_<?php echo $row['student_id']; ?>">
                                     <?php
-                                    $x = $this->db->get_where('grades',array('student_id' => $row['student_id'],'section_id' => $section_id,'class_id' => $class_id,'subject_id' => $subject_id))->row()->student_grade;
-                                    $grade = $this->db->get_where('grades',array('student_id' => $row['student_id'],'section_id' => $section_id,'class_id' => $class_id,'subject_id' => $subject_id))->row()->specific_grade;
-                                    $comments = $this->db->get_where('grades',array('student_id' => $row['student_id'],'section_id' => $section_id,'class_id' => $class_id,'subject_id' => $subject_id))->row()->comments;
+                                    $qd = '(class_id = '.$class_id.' and section_id = '.$section_id.' and year = "'.$running_year. '" and subject_id = '.$subject_id.' and student_id = '.$row['student_id'].')
+                            or
+                            (class_id = '.$class_id.' and section_id = 0 and year = "'.$running_year. '"  and subject_id = '.$subject_id.' and student_id = '.$row['student_id'].')
+                            ';
+
+
+                                    $this->db->where($qd);
+                                    $x = $this->db->get('grades')->row()->student_grade;
+//                                    $x = $this->db->get_where('grades',array('student_id' => $row['student_id'],'section_id' => $section_id,'class_id' => $class_id,'subject_id' => $subject_id))->row()->student_grade;
+
+                                    $this->db->where($qd);
+                                    $grade = $this->db->get('grades')->row()->specific_grade;
+//
+//                                    $grade = $this->db->get_where('grades',array('student_id' => $row['student_id'],'section_id' => $section_id,'class_id' => $class_id,'subject_id' => $subject_id))->row()->specific_grade;
+////
+                                    $this->db->where($qd);
+                                    $comments= $this->db->get('grades')->row()->comments;
+//                                    $comments = $this->db->get_where('grades',array('student_id' => $row['student_id'],'section_id' => $section_id,'class_id' => $class_id,'subject_id' => $subject_id))->row()->comments;
                                     ?>
                                    <option value="1.00" <?php if($x == 1.00){echo 'selected';} ?> >1.00</option>
                                    <option value="1.25"<?php if($x == 1.25){echo 'selected';} ?> >1.25</option>

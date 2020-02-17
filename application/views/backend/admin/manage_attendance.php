@@ -99,7 +99,6 @@
                 <thead>
                     <tr>
                         <th>No.</th>
-                        <th style="text-align: center;"><?php echo get_phrase('Roll');?></th>
                         <th style="text-align: center;"><?php echo get_phrase('Student');?></th>
                         <th style="text-align: center;"><?php echo get_phrase('Status');?></th>
                     </tr>
@@ -119,9 +118,6 @@
                         ?>
                         <tr>
                             <td><?php echo $count++; ?></td>
-                            <td>
-                                <?php echo $this->db->get_where('enroll', array('student_id' => $row['student_id']))->row()->roll; ?>
-                            </td>
                             <td>
                                 <?php echo $this->db->get_where('student', array('student_id' => $row['student_id']))->row()->name; ?>
                             </td>

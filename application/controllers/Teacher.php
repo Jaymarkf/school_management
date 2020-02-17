@@ -1078,10 +1078,10 @@ class Teacher extends CI_Controller
                 $data['student_id'] = $item;
                 $data['class_id'] = $this->input->post('class_id');
 
-                if($stud_section_id == '0'){
-                    $data['section_id'] = $this->input->post('section_id');
-                }else{
+                if($stud_section_id == 0){
                     $data['section_id'] = '0';
+                }else{
+                    $data['section_id'] = $this->input->post('section_id');
                 }
 
                 $data['subject_id'] = $this->input->post('subject_id');
@@ -1095,10 +1095,10 @@ class Teacher extends CI_Controller
                 $data['student_id'] = $item;
                 $data['semester'] = $this->input->post('semester');
                 $data['class_id'] = $this->input->post('class_id');
-                if($stud_section_id == '0'){
-                    $data['section_id'] = $this->input->post('section_id');
-                }else{
+                if($stud_section_id == 0){
                     $data['section_id'] = '0';
+                }else{
+                    $data['section_id'] = $this->input->post('section_id');;
                 }
 
                 $data['subject_id'] = $this->input->post('subject_id');
