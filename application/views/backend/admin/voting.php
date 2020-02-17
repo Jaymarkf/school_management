@@ -1,4 +1,8 @@
- <div class="row bg-title">
+<?php $running_year = $this->db->get_where('settings' , array(
+'type' => 'running_year'
+))->row()->description; ?>
+
+<div class="row bg-title">
         <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
             <h4 class="page-title"><?php echo get_phrase('Voting');?></h4>
         </div>
@@ -9,6 +13,15 @@
             </ol>
         </div>
     </div>
+ <?php
+ $this->db->select('student.name,count(voting_process.candidate_student_id) as vote_count,voting_process.candidate_student_id,voting_process.position_id');
+ $this->db->from('voting_process');
+ $this->db->join('student','student.student_id = voting_process.candidate_student_id');
+ $this->db->group_by('voting_process.candidate_student_id');
+ $q= $this->db->get();
+ $arrResult = $q->result_array();
+ ?>
+
 
     <div class="row">
         <div class="col-sm-12">
@@ -198,17 +211,28 @@
                         <div class="tab-content">
                             <?php
                             $xd = 0;
-                            foreach ($positions_data as $index => $x) {
-                                $getstudent = $this->db->get_where('candidate_info',array('position' => $x['position_id'] ))->result_array();
+                            $count = 0;
+                            $stud_id = 0;
+                            foreach ($positions_data as $index => $x){
+                                $getstudent = $this->db->get_where('candidate_info',array('position' => $x['position_id']))->result_array();
                                 //first tab of the president active
                                 if($xd == 0){
                                     echo '<div class="tab-pane box active" id="tab2_' . $x['position_id'] . '">';
                                     echo '<div class="box-content">';
                                     foreach ($getstudent as $index => $item){
                                         if($x['position_id'] == $item['position']){
+                                            //$arrResult is came from very top code
+                                            foreach ($arrResult as $index => $itemx) {
+                                                if($itemx['position_id'] == $item['position']){
+                                                        if($itemx['vote_count'] >= $count){
+                                                            $count = $itemx['vote_count'];
+                                                            $stud_id = $itemx['candidate_student_id'];
+                                                        }
+                                                }
+                                            }
                                             ?>
                                             <div class="form-group">
-                                                <?php $students = $this->db->get_where('student',array('student_id' => $item['student_id']))->result_array();
+                                                <?php $students = $this->db->get_where('student',array('student_id' => $stud_id))->result_array();
                                                 foreach($students as $row):?>
                                                     <div class="col-md-4 col-sm-4">
                                                         <div class="col-md-4 col-sm-4 text-center"><a href="<?php echo base_url();?>index.php?admin/student_portal/<?php echo $row['student_id'];?>"><img src="<?php echo $this->crud_model->get_image_url('student',$row['student_id']);?>" alt="user" class="img-circle img-responsive"></a></div>
@@ -221,6 +245,7 @@
                                             </div>
                                             <?php
                                         }
+                                    break;
                                     }
                                     echo '</div>';
                                     echo '</div>';
@@ -230,9 +255,18 @@
                                     echo '<div class="box-content">';
                                     foreach ($getstudent as $index => $item) {
                                         if($x['position_id'] == $item['position']){
+                                            //$arrResult is came from very top code
+                                            foreach ($arrResult as $index => $itemx) {
+                                                if($itemx['position_id'] == $item['position']){
+                                                    if($itemx['vote_count'] >= $count){
+                                                        $count = $itemx['vote_count'];
+                                                        $stud_id = $itemx['candidate_student_id'];
+                                                    }
+                                                }
+                                            }
                                             ?>
                                             <div class="form-group">
-                                                <?php $students = $this->db->get_where('student',array('student_id' => $item['student_id']))->result_array();
+                                                <?php $students = $this->db->get_where('student',array('student_id' => $stud_id))->result_array();
                                                 foreach($students as $row):?>
                                                     <div class="col-md-4 col-sm-4">
                                                         <div class="col-md-4 col-sm-4 text-center"><a href="<?php echo base_url();?>index.php?admin/student_portal/<?php echo $row['student_id'];?>"><img src="<?php echo $this->crud_model->get_image_url('student',$row['student_id']);?>" alt="user" class="img-circle img-responsive"></a></div>
@@ -245,7 +279,9 @@
                                                 <?php endforeach;?>
                                             </div>
                                             <?php
+
                                         }
+                                    break;
                                     }
                                     echo '</div>';
                                     echo '</div>';

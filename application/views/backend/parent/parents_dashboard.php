@@ -1,3 +1,43 @@
+
+<div class="modal fade modal_advertise" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="row">
+
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Ads</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p><?php echo $this->db->get_where('settings',array('type'=>'advertise'))->row()->description;?></p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<script>
+    $(window).on('load',function(){
+        <?php
+        $switch = $this->db->get_where('settings',array('type'=>'ads_switch'))->row()->description;
+        if($switch == 1){
+            echo "$('.modal_advertise').modal({backdrop: 'static', keyboard: false});";
+            echo "$('.modal_advertise').modal('show');";
+        }
+        ?>
+    });
+</script>
 <div class="row bg-title">
     <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
         <h4 class="page-title"><?php echo get_phrase('Parents-Dashboard');?></h4> </div>

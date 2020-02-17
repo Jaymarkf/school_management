@@ -1001,9 +1001,8 @@ class Teacher extends CI_Controller
         $running_year = $this->db->get_where('settings' , array('type' => 'running_year'))->row()->description;
 //die(print_r($this->input->post()));
         $stud  = $this->input->post('student_id');
-        foreach ($stud as $index => $item) {
-            $this->db->where('student_id',$item);
-            $count = $this->db->get('grades',array('student_id',$item));
+        foreach ($stud as $index => $item){
+            $count = $this->db->get_where('grades',array('student_id'=>$item,'class_id'=>$class_id,'subject_id'=>$subject_id));
             if($count->num_rows() < 1){
                 $data['semester'] = $this->input->post('semester');
                 $data['student_id'] = $item;
@@ -1028,7 +1027,6 @@ class Teacher extends CI_Controller
                 $this->db->where('student_id',$item);
                 $this->db->update('grades',$data);
             }
-
         }
 
         redirect(base_url().'index.php?teacher/manage_grade/'.$class_id.'/'.$section_id.'/'.$subject_id.'/'.$semester_id , 'refresh');

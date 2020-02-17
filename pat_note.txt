@@ -68,3 +68,19 @@ remove teacher report
 
 parents>payment 
 Prents>payment> remove options
+
+
+
+  <div class="form-group">
+                                    <?php $students = $this->db->get('candidate_info')->result_array();
+                                    foreach($students as $row):?>
+                                        <div class="col-md-4 col-sm-4">
+                                                    <div class="col-md-4 col-sm-4 text-center"><a href="<?php echo base_url();?>index.php?admin/student_portal/<?php echo $row['student_id'];?>"><img src="<?php echo $this->crud_model->get_image_url('student',$row['student_id']);?>" alt="user" class="img-circle img-responsive"></a></div>
+                                                    <div class="col-md-8 col-sm-8">
+                                                        <h3 class="box-title m-b-0"><a href="<?php echo base_url();?>index.php?admin/student_portal/<?php echo $row['student_id'];?>"><?php echo $this->db->get_where('student' , array(
+                                                                    'student_id' => $row['student_id']))->row()->name;?></a></h3>
+                                                        <small><?php echo $row['roll'];?></small>
+                                                    </div>
+                                            </div>
+                                    <?php endforeach;?>
+                                </div>

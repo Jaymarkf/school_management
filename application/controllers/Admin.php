@@ -559,6 +559,9 @@ class Admin extends CI_Controller
             'type' => 'running_year'
         ))->row()->description;
         if ($param1 == 'create') {
+            if(isset($_POST['subject_selected'])){
+                unset($_POST['section_id']);
+            }
             $data['name']           = $this->input->post('name');
             $data['username']           = $this->input->post('username');
             $data['birthday']       = $this->input->post('birthday');
@@ -579,6 +582,19 @@ class Admin extends CI_Controller
             }
             $data2['date_added']     = strtotime(date("Y-m-d H:i:s"));
             $data2['year']           = $running_year;
+            $t = $this->input->post('subject_selected');
+            if(isset($t)){
+                $data2['selected_subject'] = implode(',',$t);
+            }else{
+                $getsubject = $this->db->get_where('subject',array('class_id' => $data2['class_id']))->result_array();
+                $temp = '';
+                foreach ($getsubject as $index => $item) {
+                    $temp[] .= $item['subject_id'];
+                }
+                $data2['selected_subject'] = implode(',',$temp);
+            }
+
+
             $this->db->insert('enroll', $data2);
             move_uploaded_file($_FILES['userfile']['tmp_name'], 'uploads/student_image/tmp/' . $student_id . '.jpg');
             redirect(base_url() . 'index.php?admin/add_student/', 'refresh');
@@ -595,8 +611,8 @@ class Admin extends CI_Controller
             $data['student_session'] = $this->input->post('student_session');
             $this->db->where('student_id', $param2);
             $this->db->update('student', $data);
-           $test =  move_uploaded_file($_FILES['userfile']['tmp_name'], 'uploads/student_image/tmp/' . $param2 . '.jpg');
-           $this->crud_model->clear_cache();
+            move_uploaded_file($_FILES['userfile']['tmp_name'], 'uploads/student_image/tmp/' . $param2 . '.jpg');
+            $this->crud_model->clear_cache();
             redirect(base_url() . 'index.php?admin/student_portal/' . $param2, 'refresh');
         }
     }
@@ -1372,47 +1388,77 @@ class Admin extends CI_Controller
                     'subject_id' => $data['subject_id'],
                         'timestamp'=>$data['timestamp']));
 
-        if($query->num_rows() < 1) 
-        {
+
+
+
+        if($query->num_rows() < 1) {
 //            $students = $this->db->get_where('enroll' , array(
 //                'class_id' => $data['class_id'] , 'section_id' => $data['section_id'] , 'year' => $data['year']
 //            ))->result_array();
-            $q = ' (class_id = '.$data['class_id'].' and section_id = '.$data['section_id'].' and year = "'.$data['year']. '")
-            or
-             (class_id = '.$data['class_id'].' and section_id = 0 and year = "'.$data['year']. '")
-            ';
-//            die($q);
-            $this->db->where($q);
-            $students =  $this->db->get('enroll')->result_array();
+//            $q = ' (class_id = '.$data['class_id'].' and section_id = '.$data['section_id'].' and year = "'.$data['year']. '")
+//            or
+//             (class_id = '.$data['class_id'].' and section_id = 0 and year = "'.$data['year']. '")
+//            ';
+
+            $qryd = '(class_id = ' . $data['class_id'] . ' and section_id = ' . $data['section_id'] . ' and year = "' . $data['year'] . '" and find_in_set("' . $data['subject_id'] . '",selected_subject))
+                            or
+                            (class_id = ' . $data['class_id'] . ' and section_id = 0 and year = "' . $data['year'] . '"  and find_in_set("' . $data['subject_id'] . '",selected_subject))
+                            ';
+            $this->db->where($qryd);
+            $students = $this->db->get('enroll')->result_array();
+
 //          echo '<pre>';
-//          print_r($res);
-//          echo '</pre>';
-//           die();
-//          echo '<pre>';
-//          print_r($this->db->queries);
+//          print_r($students);
 //          echo '</pre>';
 //          die();
-            foreach($students as $row) {
-                $attn_data['class_id']   = $data['class_id'];
-                $attn_data['year']       = $data['year'];
-                $attn_data['timestamp']  = $data['timestamp'];
-                $attn_data['section_id'] = $data['section_id'];
-                $attn_data['student_id'] = $row['student_id'];
-                $attn_data['subject_id'] = $data['subject_id'];
-                $sub_id = $this->db->get_where('student_irregular_selected_subject', array('student_id' => $row['student_id']))->result_array();
-                foreach ($sub_id as $index => $item) {
-                    $arr_sub_id[] = explode(",",$item['selected_subject_concat_id']);
-                    if(in_array($data['subject_id'],$arr_sub_id[$index])){
-                        $attn_data['class_id']   = $data['class_id'];
-                        $attn_data['year']       = $data['year'];
-                        $attn_data['timestamp']  = $data['timestamp'];
+
+            foreach ($students as $row) {
+                $res = $this->db->get_where('attendance', array('student_id' => $row['student_id']))->result_array();
+
+
+                if ($row['section_id'] == 0) {
+
+                    $w = ' (class_id = ' . $data['class_id'] . ' and section_id = ' . $data['section_id'] . ' and year = "' . $data['year'] . '" and find_in_set("' . $data['subject_id'] . '",selected_subject) and student_id = ' . $row['student_id'] . ')
+                            or
+                            (class_id = ' . $data['class_id'] . ' and section_id = 0 and year = "' . $data['year'] . '"  and find_in_set("' . $data['subject_id'] . '",selected_subject) and student_id = ' . $row['student_id'] . ')';
+
+                    $sel = "*, (select SUBSTR('" . $row['selected_subject'] . "',locate('" . $data['subject_id'] . "','" . $row['selected_subject'] . "'),1)) as selected_s";
+
+                    $datax = $this->db->query('SELECT *, (select SUBSTR("' . $row['selected_subject'] . '", locate("' . $data['subject_id'] . '", "' . $row['selected_subject'] . '"), 1)) as selected_s FROM `enroll` WHERE (class_id = ' . $data['class_id'] . ' and section_id = 0 and year = "' . $data['section_id'] . '" and find_in_set("' . $data['subject_id'] . '",selected_subject) and student_id = ' . $row['student_id'] . ')')->result_array();
+
+
+                    if ($datax['selected_s'] == $data['subject_id']) {
+
+                        $attn_data['class_id'] = $data['class_id'];
+                        $attn_data['year'] = $data['year'];
+                        $attn_data['timestamp'] = $data['timestamp'];
                         $attn_data['section_id'] = 0;
                         $attn_data['student_id'] = $row['student_id'];
                         $attn_data['subject_id'] = $data['subject_id'];
+                        $this->db->where('student_id', $datax['student_id']);
+                        $this->db->where('subject_id', $datax['selected_s']);
+                        $this->db->update('attendance');
+                    } else {
+
+                        $attn_data['class_id'] = $data['class_id'];
+                        $attn_data['year'] = $data['year'];
+                        $attn_data['timestamp'] = $data['timestamp'];
+                        $attn_data['section_id'] = $row['section_id'];
+                        $attn_data['student_id'] = $row['student_id'];
+                        $attn_data['subject_id'] = $data['subject_id'];
+                        $this->db->insert('attendance', $attn_data);
                     }
 
+                } else {
+                    $attn_data['class_id'] = $data['class_id'];
+                    $attn_data['year'] = $data['year'];
+                    $attn_data['timestamp'] = $data['timestamp'];
+                    $attn_data['section_id'] = $row['section_id'];
+                    $attn_data['student_id'] = $row['student_id'];
+                    $attn_data['subject_id'] = $data['subject_id'];
+                    $this->db->insert('attendance', $attn_data);
+
                 }
-                    $this->db->insert('attendance',$attn_data);
 
             }
 
@@ -1471,13 +1517,17 @@ class Admin extends CI_Controller
     {
         $running_year = $this->db->get_where('settings' , array('type' => 'running_year'))->row()->description;
 
-        $q = ' (class_id = '.$class_id.' and section_id = '.$section_id.' and year = "'.$running_year. '")
-            or
-             (class_id = '.$class_id.' and section_id = 0 and year = "'.$running_year. '")
-            ';
+        $q = ' (class_id = '.$class_id.' and section_id = '.$section_id.' and year = "'.$running_year. '" and timestamp = "'.$timestamp.'" and subject_id = "'.$subject_id.'")
+                            or
+                            (class_id = '.$class_id.' and section_id = 0 and year = "'.$running_year. '" and timestamp = "'.$timestamp.'" and subject_id = "'.$subject_id.'")
+                            ';
         //die($q);
         $this->db->where($q);
         $attendance_of_students =  $this->db->get('attendance')->result_array();
+//        echo '<pre>';
+//        print_r($attendance_of_students);
+//        echo '</pre>';
+//        die();
         foreach($attendance_of_students as $row) {
             $attendance_status = $this->input->post('status_'.$row['attendance_id']);
             $this->db->where('attendance_id' , $row['attendance_id']);
@@ -1936,6 +1986,15 @@ class Admin extends CI_Controller
             $data['description'] = $this->input->post('running_year');
             $this->db->where('type' , 'running_year');
             $this->db->update('settings' , $data);
+
+            $data['description'] = $this->input->post('ads_switch');
+            $this->db->where('type','ads_switch');
+            $this->db->update('settings',$data);
+
+            $data['description'] = $this->input->post('advertise_message');
+            $this->db->where('type','advertise');
+            $this->db->update('settings',$data);
+
         
             redirect(base_url() . 'index.php?admin/system_settings/', 'refresh');
         }

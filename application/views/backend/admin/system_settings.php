@@ -98,7 +98,19 @@
                           </select>
                       </div>
                   </div>
-
+                    <div class="form-group">
+                        <label  class="col-sm-5 control-label">Pop up advertisement</label>
+                        <div class="col-sm-5">
+                            <input type="checkbox" value="1" <?php if($this->db->get_where('settings' , array('type' =>'ads_switch'))->row()->description == '1') echo 'checked';?>  name="ads_switch" class="js-switch" data-color="#13dafe" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label  class="col-sm-3 control-label"><?php echo get_phrase('Advertise Message');?></label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" name="advertise_message"
+                                   value="<?php echo $this->db->get_where('settings' , array('type' =>'advertise'))->row()->description;?>">
+                        </div>
+                    </div>
                   <div class="form-group">
                       <label  class="col-sm-5 control-label">RTL</label>
                       <div class="col-sm-5">

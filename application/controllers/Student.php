@@ -233,6 +233,7 @@ class Student extends CI_Controller
         ))->row()->class_id;
         $page_data['student_id'] = $student_profile->student_id;
         $page_data['page_name']  = 'class_routine';
+        $page_data['student_id'] = $param1;
         $page_data['page_title'] = get_phrase('Class-Routine');
         $this->load->view('backend/index', $page_data);
     }
@@ -631,6 +632,7 @@ class Student extends CI_Controller
         if ($this->session->userdata('student_login') != 1)
             redirect(base_url(), 'refresh');
         $page_data['page_name']  = 'grades';
+        $page_data['student_id'] =  $this->session->userdata('student_id');
         $page_data['page_title'] = get_phrase('Student-Grade');
         $this->load->view('backend/index', $page_data);
     }
@@ -676,10 +678,11 @@ class Student extends CI_Controller
         $data['class_id']   = $this->input->post('class_id');
         $data['section_id'] = $this->input->post('section_id');
         $data['subject_id'] = $this->input->post('subject_id');
+        $data['student_id'] = $this->input->post('student_id');
         $data['year'] = $this->db->get_where('settings' , array('type' => 'running_year'))->row()->description;
-        redirect(base_url().'index.php?student/manage_grade/'.$data['class_id'].'/'.$data['section_id'].'/'.$data['subject_id'].'/'.$data['semester_id'],'refresh');
+        redirect(base_url().'index.php?student/manage_grade/'.$data['class_id'].'/'.$data['section_id'].'/'.$data['subject_id'].'/'.$data['semester_id'].'/'.$data['student_id'],'refresh');
     }
-    function manage_grade($class_id = '' , $section_id = '' ,$subject_id = '', $semester_id = '')
+    function manage_grade($class_id = '' , $section_id = '' ,$subject_id = '', $semester_id = '',$student_id = '')
     {
         if($this->session->userdata('student_login')!=1)
             redirect(base_url() , 'refresh');
@@ -691,6 +694,7 @@ class Student extends CI_Controller
         $page_data['page_name'] = 'manage_grade';
         $page_data['section_id'] = $section_id;
         $page_data['subject_id'] = $subject_id;
+        $page_data['student_id'] = $student_id;
         $page_data['page_title'] = get_phrase('Manage Grade');
         $this->load->view('backend/index', $page_data);
     }
