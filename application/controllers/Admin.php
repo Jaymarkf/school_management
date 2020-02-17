@@ -1391,7 +1391,7 @@ class Admin extends CI_Controller
 
 
 
-        if($query->num_rows() < 1) {
+
 //            $students = $this->db->get_where('enroll' , array(
 //                'class_id' => $data['class_id'] , 'section_id' => $data['section_id'] , 'year' => $data['year']
 //            ))->result_array();
@@ -1412,57 +1412,67 @@ class Admin extends CI_Controller
 //          echo '</pre>';
 //          die();
 
-            foreach ($students as $row) {
-                $res = $this->db->get_where('attendance', array('student_id' => $row['student_id']))->result_array();
+        if($query->num_rows() < 1) {
+            foreach ($students as $row => $ix) {
+//        $res = $this->db->get_where('attendance', array('student_id' => $row['student_id']))->result_array();
+                if ($ix['section_id'] == 0)  {
+//            $w = ' (class_id = ' . $data['class_id'] . ' and section_id = ' . $data['section_id'] . ' and year = "' . $data['year'] . '" and find_in_set("' . $data['subject_id'] . '",selected_subject) and student_id = ' . $row['student_id'] . ')
+//                            or
+//                            (class_id = ' . $data['class_id'] . ' and section_id = 0 and year = "' . $data['year'] . '"  and find_in_set("' . $data['subject_id'] . '",selected_subject) and student_id = ' . $row['student_id'] . ')';
 
+//            $sel = "*, (select SUBSTR('" . $row['selected_subject'] . "',locate('" . $data['subject_id'] . "','" . $row['selected_subject'] . "'),1)) as selected_s";
 
-                if ($row['section_id'] == 0) {
+                    $datax = $this->db->query('SELECT *, (select SUBSTR("' . $ix['selected_subject'] . '", locate("' . $data['subject_id'] . '", "' . $ix['selected_subject'] . '"), 1)) as selected_s FROM `enroll` WHERE (class_id = ' . $data['class_id'] . ' and section_id = 0 and year = "' . $data['year'] . '" and find_in_set("' . $data['subject_id'] . '",selected_subject) and student_id = ' . $ix['student_id'] . ')')->result_array();
+                    foreach ($datax as $index => $i) {
+                        if ($i['selected_s'] == $data['subject_id']) {
+                            $sub_id = 0;
+                            $getstud = $this->db->get_where('attendance',array('student_id'=> $i['student_id'] ));
+                            if($getstud->num_rows() > 1){
 
-                    $w = ' (class_id = ' . $data['class_id'] . ' and section_id = ' . $data['section_id'] . ' and year = "' . $data['year'] . '" and find_in_set("' . $data['subject_id'] . '",selected_subject) and student_id = ' . $row['student_id'] . ')
-                            or
-                            (class_id = ' . $data['class_id'] . ' and section_id = 0 and year = "' . $data['year'] . '"  and find_in_set("' . $data['subject_id'] . '",selected_subject) and student_id = ' . $row['student_id'] . ')';
-
-                    $sel = "*, (select SUBSTR('" . $row['selected_subject'] . "',locate('" . $data['subject_id'] . "','" . $row['selected_subject'] . "'),1)) as selected_s";
-
-                    $datax = $this->db->query('SELECT *, (select SUBSTR("' . $row['selected_subject'] . '", locate("' . $data['subject_id'] . '", "' . $row['selected_subject'] . '"), 1)) as selected_s FROM `enroll` WHERE (class_id = ' . $data['class_id'] . ' and section_id = 0 and year = "' . $data['section_id'] . '" and find_in_set("' . $data['subject_id'] . '",selected_subject) and student_id = ' . $row['student_id'] . ')')->result_array();
-
-
-                    if ($datax['selected_s'] == $data['subject_id']) {
-
-                        $attn_data['class_id'] = $data['class_id'];
-                        $attn_data['year'] = $data['year'];
-                        $attn_data['timestamp'] = $data['timestamp'];
-                        $attn_data['section_id'] = 0;
-                        $attn_data['student_id'] = $row['student_id'];
-                        $attn_data['subject_id'] = $data['subject_id'];
-                        $this->db->where('student_id', $datax['student_id']);
-                        $this->db->where('subject_id', $datax['selected_s']);
-                        $this->db->update('attendance');
-                    } else {
-
-                        $attn_data['class_id'] = $data['class_id'];
-                        $attn_data['year'] = $data['year'];
-                        $attn_data['timestamp'] = $data['timestamp'];
-                        $attn_data['section_id'] = $row['section_id'];
-                        $attn_data['student_id'] = $row['student_id'];
-                        $attn_data['subject_id'] = $data['subject_id'];
-                        $this->db->insert('attendance', $attn_data);
+                                $attn_data['class_id'] = $data['class_id'];
+                                $attn_data['year'] = $data['year'];
+                                $attn_data['timestamp'] = $data['timestamp'];
+                                $attn_data['section_id'] = 0;
+                                $attn_data['student_id'] = $ix['student_id'];
+                                $attn_data['subject_id'] = $data['subject_id'];
+                                $this->db->where('student_id', $i['student_id']);
+                                $this->db->where('subject_id', $i['selected_s']);
+                                $this->db->where('section_id','0');
+                                $this->db->update('attendance', $attn_data);
+                            }else{
+                                $attn_data['class_id'] = $data['class_id'];
+                                $attn_data['year'] = $data['year'];
+                                $attn_data['timestamp'] = $data['timestamp'];
+                                $attn_data['section_id'] = 0;
+                                $attn_data['student_id'] = $ix['student_id'];
+                                $attn_data['subject_id'] = $data['subject_id'];
+                                $this->db->where('student_id', $i['student_id']);
+                                $this->db->where('subject_id', $i['selected_s']);
+                                $this->db->where('section_id','0');
+                                $this->db->insert('attendance', $attn_data);
+                            }
+                        } else {
+                            $attn_data['class_id'] = $data['class_id'];
+                            $attn_data['year'] = $data['year'];
+                            $attn_data['timestamp'] = $data['timestamp'];
+                            $attn_data['section_id'] = $ix['section_id'];
+                            $attn_data['student_id'] = $ix['student_id'];
+                            $attn_data['subject_id'] = $data['subject_id'];
+                            $this->db->insert('attendance', $attn_data);
+                        }
                     }
-
                 } else {
                     $attn_data['class_id'] = $data['class_id'];
                     $attn_data['year'] = $data['year'];
                     $attn_data['timestamp'] = $data['timestamp'];
-                    $attn_data['section_id'] = $row['section_id'];
-                    $attn_data['student_id'] = $row['student_id'];
+                    $attn_data['section_id'] = $ix['section_id'];
+                    $attn_data['student_id'] = $ix['student_id'];
                     $attn_data['subject_id'] = $data['subject_id'];
+                    $d = "section_id <> 0 and subject_id <> '".$data['subject_id']."'";
+                    $this->db->where($d);
                     $this->db->insert('attendance', $attn_data);
-
                 }
-
             }
-
-
         }
 //        echo '<pre>';
 //        print_r($attn_data);

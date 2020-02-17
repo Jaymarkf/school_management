@@ -684,11 +684,9 @@ class Student extends CI_Controller
     }
     function manage_grade($class_id = '' , $section_id = '' ,$subject_id = '', $semester_id = '',$student_id = '')
     {
+
         if($this->session->userdata('student_login')!=1)
             redirect(base_url() , 'refresh');
-        $class_name = $this->db->get_where('class' , array(
-            'class_id' => $class_id
-        ))->row()->name;
         $page_data['class_id'] = $class_id;
         $page_data['semester_id'] = $semester_id;
         $page_data['page_name'] = 'manage_grade';

@@ -107,13 +107,13 @@
                 <tbody>
                     <?php
                     $count = 1;
+
                     $qrs = ' (class_id = '.$class_id.' and section_id = '.$section_id.' and year = "'.$running_year. '" and timestamp = "'.$timestamp.'" and subject_id = "'.$subject_id.'")
                             or
                             (class_id = '.$class_id.' and section_id = 0 and year = "'.$running_year. '" and timestamp = "'.$timestamp.'" and subject_id = "'.$subject_id.'")
                             ';
                     $this->db->where($qrs);
                     $attendance_of_students =  $this->db->get('attendance')->result_array();
-
 
                     foreach ($attendance_of_students as $row):
                         ?>
