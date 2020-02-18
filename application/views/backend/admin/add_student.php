@@ -11,6 +11,7 @@
         padding-top:50px;
         margin: auto;
     }
+
 </style>
 
 <div class="row bg-title">

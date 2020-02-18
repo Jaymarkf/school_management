@@ -637,6 +637,7 @@ class Teacher extends CI_Controller
                 'section_id'=>$data['section_id'],
                     'year'=>$data['year'],
                         'subject_id' => $data['subject_id'],
+                         'timestamp'=>$data['timestamp']
 
         ));
         $qryd = '(class_id = ' . $data['class_id'] . ' and section_id = ' . $data['section_id'] . ' and year = "' . $data['year'] . '" and find_in_set("' . $data['subject_id'] . '",selected_subject))
@@ -659,9 +660,8 @@ class Teacher extends CI_Controller
                     foreach ($datax as $index => $i) {
                         if ($i['selected_s'] == $data['subject_id']) {
                             $sub_id = 0;
-                            $getstud = $this->db->get_where('attendance',array('student_id'=> $i['student_id'] ));
+                            $getstud = $this->db->get_where('attendance',array('student_id'=> $i['student_id'],'timestamp'=>$data['timestamp'] ));
                             if($getstud->num_rows() > 1){
-
                                 $attn_data['class_id'] = $data['class_id'];
                                 $attn_data['year'] = $data['year'];
                                 $attn_data['timestamp'] = $data['timestamp'];
@@ -671,10 +671,9 @@ class Teacher extends CI_Controller
                                 $this->db->where('student_id', $i['student_id']);
                                 $this->db->where('subject_id', $i['selected_s']);
                                 $this->db->where('section_id','0');
+                                $this->db->where('timestamp',$data['timestamp']);
                                 $this->db->update('attendance', $attn_data);
-
                             }else{
-
                                 $attn_data['class_id'] = $data['class_id'];
                                 $attn_data['year'] = $data['year'];
                                 $attn_data['timestamp'] = $data['timestamp'];
@@ -684,8 +683,8 @@ class Teacher extends CI_Controller
                                 $this->db->where('student_id', $i['student_id']);
                                 $this->db->where('subject_id', $i['selected_s']);
                                 $this->db->where('section_id','0');
+                                $this->db->where('timestamp',$data['timestamp']);
                                 $this->db->insert('attendance', $attn_data);
-
                             }
                         } else {
                             $attn_data['class_id'] = $data['class_id'];
@@ -706,6 +705,7 @@ class Teacher extends CI_Controller
                     $attn_data['subject_id'] = $data['subject_id'];
                     $d = "section_id <> 0 and subject_id <> '".$data['subject_id']."'";
                     $this->db->where($d);
+                    $this->db->where('timestamp',$data['timestamp']);
                     $this->db->insert('attendance', $attn_data);
                 }
             }
@@ -1114,6 +1114,41 @@ class Teacher extends CI_Controller
 
 
         redirect(base_url().'index.php?teacher/manage_grade/'.$class_id.'/'.$section_id.'/'.$subject_id.'/'.$semester_id , 'refresh');
+    }
+    function attendance_report_selector()
+    {
+        $data['class_id']   = $this->input->post('class_id');
+        $data['year']       = $this->input->post('year');
+        $data['month']  = $this->input->post('month');
+        $data['section_id'] = $this->input->post('section_id');
+        $data['subject_id'] = $this->input->post('subject_id');
+        redirect(base_url().'index.php?teacher/report_attendance_view/'.$data['class_id'].'/'.$data['section_id'].'/'.$data['month'].'/'.$data['subject_id'],'refresh');
+    }
+
+    function attendance_report()
+    {
+        $page_data['month']        = date('m');
+        $page_data['page_name']    = 'attendance_report';
+        $page_data['page_title']   = get_phrase('Attendance-Report');
+        $this->load->view('backend/index',$page_data);
+    }
+    function report_attendance_view($class_id = '' , $section_id = '', $month = '',$subject_id = '')
+    {
+        if($this->session->userdata('teacher_login')!=1)
+            redirect(base_url() , 'refresh');
+        $class_name = $this->db->get_where('class' , array(
+            'class_id' => $class_id
+        ))->row()->name;
+        $page_data['class_id'] = $class_id;
+        $page_data['month']    = $month;
+        $page_data['page_name'] = 'report_attendance_view';
+        $section_name = $this->db->get_where('section' , array(
+            'section_id' => $section_id
+        ))->row()->name;
+        $page_data['section_id'] = $section_id;
+        $page_data['subject_id'] = $subject_id;
+        $page_data['page_title'] = get_phrase('Attendance-Report');
+        $this->load->view('backend/index', $page_data);
     }
 
 

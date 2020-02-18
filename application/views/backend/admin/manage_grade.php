@@ -195,6 +195,74 @@
     </div>
 
 </div>
+<div class="row" style="display:none;">
+    <div class="row" id="print_data">
+        <div class="col-lg-6" style="float:none;margin:auto;">
+            <div class="text-right">
+                <label>Date: ______________ </label>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <th>Semester : <?php echo $semester_id?></th>
+                    <th>Class : <?php echo $this->db->get_where('class',array('class_id'=>$class_id))->row()->name; ?></th>
+                    <th>Section : <?php echo $this->db->get_where('section',array('section_id' => $section_id))->row()->name; ?></th>
+                    <th>Subject : <?php echo $this->db->get_where('subject',array('subject_id' => $subject_id))->row()->name; ?></th>
+                </table>
+                <table class="table table-bordered">
+                    <th>
+                        Student
+                    </th>
+                    <th>
+                        Grade
+                    </th>
+                    <th>
+                        Specific Grade
+                    </th>
+                    <th>
+                        Comments Optional
+                    </th>
+                    <tbody>
+                    <?php
+                    $q = '(class_id = '.$class_id.' and section_id = '.$section_id.' and year = "'.$running_year. '" and find_in_set("'.$subject_id.'",selected_subject))
+                            or
+                            (class_id = '.$class_id.' and section_id = 0 and year = "'.$running_year. '"  and find_in_set("'.$subject_id.'",selected_subject))
+                            ';
+                    $this->db->where($q);
+                    $temp_grade = $this->db->get('enroll')->result_array();
+                    //                    $this->db->select('*');
+                    //                    $this->db->from('enroll');
+                    //                    $this->db->where('');
+                    foreach ($temp_grade as $row):
+                    ?>
+                        <tr>
+                            <td><?php echo $this->db->get_where('student', array('student_id' => $row['student_id']))->row()->name; ?></td>
+                            <?php
+                            $qd = '(class_id = '.$class_id.' and section_id = '.$section_id.' and year = "'.$running_year. '" and subject_id = '.$subject_id.' and student_id = '.$row['student_id'].')
+                            or
+                            (class_id = '.$class_id.' and section_id = 0 and year = "'.$running_year. '"  and subject_id = '.$subject_id.' and student_id = '.$row['student_id'].')
+                            ';
+
+
+                            $this->db->where($qd);
+                            $x = $this->db->get('grades')->row()->student_grade;
+                            $this->db->where($qd);
+                            $grade = $this->db->get('grades')->row()->specific_grade;
+                            $this->db->where($qd);
+                            $comments= $this->db->get('grades')->row()->comments;
+                            ?>
+                            <td><?php echo $x; ?></td>
+                            <td><?php echo $grade; ?></td>
+                            <td><?php echo $comments; ?></td>
+                        </tr>
+
+                    <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+</div>
 
 <script type="text/javascript">
     function select_section(class_id) {
@@ -216,4 +284,41 @@
         });
 
     }
+
+        $(document).ready(function() {
+
+            $('#btnprint').click(function () {
+                var elem = $('#print_data');
+                PrintElem(elem);
+                Popup(data);
+            });
+        });
+            function PrintElem(elem)
+            {
+                Popup($(elem).html());
+            }
+
+            function Popup(data) {
+                var a = '<link rel=\"stylesheet\" href=\"https:\/\/maxcdn.bootstrapcdn.com\/bootstrap\/3.4.1\/css\/bootstrap.min.css\"><style>' +
+                    '@media print {' +
+                    'body {-webkit-print-color-adjust: exact;}' +
+                    '}<\/style>';
+                var b = '<script src=\"https:\/\/ajax.googleapis.com\/ajax\/libs\/jquery\/3.4.1\/jquery.min.js\"><\/script>';
+                var c = '<script src=\"https:\/\/maxcdn.bootstrapcdn.com\/bootstrap\/3.4.1\/js\/bootstrap.min.js\"><\/script>';
+                var d = '<link rel=\"stylesheet\" href=\"https:\/\/cdnjs.cloudflare.com\/ajax\/libs\/font-awesome\/4.7.0\/css\/font-awesome.min.css\">';
+                var scripts = a + '' + b +'' + c + '' + d;
+
+                var mywindow = window.open('', 'my div', 'height=400,width=700');
+                mywindow.document.write('<html><head><title></title>');
+                mywindow.document.write(scripts + '</head><body>');
+                mywindow.document.write('<br><br><br><br>');
+                mywindow.document.write(data+'</body></html>');
+                mywindow.document.close();
+                mywindow.print();
+
+            }
+
+
+
+
 </script>

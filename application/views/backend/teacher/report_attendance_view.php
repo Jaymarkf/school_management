@@ -1,5 +1,5 @@
 <?php $running_year = $this->db->get_where('settings' , array('type' => 'running_year'))->row()->description; ?>
-<?php echo form_open(base_url() . 'index.php?admin/attendance_report_selector/'); ?>
+<?php echo form_open(base_url() . 'index.php?teacher/attendance_report_selector/'); ?>
 
 <div class="row bg-title">
     <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">

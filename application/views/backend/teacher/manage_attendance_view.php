@@ -44,7 +44,7 @@
             <label class="control-label" style="margin-bottom: 5px;"><?php echo get_phrase('Subject'); ?></label>
             <select class="form-control selectboxit" name="subject_id">
                 <?php
-                $subj = $this->db->get_where('subject',array('class_id' => $class_id))->result_array();
+                $subj = $this->db->get_where('subject',array('subject_id' => $subject_id))->result_array();
                 foreach ($subj as $index => $item) {
                     echo '<option value="'.$item['subject_id'].'">'.$item['name'].'</option>';
                 }

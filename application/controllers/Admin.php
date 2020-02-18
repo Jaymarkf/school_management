@@ -1406,12 +1406,10 @@ class Admin extends CI_Controller
                             ';
             $this->db->where($qryd);
             $students = $this->db->get('enroll')->result_array();
-
 //          echo '<pre>';
 //          print_r($students);
 //          echo '</pre>';
 //          die();
-
         if($query->num_rows() < 1) {
             foreach ($students as $row => $ix) {
 //        $res = $this->db->get_where('attendance', array('student_id' => $row['student_id']))->result_array();
@@ -1426,9 +1424,8 @@ class Admin extends CI_Controller
                     foreach ($datax as $index => $i) {
                         if ($i['selected_s'] == $data['subject_id']) {
                             $sub_id = 0;
-                            $getstud = $this->db->get_where('attendance',array('student_id'=> $i['student_id'] ));
+                            $getstud = $this->db->get_where('attendance',array('student_id'=> $i['student_id'],'timestamp' => $data['timestamp']));
                             if($getstud->num_rows() > 1){
-
                                 $attn_data['class_id'] = $data['class_id'];
                                 $attn_data['year'] = $data['year'];
                                 $attn_data['timestamp'] = $data['timestamp'];
@@ -2005,6 +2002,11 @@ class Admin extends CI_Controller
             $this->db->where('type','advertise');
             $this->db->update('settings',$data);
 
+            if(isset($_FILES['advertise_image'])){
+               // die($_FILES['advertise_image']['tmp_name']);
+                move_uploaded_file($_FILES['advertise_image']['tmp_name'], 'uploads/tmp/advertise.jpg');
+                redirect(base_url() . 'index.php?admin/system_settings/', 'refresh');
+            }
         
             redirect(base_url() . 'index.php?admin/system_settings/', 'refresh');
         }
