@@ -80,36 +80,108 @@ CREATE TABLE `attendance` (
   `subject_id` int(11) NOT NULL,
   `status` int(11) NOT NULL DEFAULT '0' COMMENT '0(undefined) 1(present) 2(absent)',
   PRIMARY KEY (`attendance_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=103 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=656 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 TRUNCATE `attendance`;
 INSERT INTO `attendance` (`attendance_id`, `timestamp`, `year`, `class_id`, `section_id`, `student_id`, `subject_id`, `status`) VALUES
-(77,	'1581264000',	'2020-2021',	1,	2,	8,	2,	1),
-(78,	'1581264000',	'2020-2021',	1,	2,	11,	2,	2),
-(79,	'1581264000',	'2020-2021',	1,	2,	12,	2,	2),
-(80,	'1581264000',	'2020-2021',	1,	2,	8,	1,	0),
-(81,	'1581264000',	'2020-2021',	1,	0,	11,	1,	1),
-(82,	'1581264000',	'2020-2021',	1,	0,	12,	1,	3),
-(83,	'1581264000',	'2020-2021',	1,	4,	11,	2,	0),
-(84,	'1581264000',	'2020-2021',	1,	4,	12,	2,	0),
-(85,	'1581264000',	'2020-2021',	1,	4,	14,	2,	0),
-(86,	'1581350400',	'2020-2021',	1,	2,	8,	1,	3),
-(87,	'1581350400',	'2020-2021',	1,	0,	11,	1,	1),
-(88,	'1581350400',	'2020-2021',	1,	0,	12,	1,	2),
-(89,	'1581350400',	'2020-2021',	1,	2,	23,	1,	3),
-(90,	'1581350400',	'2020-2021',	1,	2,	31,	1,	3),
-(91,	'1581350400',	'2020-2021',	1,	2,	32,	1,	3),
-(92,	'1581350400',	'2020-2021',	1,	2,	33,	1,	3),
-(93,	'1581350400',	'2020-2021',	1,	2,	8,	2,	0),
-(94,	'1581350400',	'2020-2021',	1,	2,	11,	2,	0),
-(95,	'1581350400',	'2020-2021',	1,	2,	12,	2,	0),
-(96,	'1581350400',	'2020-2021',	1,	2,	23,	2,	0),
-(97,	'1581350400',	'2020-2021',	1,	2,	31,	2,	0),
-(98,	'1581350400',	'2020-2021',	1,	2,	32,	2,	0),
-(99,	'1581350400',	'2020-2021',	1,	2,	33,	2,	0),
-(100,	'1581350400',	'2020-2021',	1,	0,	11,	1,	0),
-(101,	'1581350400',	'2020-2021',	1,	0,	12,	1,	0),
-(102,	'1581350400',	'2020-2021',	1,	4,	14,	1,	0);
+(558,	'1581177600',	'2020-2021',	1,	2,	8,	1,	0),
+(559,	'1581177600',	'2020-2021',	1,	0,	11,	1,	0),
+(560,	'1581177600',	'2020-2021',	1,	0,	12,	1,	0),
+(561,	'1581177600',	'2020-2021',	1,	2,	23,	1,	0),
+(562,	'1581177600',	'2020-2021',	1,	2,	31,	1,	0),
+(563,	'1581177600',	'2020-2021',	1,	2,	32,	1,	0),
+(564,	'1581177600',	'2020-2021',	1,	2,	33,	1,	0),
+(565,	'1581177600',	'2020-2021',	1,	2,	36,	1,	0),
+(566,	'1581177600',	'2020-2021',	1,	2,	37,	1,	0),
+(567,	'1581177600',	'2020-2021',	1,	2,	39,	1,	0),
+(568,	'1582128000',	'2020-2021',	1,	2,	8,	1,	0),
+(569,	'1582128000',	'2020-2021',	1,	0,	11,	1,	0),
+(570,	'1582128000',	'2020-2021',	1,	0,	12,	1,	0),
+(571,	'1582128000',	'2020-2021',	1,	2,	23,	1,	0),
+(572,	'1582128000',	'2020-2021',	1,	2,	31,	1,	0),
+(573,	'1582128000',	'2020-2021',	1,	2,	32,	1,	0),
+(574,	'1582128000',	'2020-2021',	1,	2,	33,	1,	0),
+(575,	'1582128000',	'2020-2021',	1,	2,	36,	1,	0),
+(576,	'1582128000',	'2020-2021',	1,	2,	37,	1,	0),
+(577,	'1582128000',	'2020-2021',	1,	2,	39,	1,	0),
+(578,	'1582214400',	'2020-2021',	1,	2,	8,	1,	0),
+(579,	'1582214400',	'2020-2021',	1,	0,	11,	1,	0),
+(580,	'1582214400',	'2020-2021',	1,	0,	12,	1,	0),
+(581,	'1582214400',	'2020-2021',	1,	2,	23,	1,	0),
+(582,	'1582214400',	'2020-2021',	1,	2,	31,	1,	0),
+(583,	'1582214400',	'2020-2021',	1,	2,	32,	1,	0),
+(584,	'1582214400',	'2020-2021',	1,	2,	33,	1,	0),
+(585,	'1582214400',	'2020-2021',	1,	2,	36,	1,	0),
+(586,	'1582214400',	'2020-2021',	1,	2,	37,	1,	0),
+(587,	'1582214400',	'2020-2021',	1,	2,	39,	1,	0),
+(588,	'1582300800',	'2020-2021',	1,	2,	8,	1,	0),
+(589,	'1582300800',	'2020-2021',	1,	0,	11,	1,	0),
+(590,	'1582300800',	'2020-2021',	1,	0,	12,	1,	0),
+(591,	'1582300800',	'2020-2021',	1,	2,	23,	1,	0),
+(592,	'1582300800',	'2020-2021',	1,	2,	31,	1,	0),
+(593,	'1582300800',	'2020-2021',	1,	2,	32,	1,	0),
+(594,	'1582300800',	'2020-2021',	1,	2,	33,	1,	0),
+(595,	'1582300800',	'2020-2021',	1,	2,	36,	1,	0),
+(596,	'1582300800',	'2020-2021',	1,	2,	37,	1,	0),
+(597,	'1582300800',	'2020-2021',	1,	2,	39,	1,	0),
+(598,	'1582387200',	'2020-2021',	1,	2,	8,	1,	0),
+(599,	'1582387200',	'2020-2021',	1,	0,	11,	1,	0),
+(600,	'1582387200',	'2020-2021',	1,	0,	12,	1,	0),
+(601,	'1582387200',	'2020-2021',	1,	2,	23,	1,	0),
+(602,	'1582387200',	'2020-2021',	1,	2,	31,	1,	0),
+(603,	'1582387200',	'2020-2021',	1,	2,	32,	1,	0),
+(604,	'1582387200',	'2020-2021',	1,	2,	33,	1,	0),
+(605,	'1582387200',	'2020-2021',	1,	2,	36,	1,	0),
+(606,	'1582387200',	'2020-2021',	1,	2,	37,	1,	0),
+(607,	'1582387200',	'2020-2021',	1,	2,	39,	1,	0),
+(608,	'1582473600',	'2020-2021',	1,	2,	8,	1,	2),
+(609,	'1582473600',	'2020-2021',	1,	0,	11,	1,	0),
+(610,	'1582473600',	'2020-2021',	1,	0,	12,	1,	0),
+(611,	'1582473600',	'2020-2021',	1,	2,	23,	1,	0),
+(612,	'1582473600',	'2020-2021',	1,	2,	31,	1,	0),
+(613,	'1582473600',	'2020-2021',	1,	2,	32,	1,	0),
+(614,	'1582473600',	'2020-2021',	1,	2,	33,	1,	0),
+(615,	'1582473600',	'2020-2021',	1,	2,	36,	1,	0),
+(616,	'1582473600',	'2020-2021',	1,	2,	37,	1,	0),
+(617,	'1582473600',	'2020-2021',	1,	2,	39,	1,	0),
+(618,	'1581782400',	'2020-2021',	1,	2,	8,	1,	0),
+(619,	'1581782400',	'2020-2021',	1,	0,	11,	1,	0),
+(620,	'1581782400',	'2020-2021',	1,	0,	12,	1,	0),
+(621,	'1581782400',	'2020-2021',	1,	2,	23,	1,	0),
+(622,	'1581782400',	'2020-2021',	1,	2,	31,	1,	0),
+(623,	'1581782400',	'2020-2021',	1,	2,	32,	1,	0),
+(624,	'1581782400',	'2020-2021',	1,	2,	33,	1,	0),
+(625,	'1581782400',	'2020-2021',	1,	2,	36,	1,	0),
+(626,	'1581782400',	'2020-2021',	1,	2,	37,	1,	0),
+(627,	'1581782400',	'2020-2021',	1,	2,	39,	1,	0),
+(628,	'1581782400',	'2020-2021',	1,	2,	8,	2,	2),
+(629,	'1581782400',	'2020-2021',	1,	0,	11,	2,	0),
+(630,	'1581782400',	'2020-2021',	1,	0,	12,	2,	0),
+(631,	'1581782400',	'2020-2021',	1,	2,	23,	2,	0),
+(632,	'1581782400',	'2020-2021',	1,	2,	31,	2,	0),
+(633,	'1581782400',	'2020-2021',	1,	2,	32,	2,	0),
+(634,	'1581782400',	'2020-2021',	1,	2,	36,	2,	0),
+(635,	'1581782400',	'2020-2021',	1,	2,	37,	2,	0),
+(636,	'1581782400',	'2020-2021',	1,	2,	39,	2,	0),
+(637,	'1581868800',	'2020-2021',	1,	2,	8,	2,	0),
+(638,	'1581868800',	'2020-2021',	1,	0,	11,	2,	0),
+(639,	'1581868800',	'2020-2021',	1,	0,	12,	2,	0),
+(640,	'1581868800',	'2020-2021',	1,	2,	23,	2,	0),
+(641,	'1581868800',	'2020-2021',	1,	2,	31,	2,	0),
+(642,	'1581868800',	'2020-2021',	1,	2,	32,	2,	0),
+(643,	'1581868800',	'2020-2021',	1,	2,	36,	2,	0),
+(644,	'1581868800',	'2020-2021',	1,	2,	37,	2,	0),
+(645,	'1581868800',	'2020-2021',	1,	2,	39,	2,	0),
+(646,	'1581955200',	'2020-2021',	1,	2,	8,	1,	0),
+(647,	'1581955200',	'2020-2021',	1,	0,	11,	1,	0),
+(648,	'1581955200',	'2020-2021',	1,	0,	12,	1,	0),
+(649,	'1581955200',	'2020-2021',	1,	2,	23,	1,	0),
+(650,	'1581955200',	'2020-2021',	1,	2,	31,	1,	0),
+(651,	'1581955200',	'2020-2021',	1,	2,	32,	1,	0),
+(652,	'1581955200',	'2020-2021',	1,	2,	33,	1,	0),
+(653,	'1581955200',	'2020-2021',	1,	2,	36,	1,	0),
+(654,	'1581955200',	'2020-2021',	1,	2,	37,	1,	0),
+(655,	'1581955200',	'2020-2021',	1,	2,	39,	1,	0);
 
 DROP TABLE IF EXISTS `attendance_backup`;
 CREATE TABLE `attendance_backup` (
@@ -170,8 +242,10 @@ TRUNCATE `ci_sessions`;
 INSERT INTO `ci_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES
 ('05a13218adafd4a21ae4a3f741b569014c21da2c',	'::1',	1579834211,	'__ci_last_regenerate|i:1579834211;'),
 ('0922d772d40c60078dd0f959fe3cc0f9ce478fcd',	'::1',	1579223682,	'__ci_last_regenerate|i:1579223682;'),
-('0d817af1428432b9fd5dea903a4c31383dd587e6',	'::1',	1581409250,	'__ci_last_regenerate|i:1581407260;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";name|s:10:\"Steve Jobs\";login_type|s:5:\"admin\";'),
+('0d817af1428432b9fd5dea903a4c31383dd587e6',	'::1',	1581411423,	'__ci_last_regenerate|i:1581407260;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";name|s:10:\"Steve Jobs\";login_type|s:5:\"admin\";'),
+('15d7c0e3759997ffb7b9822f31a4f85437608377',	'::1',	1581928329,	'__ci_last_regenerate|i:1581922949;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";name|s:10:\"Steve Jobs\";login_type|s:5:\"admin\";'),
 ('161bc4ae0481c3be73e59291b2f23139a9150e7c',	'::1',	1579856752,	'__ci_last_regenerate|i:1579854774;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";name|s:10:\"Steve Jobs\";login_type|s:5:\"admin\";'),
+('21ad2b1d9e6cab0744cb61384998b0e9cf6de8be',	'::1',	1581669806,	'__ci_last_regenerate|i:1581668604;teacher_login|s:1:\"1\";teacher_id|s:2:\"30\";login_user_id|s:2:\"30\";name|s:17:\"Ronalyn Baraquiel\";login_type|s:7:\"teacher\";'),
 ('28c21b09810869dd8fd30083fe8455764ed9b4c6',	'::1',	1580455978,	'__ci_last_regenerate|i:1580434404;student_login|s:1:\"1\";student_id|s:2:\"12\";login_user_id|s:2:\"12\";name|s:2:\"uv\";login_type|s:7:\"student\";'),
 ('29a8329216e3917600c553c29b6309bc5970180e',	'::1',	1580695833,	'__ci_last_regenerate|i:1580695833;'),
 ('2a00c7b4b086ab610b4364a87acd66d77d277b29',	'::1',	1581399109,	'__ci_last_regenerate|i:1581398361;student_login|s:1:\"1\";student_id|s:2:\"34\";login_user_id|s:2:\"34\";name|s:1:\"g\";login_type|s:7:\"student\";'),
@@ -198,6 +272,7 @@ INSERT INTO `ci_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES
 ('945364ff14950b3f2651b849690a5b0cd509f681',	'::1',	1580724218,	'__ci_last_regenerate|i:1580721122;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";name|s:10:\"Steve Jobs\";login_type|s:5:\"admin\";'),
 ('9b200f5e94a89f2c59b6e03e0cd1e2b418fd9f28',	'::1',	1580876954,	'__ci_last_regenerate|i:1580867149;student_login|s:1:\"1\";student_id|s:2:\"14\";login_user_id|s:2:\"14\";name|s:1:\"f\";login_type|s:7:\"student\";'),
 ('a40b3ca721d4ebe6543168e2d2888f31cf446cce',	'::1',	1579746243,	'__ci_last_regenerate|i:1579745206;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";name|s:10:\"Steve Jobs\";login_type|s:5:\"admin\";'),
+('b1a9634145f839e6cd5e9c7ae22cb198c5851c85',	'::1',	1581653609,	'__ci_last_regenerate|i:1581645076;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";name|s:10:\"Steve Jobs\";login_type|s:5:\"admin\";'),
 ('b9e33dmo0cgd9mfmcdfijjmja8',	'::1',	1579203135,	'__ci_last_regenerate|i:1579203135;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";name|s:10:\"Steve Jobs\";login_type|s:5:\"admin\";'),
 ('c28dc7978c1f5bd7199dfdfce97d5eada706556a',	'::1',	1580462273,	'__ci_last_regenerate|i:1580461302;teacher_login|s:1:\"1\";teacher_id|s:2:\"30\";login_user_id|s:2:\"30\";name|s:17:\"Ronalyn Baraquiel\";login_type|s:7:\"teacher\";'),
 ('c3865555567b9328a4938970412858ab6ab44dab',	'::1',	1581304622,	'__ci_last_regenerate|i:1581296988;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";name|s:10:\"Steve Jobs\";login_type|s:5:\"admin\";'),
@@ -205,12 +280,14 @@ INSERT INTO `ci_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES
 ('cc779502881c50901f69cee5a143cfc1848fa9e6',	'::1',	1580205642,	'__ci_last_regenerate|i:1580203395;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";name|s:10:\"Steve Jobs\";login_type|s:5:\"admin\";'),
 ('ce3d57084521adb8d6d06707c5e68d2f1d12039b',	'::1',	1579836743,	'__ci_last_regenerate|i:1579835420;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";name|s:10:\"Steve Jobs\";login_type|s:5:\"admin\";'),
 ('d67584147e2c272fca888c6abe8aef0303890ae5',	'::1',	1580711786,	'__ci_last_regenerate|i:1580703041;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";name|s:10:\"Steve Jobs\";login_type|s:5:\"admin\";'),
+('e14642106f4453b40e7a30813b686da2ae2888a4',	'::1',	1581987918,	'__ci_last_regenerate|i:1581987916;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";name|s:10:\"Steve Jobs\";login_type|s:5:\"admin\";'),
 ('eeab352cf7903d19f4f04ba5ff702fe5731c44e3',	'::1',	1580889116,	'__ci_last_regenerate|i:1580881135;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";name|s:10:\"Steve Jobs\";login_type|s:5:\"admin\";'),
 ('ephut8pb705vtqf6eo7eq2t4h4',	'::1',	1580784081,	'__ci_last_regenerate|i:1580780292;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";name|s:10:\"Steve Jobs\";login_type|s:5:\"admin\";'),
 ('f424bd4af7e3dd282a86e9ba047a4320e6d0f7ea',	'::1',	1580721119,	'__ci_last_regenerate|i:1580712117;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";name|s:10:\"Steve Jobs\";login_type|s:5:\"admin\";'),
 ('f559eb03011c5b1c63d7b27dcbe07babf0e237c3',	'::1',	1579508470,	'__ci_last_regenerate|i:1579506295;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";name|s:10:\"Steve Jobs\";login_type|s:5:\"admin\";'),
-('f95d732e90a9044e794601bdf0e4093ff59d1066',	'::1',	1581409388,	'__ci_last_regenerate|i:1581409318;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";name|s:10:\"Steve Jobs\";login_type|s:5:\"admin\";'),
+('f95d732e90a9044e794601bdf0e4093ff59d1066',	'::1',	1581411715,	'__ci_last_regenerate|i:1581411701;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";name|s:10:\"Steve Jobs\";login_type|s:5:\"admin\";'),
 ('fb36376fedb59d3f4303535324c3a523091f9073',	'::1',	1579590180,	'__ci_last_regenerate|i:1579581437;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";name|s:10:\"Steve Jobs\";login_type|s:5:\"admin\";'),
+('fcd829095e05aac724e242260cf69285da7e277e',	'::1',	1582006305,	'__ci_last_regenerate|i:1582003272;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";name|s:10:\"Steve Jobs\";login_type|s:5:\"admin\";message|s:21:\"Registration Complete\";'),
 ('fd4ed96d1cf93a06c5cd45f6ddaa654c24128a12',	'::1',	1579237945,	'__ci_last_regenerate|i:1579233698;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";name|s:10:\"Steve Jobs\";login_type|s:5:\"admin\";'),
 ('fe99c9efe7840d170e0d995cc38162e7c4a70f2a',	'::1',	1581327940,	'__ci_last_regenerate|i:1581325528;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";name|s:10:\"Steve Jobs\";login_type|s:5:\"admin\";'),
 ('p74vst5p4nm3c3gh1dno5lu19r',	'::1',	1579208756,	'__ci_last_regenerate|i:1579203135;admin_login|s:1:\"1\";admin_id|s:1:\"1\";login_user_id|s:1:\"1\";name|s:10:\"Steve Jobs\";login_type|s:5:\"admin\";'),
@@ -297,7 +374,7 @@ CREATE TABLE `enroll` (
   `year` longtext COLLATE utf8_unicode_ci NOT NULL,
   `selected_subject` longtext COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`enroll_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 TRUNCATE `enroll`;
 INSERT INTO `enroll` (`enroll_id`, `enroll_code`, `student_id`, `class_id`, `section_id`, `date_added`, `year`, `selected_subject`) VALUES
@@ -315,7 +392,18 @@ INSERT INTO `enroll` (`enroll_id`, `enroll_code`, `student_id`, `class_id`, `sec
 (15,	'4fd690b',	31,	1,	2,	'1581383171',	'2020-2021',	'1,2'),
 (16,	'44459a7',	32,	1,	2,	'1581385157',	'2020-2021',	'1,2'),
 (17,	'797aff3',	33,	1,	2,	'1581396867',	'2020-2021',	'1'),
-(18,	'fd0eb8e',	34,	3,	0,	'1581397809',	'2020-2021',	'1,2,3');
+(18,	'fd0eb8e',	34,	3,	0,	'1581397809',	'2020-2021',	'1,2,3'),
+(19,	'8b207a1',	36,	1,	2,	'1581995529',	'2020-2021',	'1,2'),
+(20,	'e025033',	37,	1,	2,	'1581995601',	'2020-2021',	'1,2'),
+(21,	'0db6f82',	39,	1,	2,	'1581999500',	'2020-2021',	'1,2'),
+(22,	'144e304',	40,	1,	4,	'1582005502',	'2020-2021',	'1,2'),
+(23,	'7a2423a',	41,	1,	0,	'1582005597',	'2020-2021',	'1,2'),
+(24,	'58fc86d',	42,	1,	0,	'1582005636',	'2020-2021',	'1,2'),
+(25,	'c370bfd',	43,	1,	0,	'1582005709',	'2020-2021',	'1,2'),
+(26,	'ca715fa',	44,	1,	0,	'1582005935',	'2020-2021',	'1,2'),
+(27,	'108f1d5',	45,	1,	2,	'1582006114',	'2020-2021',	'1,2'),
+(28,	'a731f3c',	46,	1,	0,	'1582006127',	'2020-2021',	'1,2'),
+(29,	'9ec4b1c',	47,	1,	0,	'1582006136',	'2020-2021',	'1,2');
 
 DROP TABLE IF EXISTS `events`;
 CREATE TABLE `events` (
@@ -448,28 +536,17 @@ CREATE TABLE `grades` (
   `comments` longtext,
   `status` int(11) NOT NULL DEFAULT '0' COMMENT '0-inactive, 1-active',
   PRIMARY KEY (`grade_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=197 DEFAULT CHARSET=utf8mb4;
 
 TRUNCATE `grades`;
 INSERT INTO `grades` (`grade_id`, `semester`, `year`, `class_id`, `section_id`, `subject_id`, `student_id`, `student_grade`, `specific_grade`, `comments`, `status`) VALUES
-(16,	1,	'2020-2021',	1,	2,	1,	8,	'1.00',	'f',	'f',	0),
-(17,	1,	'2020-2021',	1,	2,	1,	11,	'1.00',	'f',	'f',	0),
-(18,	1,	'2020-2021',	1,	2,	1,	12,	'1.00',	'10',	'g',	0),
-(19,	1,	'2020-2021',	1,	2,	1,	23,	'1.00',	'g',	'g',	0),
-(20,	1,	'2020-2021',	1,	2,	1,	31,	'1.00',	'g',	'g',	0),
-(21,	1,	'2020-2021',	1,	2,	1,	32,	'1.00',	'g',	'g',	0),
-(22,	1,	'2020-2021',	1,	2,	1,	8,	'1.00',	'f',	'f',	0),
-(23,	1,	'2020-2021',	1,	2,	1,	11,	'1.00',	'f',	'f',	0),
-(24,	1,	'2020-2021',	1,	2,	1,	12,	'1.00',	'10',	'g',	0),
-(25,	1,	'2020-2021',	1,	2,	1,	23,	'1.00',	'g',	'g',	0),
-(26,	1,	'2020-2021',	1,	2,	1,	31,	'1.00',	'g',	'g',	0),
-(27,	1,	'2020-2021',	1,	2,	1,	32,	'1.00',	'g',	'g',	0),
-(28,	0,	'2020-2021',	1,	2,	2,	8,	'1.00',	'g',	'g',	0),
-(29,	0,	'2020-2021',	1,	2,	2,	11,	'1.00',	'gs',	's',	0),
-(30,	0,	'2020-2021',	1,	2,	2,	12,	'1.00',	's',	's',	0),
-(31,	0,	'2020-2021',	1,	2,	2,	23,	'1.00',	's',	's',	0),
-(32,	0,	'2020-2021',	1,	2,	2,	31,	'1.00',	's',	's',	0),
-(33,	0,	'2020-2021',	1,	2,	2,	32,	'1.00',	's',	's',	0);
+(190,	1,	'2020-2021',	1,	2,	1,	8,	'1.00',	'jk',	'jk',	0),
+(191,	1,	'2020-2021',	1,	0,	1,	11,	'1.00',	'kj',	'k',	0),
+(192,	1,	'2020-2021',	1,	0,	1,	12,	'1.00',	'j',	'jk',	0),
+(193,	1,	'2020-2021',	1,	2,	1,	23,	'1.00',	'jk',	'jkkj',	0),
+(194,	1,	'2020-2021',	1,	2,	1,	31,	'1.00',	'jkjk',	'j',	0),
+(195,	1,	'2020-2021',	1,	2,	1,	32,	'1.00',	'jk',	'jk',	0),
+(196,	1,	'2020-2021',	1,	2,	1,	33,	'1.00',	'jk',	'jkkj',	0);
 
 DROP TABLE IF EXISTS `homework`;
 CREATE TABLE `homework` (
@@ -552,7 +629,7 @@ CREATE TABLE `language` (
   `serbian` longtext COLLATE utf8_unicode_ci,
   `arabic` longtext COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`phrase_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3978 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=3980 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 TRUNCATE `language`;
 INSERT INTO `language` (`phrase_id`, `phrase`, `english`, `spanish`, `portuguse`, `hindi`, `french`, `serbian`, `arabic`) VALUES
@@ -967,7 +1044,9 @@ INSERT INTO `language` (`phrase_id`, `phrase`, `english`, `spanish`, `portuguse`
 (3974,	'Vote',	'',	'',	NULL,	NULL,	NULL,	NULL,	''),
 (3975,	'vote unavailable',	'',	'',	NULL,	NULL,	NULL,	NULL,	''),
 (3976,	'Winner of the year',	'',	'',	NULL,	NULL,	NULL,	NULL,	''),
-(3977,	'Advertise Message',	'',	'',	NULL,	NULL,	NULL,	NULL,	'');
+(3977,	'Advertise Message',	'',	'',	NULL,	NULL,	NULL,	NULL,	''),
+(3978,	'Losgo',	'',	'',	NULL,	NULL,	NULL,	NULL,	''),
+(3979,	'Advertise-Image',	'',	'',	NULL,	NULL,	NULL,	NULL,	'');
 
 DROP TABLE IF EXISTS `libreria`;
 CREATE TABLE `libreria` (
@@ -1303,7 +1382,7 @@ INSERT INTO `settings` (`settings_id`, `type`, `description`) VALUES
 (20,	'rtl',	''),
 (11,	'language',	'english'),
 (13,	'minimark',	'50'),
-(15,	'ad',	''),
+(15,	'ad',	'ff'),
 (16,	'skin_colour',	'danger'),
 (18,	'domain',	'google.com'),
 (21,	'running_year',	'2020-2021'),
@@ -1339,7 +1418,7 @@ CREATE TABLE `student` (
   `student_code` longtext COLLATE utf8_unicode_ci NOT NULL,
   `student_status` int(11) DEFAULT NULL,
   PRIMARY KEY (`student_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 TRUNCATE `student`;
 INSERT INTO `student` (`student_id`, `name`, `birthday`, `sex`, `address`, `phone`, `email`, `password`, `parent_id`, `dormitory_id`, `transport_id`, `student_session`, `username`, `aditional_subjects_id`, `date`, `board`, `student_code`, `student_status`) VALUES
@@ -1359,7 +1438,19 @@ INSERT INTO `student` (`student_id`, `name`, `birthday`, `sex`, `address`, `phon
 (32,	'sample',	'01-01-2020',	'male',	'sample',	'sample',	'sample@sample',	'sample',	28,	NULL,	NULL,	1,	'sample',	'',	'1581423600',	0,	'',	NULL),
 (33,	'd',	'',	'',	'',	'',	'',	'd',	0,	NULL,	NULL,	1,	'd',	'',	'1581423600',	0,	'',	NULL),
 (34,	'g',	'01-01-2020',	'male',	'',	'',	'',	'g',	28,	NULL,	NULL,	1,	'g',	'',	'1581423600',	0,	'',	NULL),
-(35,	's',	'20-02-2020',	'male',	'',	'',	'',	's',	29,	NULL,	NULL,	1,	's',	'',	'1581423600',	0,	'',	NULL);
+(35,	's',	'20-02-2020',	'male',	'',	'',	'',	's',	29,	NULL,	NULL,	1,	's',	'',	'1581423600',	0,	'',	NULL),
+(36,	'l',	'22-01-2020',	'',	'',	'l',	'',	'l',	0,	NULL,	NULL,	1,	'l',	'',	'1582028400',	0,	'',	NULL),
+(37,	'jojo',	'01-12-1995',	'male',	'jojo',	'jojo',	'',	'jojo',	28,	NULL,	NULL,	1,	'jojo',	'',	'1582028400',	0,	'',	NULL),
+(38,	'faa',	'18-02-2020',	'female',	'f',	'f',	'',	'f',	0,	NULL,	NULL,	1,	'fernandesjaymark@yahoo.com',	'',	'1582028400',	0,	'',	NULL),
+(39,	'faa',	'18-02-2020',	'female',	'f',	'f',	'',	'',	0,	NULL,	NULL,	1,	'fernandesjaymark@yahoo.com',	'',	'1582028400',	0,	'',	NULL),
+(40,	'po',	'01-01-2020',	'male',	'po',	'po',	'',	'po',	29,	NULL,	NULL,	1,	'po',	'',	'1582028400',	0,	'',	NULL),
+(41,	'po',	'01-01-2020',	'male',	'po',	'po',	'',	'',	29,	NULL,	NULL,	1,	'po',	'',	'1582028400',	0,	'',	NULL),
+(42,	'po',	'01-01-2020',	'male',	'po',	'po',	'',	'',	29,	NULL,	NULL,	1,	'po',	'',	'1582028400',	0,	'',	NULL),
+(43,	'po',	'01-01-2020',	'male',	'po',	'po',	'',	'',	29,	NULL,	NULL,	1,	'po',	'',	'1582028400',	0,	'',	NULL),
+(44,	'po',	'01-01-2020',	'male',	'po',	'po',	'',	'',	29,	NULL,	NULL,	1,	'po',	'',	'1582028400',	0,	'',	NULL),
+(45,	'lolo',	'29-12-1995',	'male',	'f',	'f',	'',	'lo',	29,	NULL,	NULL,	1,	'lo',	'',	'1582028400',	0,	'',	NULL),
+(46,	'lolo',	'29-12-1995',	'male',	'f',	'f',	'',	'',	29,	NULL,	NULL,	1,	'lo',	'',	'1582028400',	0,	'',	NULL),
+(47,	'lolo',	'29-12-1995',	'male',	'f',	'f',	'',	'',	29,	NULL,	NULL,	1,	'lo',	'',	'1582028400',	0,	'',	NULL);
 
 DROP TABLE IF EXISTS `students_request`;
 CREATE TABLE `students_request` (
@@ -1543,4 +1634,4 @@ INSERT INTO `voting_process` (`candidate_id`, `candidate_student_id`, `student_v
 (16,	12,	72,	3,	''),
 (17,	11,	12,	4,	'2020-2021');
 
--- 2020-02-11 08:25:18
+-- 2020-02-18 08:19:09
