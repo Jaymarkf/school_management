@@ -594,8 +594,9 @@ class Admin extends CI_Controller
                 $data2['selected_subject'] = implode(',',$temp);
             }
 
-
+            $_SESSION['message'] = "Registration Success";
             $this->db->insert('enroll', $data2);
+
             move_uploaded_file($_FILES['userfile']['tmp_name'], 'uploads/student_image/tmp/' . $student_id . '.jpg');
             redirect(base_url() . 'index.php?admin/add_student/', 'refresh');
         }

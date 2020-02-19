@@ -1069,7 +1069,7 @@ class Teacher extends CI_Controller
 //die(print_r($this->input->post()));
         $stud  = $this->input->post('student_id');
         foreach ($stud as $index => $item){
-            $count = $this->db->get_where('grades',array('student_id'=>$item,'class_id'=>$class_id,'subject_id'=>$subject_id));
+            $count = $this->db->get_where('grades',array('student_id'=>$item,'class_id'=>$class_id,'subject_id'=>$subject_id,'semester' =>$semester_id));
             $temp = $this->db->get_where('enroll',array('student_id'=>$item))->row()->section_id;
 
             $stud_section_id = $temp;

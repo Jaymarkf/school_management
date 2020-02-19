@@ -16,7 +16,7 @@
                             <li> <a href="<?php echo base_url(); ?>index.php?admin/teachers"><?php echo get_phrase('Teachers'); ?></a></li>
                             <li> <a href="<?php echo base_url(); ?>index.php?admin/parents"><?php echo get_phrase('Parents'); ?></a></li>
                             <li> <a href="<?php echo base_url(); ?>index.php?admin/add_student"><?php echo get_phrase('Students'); ?></a></li>
-                            <li> <a href="<?php echo base_url(); ?>index.php?admin/student_bulk"><?php echo get_phrase('Student-Bulk'); ?></a></li>
+<!--                            <li> <a href="--><?php //echo base_url(); ?><!--index.php?admin/student_bulk">--><?php //echo get_phrase('Student-Bulk'); ?><!--</a></li>-->
                         </ul>
                     </li>
                     <li> <a href="javascript:void(0);" class="waves-effect"><i class="ti-medall"></i> <span class="hide-menu"><?php echo get_phrase('Students-Information'); ?><span class="fa arrow"></span></span></a>
@@ -46,7 +46,7 @@
                     </li>
                      <li> <a href="javascript:void(0);" class="waves-effect"><i class="ti-check-box"></i> <span class="hide-menu"><?php echo get_phrase('Attendance'); ?><span class="fa arrow"></span></span></a>
                         <ul class="nav nav-second-level">
-                            <li> <a href="<?php echo base_url(); ?>index.php?admin/attendance"><?php echo get_phrase('Daily-Attendance'); ?></a></li>
+<!--                            <li> <a href="--><?php //echo base_url(); ?><!--index.php?admin/attendance">--><?php //echo get_phrase('Daily-Attendance'); ?><!--</a></li>-->
                              <li> <a href="<?php echo base_url(); ?>index.php?admin/attendance_report"><?php echo get_phrase('Attendance-Report'); ?></a></li>
                         </ul>
                     </li>

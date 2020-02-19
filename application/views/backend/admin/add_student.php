@@ -33,7 +33,13 @@
 					<font color="white"><?php echo get_phrase('Student-Form'); ?></font>
             	</div>
             </div>
-
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="text-center">
+                        <h4 class="text-success"><?php if(isset($_SESSION['message'])){echo $_SESSION['message']; unset($_SESSION['message']);} ?></h4>
+                    </div>
+                </div>
+            </div>
 			<div class="panel-body">
                 <?php echo form_open(base_url() . 'index.php?admin/student/create/' , array('class' => 'form-horizontal form-groups-bordered validate', 'enctype' => 'multipart/form-data'));?>
 					<div class="form-group">
