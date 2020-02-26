@@ -122,6 +122,16 @@
 </div>
 
 <script type="text/javascript">
+$(document).ready(function(){
+
+        <?php
+        if(isset($_SESSION['message'])){
+            echo 'alert("'.$_SESSION['message'].'")';
+            unset($_SESSION['message']);
+        }
+        ?>
+
+});
     function get_class_section_subject(class_id) {
         $.ajax({
             url: '<?php echo base_url();?>index.php?admin/get_class_section_subject/' + class_id ,

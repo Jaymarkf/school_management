@@ -72,7 +72,7 @@
                       <div class="input-group-addon"><i class="ti-user"></i></div>
                       <input type="text" class="form-control" required="" name="name" placeholder="<?php echo get_phrase('Name');?>">
                     </div>
-                    </div>
+                    </div>s
                   </div>
 
 					 <div class="form-group">
@@ -186,7 +186,12 @@
     $(document).ready(function(){
       $('#myTable').DataTable();
       $(document).ready(function() {
-        var table = $('#example').DataTable({
+        var table = $('#example').DataTable({  <?php
+            if(isset($_SESSION['message'])){
+                echo 'alert("Teacher -- '.$_SESSION['message'].' Succesfully added")';
+                unset($_SESSION['message']);
+            }
+            ?>
           "columnDefs": [
           { "visible": false, "targets": 2 }
           ],

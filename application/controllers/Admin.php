@@ -102,6 +102,7 @@ class Admin extends CI_Controller
             $this->db->insert('teacher', $data);
             $teacher_id = $this->db->insert_id();
             move_uploaded_file($_FILES['userfile']['tmp_name'], 'uploads/teacher_image/' . $teacher_id . '.jpg');
+            $_SESSION['message'] = $data['name'];
             redirect(base_url() . 'index.php?admin/teacher_profile/'.$teacher_id, 'refresh');
         }
         if ($param1 == 'do_update') {
@@ -451,7 +452,7 @@ class Admin extends CI_Controller
             $data['status']             = $this->input->post('status');
             $data['creation_timestamp'] = strtotime($this->input->post('date'));
             $data['year']               = $this->db->get_where('settings' , array('type' => 'running_year'))->row()->description;
-            
+            $_SESSION['message'] = "a new invoice was successfully added";
             $this->db->insert('invoice', $data);
             $invoice_id = $this->db->insert_id();
 
@@ -477,6 +478,7 @@ class Admin extends CI_Controller
             
             $this->db->where('invoice_id', $param2);
             $this->db->update('invoice', $data);
+            $_SESSION['message'] = "a new invoice was successfully updated";
             redirect(base_url() . 'index.php?admin/students_payments', 'refresh');
         } else if ($param1 == 'edit') {
             $page_data['edit_data'] = $this->db->get_where('invoice', array(
@@ -487,6 +489,7 @@ class Admin extends CI_Controller
         if ($param1 == 'delete') {
             $this->db->where('invoice_id', $param2);
             $this->db->delete('invoice');
+            $_SESSION['message'] = "an invoice was successfully deleted";
             redirect(base_url() . 'index.php?admin/students_payments', 'refresh');
         }
         $page_data['page_name']  = 'invoice';
@@ -672,7 +675,9 @@ class Admin extends CI_Controller
             $this->db->insert('parent', $data);
             $parent_id     =   $this->db->insert_id();
         	move_uploaded_file($_FILES['userfile']['tmp_name'], 'uploads/parent_image/' . $parent_id . '.jpg');
+            $_SESSION['message'] = $data['name'];
             redirect(base_url() . 'index.php?admin/parents/', 'refresh');
+
         }
         if ($param1 == 'edit') 
         {
@@ -741,27 +746,25 @@ class Admin extends CI_Controller
             $data['teacher_id'] = $this->input->post('teacher_id');
             $data['year']       = $this->db->get_where('settings' , array('type' => 'running_year'))->row()->description;
             $this->db->insert('subject', $data);
+            $section_name = $data['name'];
+            $class_name = $this->db->get_where('class',array('class_id' => $data['class_id']))->row()->name;
+            $teacher_name = $this->db->get_where('teacher',array('teacher_id' => $data['teacher_id']))->row()->name;
+            $_SESSION['message'] = "subject: " . $section_name. " with class name: " . $class_name . " and teacher: " . $teacher_name . " was successfully added";
             redirect(base_url() . 'index.php?admin/courses/'.$data['class_id'], 'refresh');
         }
         if ($param1 == 'do_update') 
         {
             $data['name']       = $this->input->post('name');
-            $data['la1']       = $this->input->post('la1');
-            $data['la2']       = $this->input->post('la2');
-            $data['la3']       = $this->input->post('la3');
-            $data['la4']       = $this->input->post('la4');
-            $data['la5']       = $this->input->post('la5');
-            $data['la6']       = $this->input->post('la6');
-            $data['la7']       = $this->input->post('la7');
-            $data['la8']       = $this->input->post('la8');
-            $data['la9']       = $this->input->post('la9');
-            $data['final']       = $this->input->post('final');
             $data['class_id']   = $this->input->post('class_id');
             $data['teacher_id'] = $this->input->post('teacher_id');
             $data['year']       = $this->db->get_where('settings' , array('type' => 'running_year'))->row()->description;
             
             $this->db->where('subject_id', $param2);
             $this->db->update('subject', $data);
+            $section_name = $data['name'];
+            $class_name = $this->db->get_where('class',array('class_id' => $data['class_id']))->row()->name;
+            $teacher_name = $this->db->get_where('teacher',array('teacher_id' => $data['teacher_id']))->row()->name;
+            $_SESSION['message'] = "subject: " . $section_name. " with class name: " . $class_name . " and teacher: " . $teacher_name . " was successfully updated";
             redirect(base_url() . 'index.php?admin/courses/'.$data['class_id'], 'refresh');
         } else if ($param1 == 'edit') {
             $page_data['edit_data'] = $this->db->get_where('subject', array(
@@ -771,6 +774,7 @@ class Admin extends CI_Controller
         if ($param1 == 'delete') {
             $this->db->where('subject_id', $param2);
             $this->db->delete('subject');
+            $_SESSION['message'] = "successfully deleted";
             redirect(base_url() . 'index.php?admin/courses/'.$param3, 'refresh');
         }
 		$page_data['class_id']   = $param1;
@@ -788,9 +792,7 @@ class Admin extends CI_Controller
             $data['name']         = $this->input->post('name');
             $this->db->insert('class', $data);
             $class_id = $this->db->insert_id();
-            $data2['class_id']  =   $class_id;
-            $data2['name']      =   'A';
-            $this->db->insert('section' , $data2);
+            $_SESSION['message'] = $data['name'] . " was successfully added";
             redirect(base_url() . 'index.php?admin/manage_classes/', 'refresh');
         }
         if ($param1 == 'do_update')
@@ -800,6 +802,7 @@ class Admin extends CI_Controller
             
             $this->db->where('class_id', $param2);
             $this->db->update('class', $data);
+            $_SESSION['message'] = $data['name'] . " was successfully update";
             redirect(base_url() . 'index.php?admin/manage_classes/', 'refresh');
         } else if ($param1 == 'edit') 
         {
@@ -811,6 +814,7 @@ class Admin extends CI_Controller
         {
             $this->db->where('class_id', $param2);
             $this->db->delete('class');
+            $_SESSION['message'] = "successfully deleted";
             redirect(base_url() . 'index.php?admin/manage_classes/', 'refresh');
         }
         $page_data['classes']    = $this->db->get('class')->result_array();
@@ -928,6 +932,7 @@ class Admin extends CI_Controller
             $data['class_id']   =   $this->input->post('class_id');
             $data['teacher_id'] =   $this->input->post('teacher_id');
             $this->db->insert('section' , $data);
+            $_SESSION['message'] = $data['name'] . " was successfully added";
             redirect(base_url() . 'index.php?admin/section/' . $data['class_id'] , 'refresh');
         }
         if ($param1 == 'edit') {
@@ -936,12 +941,14 @@ class Admin extends CI_Controller
             $data['teacher_id'] =   $this->input->post('teacher_id');
             $this->db->where('section_id' , $param2);
             $this->db->update('section' , $data);
+            $_SESSION['message'] = $data['name'] . " was successfully updated";
             redirect(base_url() . 'index.php?admin/section/' . $data['class_id'] , 'refresh');
         }
         if ($param1 == 'delete') 
         {
             $this->db->where('section_id' , $param2);
             $this->db->delete('section');
+            $_SESSION['message'] = "successfully deleted";
             redirect(base_url() . 'index.php?admin/section' , 'refresh');
         }
     }
@@ -1180,6 +1187,7 @@ class Admin extends CI_Controller
             $data['day']            = $this->input->post('day');
             $data['room_id'] = $this->input->post('room_id');
             $data['year']           = $this->db->get_where('settings' , array('type' => 'running_year'))->row()->description;
+            $_SESSION['message'] = "A new Class Route was successfully added";
             $this->db->insert('class_routine', $data);
             redirect(base_url() . 'index.php?admin/class_routine_add/', 'refresh');
         }
@@ -1198,6 +1206,7 @@ class Admin extends CI_Controller
             
             $this->db->where('class_routine_id', $param2);
             $this->db->update('class_routine', $data);
+            $_SESSION['message'] = "A new Class Route was successfully updated";
             redirect(base_url() . 'index.php?admin/class_routine_view/' . $data['class_id'], 'refresh');
         } else if ($param1 == 'edit') {
             $page_data['edit_data'] = $this->db->get_where('class_routine', array(
@@ -1208,6 +1217,7 @@ class Admin extends CI_Controller
             $class_id = $this->db->get_where('class_routine' , array('class_routine_id' => $param2))->row()->class_id;
             $this->db->where('class_routine_id', $param2);
             $this->db->delete('class_routine');
+            $_SESSION['message'] = "class Route was successfully deleted";
             redirect(base_url() . 'index.php?admin/class_routine_view/' . $class_id, 'refresh');
         } 
     }
@@ -1231,6 +1241,7 @@ class Admin extends CI_Controller
             $data['room_id']            = $this->input->post('room_id');
             $data['year']           = $this->db->get_where('settings' , array('type' => 'running_year'))->row()->description;
             $this->db->insert('horarios_examenes', $data);
+            $_SESSION['message'] = "a new exam route was successfully added";
             redirect(base_url() . 'index.php?admin/add_exam_routine/', 'refresh');
         }
         if ($param1 == 'do_update') {
@@ -1249,6 +1260,7 @@ class Admin extends CI_Controller
             $data['year']           = $this->db->get_where('settings' , array('type' => 'running_year'))->row()->description;
             $this->db->where('horario_id', $param2);
             $this->db->update('horarios_examenes', $data);
+            $_SESSION['message'] = "a new exam route was successfully updated";
             redirect(base_url() . 'index.php?admin/looking_routine/' . $data['class_id'], 'refresh');
         } else if ($param1 == 'edit') 
         {
@@ -1259,6 +1271,7 @@ class Admin extends CI_Controller
             $class_id = $this->db->get_where('horarios_examenes' , array('horario_id' => $param2))->row()->class_id;
             $this->db->where('horario_id', $param2);
             $this->db->delete('horarios_examenes');
+            $_SESSION['message'] = "exam route was successfully deleted";
             redirect(base_url() . 'index.php?admin/looking_routine/' . $class_id, 'refresh');
         }
     }

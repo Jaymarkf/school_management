@@ -132,6 +132,14 @@
     $(document).ready(function(){
       $('#myTable').DataTable();
       $(document).ready(function() {
+
+          <?php
+          if(isset($_SESSION['message'])){
+              echo 'alert("'.$_SESSION['message'].'")';
+              unset($_SESSION['message']);
+          }
+          ?>
+
         var table = $('#example').DataTable({
           "columnDefs": [
           { "visible": false, "targets": 2 }

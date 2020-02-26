@@ -189,7 +189,15 @@
     $(document).ready(function(){
       $('#myTable').DataTable();
       $(document).ready(function() {
-        var table = $('#example').DataTable({
+
+          <?php
+          if(isset($_SESSION['message'])){
+              echo 'alert("Parent -- '.$_SESSION['message'].' Succesfully added")';
+              unset($_SESSION['message']);
+          }
+          ?>
+
+          var table = $('#example').DataTable({
           "columnDefs": [
           { "visible": false, "targets": 2 }
           ],
