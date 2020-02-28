@@ -2019,7 +2019,6 @@ class Admin extends CI_Controller
             if(isset($_FILES['advertise_image'])){
                // die($_FILES['advertise_image']['tmp_name']);
                 move_uploaded_file($_FILES['advertise_image']['tmp_name'], 'uploads/tmp/advertise.jpg');
-                redirect(base_url() . 'index.php?admin/system_settings/', 'refresh');
             }
         
             redirect(base_url() . 'index.php?admin/system_settings/', 'refresh');
