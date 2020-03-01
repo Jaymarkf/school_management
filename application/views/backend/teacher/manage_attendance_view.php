@@ -71,7 +71,6 @@
 				<thead>
 					<tr>
 						<th>No.</th>
-						<th><?php echo get_phrase('Roll'); ?></th>
 						<th><?php echo get_phrase('Student'); ?></th>
 						<th><?php echo get_phrase('Status'); ?></th>
 					</tr>
@@ -79,23 +78,32 @@
 				<tbody>
 				<?php
 					$count = 1;
-					if($section_id != ''){
-                        $qrs = ' (class_id = '.$class_id.' and section_id = '.$section_id.' and year = "'.$running_year. '" and timestamp = "'.$timestamp.'" and subject_id = "'.$subject_id.'")
+
+                $qryd = '(class_id = '.$class_id.' and section_id = '.$section_id.' and year = "'.$running_year. '" and find_in_set("'.$subject_id.'",selected_subject))
                             or
-                            (class_id = '.$class_id.' and section_id = 0 and year = "'.$running_year. '" and timestamp = "'.$timestamp.'" and subject_id = "'.$subject_id.'")
+                            (section_id = 0 and year = "'.$running_year. '"  and find_in_set("'.$subject_id.'",selected_subject))
                             ';
-                        $this->db->where($qrs);
-                        $attendance_of_students =  $this->db->get('attendance')->result_array();
-					}
+                $this->db->where($qryd);
+                $students =  $this->db->get('enroll')->result_array();
 
 
-					foreach($attendance_of_students as $row):
+//
+//					if($section_id != ''){
+//                        $qrs = ' (class_id = '.$class_id.' and section_id = '.$section_id.' and year = "'.$running_year. '" and timestamp = "'.$timestamp.'" and subject_id = "'.$subject_id.'")
+//                            or
+//                            ( section_id = 0 and year = "'.$running_year. '" and timestamp = "'.$timestamp.'" and subject_id = "'.$subject_id.'")
+//                            ';
+//                        $this->db->where($qrs);
+//                        $attendance_of_students =  $this->db->get('attendance')->result_array();
+//					}
+
+
+
+					foreach($students as $row):
 				?>
 					<tr>
 						<td><?php echo $count++;?></td>
-						<td>
-							<?php echo $this->db->get_where('enroll', array('student_id'=>$row['student_id']))->row()->roll;?>
-						</td>
+
 						<td>
 							<?php echo $this->db->get_where('student' , array('student_id' => $row['student_id']))->row()->name;?>
 						</td>
