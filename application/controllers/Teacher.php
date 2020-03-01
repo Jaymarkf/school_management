@@ -639,10 +639,11 @@ class Teacher extends CI_Controller
                         'subject_id' => $data['subject_id'],
                          'timestamp'=>$data['timestamp']
 
+
         ));
         $qryd = '(class_id = ' . $data['class_id'] . ' and section_id = ' . $data['section_id'] . ' and year = "' . $data['year'] . '" and find_in_set("' . $data['subject_id'] . '",selected_subject))
                             or
-                            (class_id = ' . $data['class_id'] . ' and section_id = 0 and year = "' . $data['year'] . '"  and find_in_set("' . $data['subject_id'] . '",selected_subject))
+                            (section_id = 0 and year = "' . $data['year'] . '"  and find_in_set("' . $data['subject_id'] . '",selected_subject))
                             ';
         $this->db->where($qryd);
         $students = $this->db->get('enroll')->result_array();
@@ -656,7 +657,7 @@ class Teacher extends CI_Controller
 //                            (class_id = ' . $data['class_id'] . ' and section_id = 0 and year = "' . $data['year'] . '"  and find_in_set("' . $data['subject_id'] . '",selected_subject) and student_id = ' . $row['student_id'] . ')';
 //            $sel = "*, (select SUBSTR('" . $row['selected_subject'] . "',locate('" . $data['subject_id'] . "','" . $row['selected_subject'] . "'),1)) as selected_s";
 
-                    $datax = $this->db->query('SELECT *, (select SUBSTR("' . $ix['selected_subject'] . '", locate("' . $data['subject_id'] . '", "' . $ix['selected_subject'] . '"), 1)) as selected_s FROM `enroll` WHERE (class_id = ' . $data['class_id'] . ' and section_id = 0 and year = "' . $data['year'] . '" and find_in_set("' . $data['subject_id'] . '",selected_subject) and student_id = ' . $ix['student_id'] . ')')->result_array();
+                    $datax = $this->db->query('SELECT *, (select SUBSTR("' . $ix['selected_subject'] . '", locate("' . $data['subject_id'] . '", "' . $ix['selected_subject'] . '"), 1)) as selected_s FROM `enroll` WHERE (section_id = 0 and year = "' . $data['year'] . '" and find_in_set("' . $data['subject_id'] . '",selected_subject) and student_id = ' . $ix['student_id'] . ')')->result_array();
                     foreach ($datax as $index => $i) {
                         if ($i['selected_s'] == $data['subject_id']) {
                             $sub_id = 0;
@@ -723,12 +724,15 @@ class Teacher extends CI_Controller
 
         $q = ' (class_id = '.$class_id.' and section_id = '.$section_id.' and year = "'.$running_year. '" and timestamp = "'.$timestamp.'" and subject_id = "'.$subject_id.'")
                             or
-                            (class_id = '.$class_id.' and section_id = 0 and year = "'.$running_year. '" and timestamp = "'.$timestamp.'" and subject_id = "'.$subject_id.'")
+                            (section_id = 0 and year = "'.$running_year. '" and timestamp = "'.$timestamp.'" and subject_id = "'.$subject_id.'")
                             ';
-        //die($q);
+
         $this->db->where($q);
         $attendance_of_students =  $this->db->get('attendance')->result_array();
-        
+//        echo '<pre>';
+//        print_r($attendance_of_students);
+//        echo '</pre>';
+//        die();
 
 
         foreach($attendance_of_students as $row) 

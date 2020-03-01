@@ -86,7 +86,6 @@
                 $this->db->where($qryd);
                 $students =  $this->db->get('enroll')->result_array();
 
-
 //
 //					if($section_id != ''){
 //                        $qrs = ' (class_id = '.$class_id.' and section_id = '.$section_id.' and year = "'.$running_year. '" and timestamp = "'.$timestamp.'" and subject_id = "'.$subject_id.'")
@@ -108,11 +107,15 @@
 							<?php echo $this->db->get_where('student' , array('student_id' => $row['student_id']))->row()->name;?>
 						</td>
 						<td>
-							<select class="form-control selectboxit" name="status_<?php echo $row['attendance_id'];?>">
-								<option value="0" <?php if($row['status'] == 0) echo 'selected';?>><?php echo get_phrase('Select'); ?></option>
-								<option value="1" <?php if($row['status'] == 1) echo 'selected';?>><?php echo get_phrase('Present'); ?></option>
-								<option value="2" <?php if($row['status'] == 2) echo 'selected';?>><?php echo get_phrase('Absent'); ?></option>
-								<option value="3" <?php if($row['status'] == 3) echo 'selected';?>><?php echo get_phrase('Late');?></option>
+							<select class="form-control selectboxit" name="status_<?php
+                                $x = $this->db->get_where('attendance',array('student_id' => $row['student_id'],'subject_id' => $subject_id,'year' => $running_year, 'timestamp' => $timestamp, 'class_id' => $class_id))->row()->attendance_id;
+                                $stat = $this->db->get_where('attendance',array('student_id' => $row['student_id'],'subject_id' => $subject_id,'year' => $running_year, 'timestamp' => $timestamp, 'class_id' => $class_id))->row()->status;
+                                echo $x;
+                            ?>">
+								<option value="0" <?php if($stat == 0) echo 'selected';?>><?php echo get_phrase('Select'); ?></option>
+								<option value="1" <?php if($stat == 1) echo 'selected';?>><?php echo get_phrase('Present'); ?></option>
+								<option value="2" <?php if($stat == 2) echo 'selected';?>><?php echo get_phrase('Absent'); ?></option>
+								<option value="3" <?php if($stat == 3) echo 'selected';?>><?php echo get_phrase('Late');?></option>
 							</select>	
 						</td>
 					</tr>
