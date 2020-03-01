@@ -115,20 +115,13 @@
                     $count = 1;
                     $q = '(class_id = '.$class_id.' and section_id = '.$section_id.' and year = "'.$running_year. '" and find_in_set("'.$subject_id.'",selected_subject) and student_id = '.$student_id.')
                             or
-                            (class_id = '.$class_id.' and section_id = 0 and year = "'.$running_year. '"  and find_in_set("'.$subject_id.'",selected_subject) and student_id = '.$student_id.')';
+                            (section_id = 0 and year = "'.$running_year. '"  and find_in_set("'.$subject_id.'",selected_subject) and student_id = '.$student_id.')';
                     $this->db->where($q);
                     $temp_grade = $this->db->get('enroll')->result_array();
 
                     foreach ($temp_grade as $row):
                         if($row['section_id'] == 0){
-                            $sub_id = $this->db->get_where('student_irregular_selected_subject', array('student_id' => $student_id))->result_array();
-                            foreach ($sub_id as $index => $item) {
-                                $arr_sub_id[] = explode(",",$item['selected_subject_concat_id']);
-                                if(in_array($subject_id,$arr_sub_id[$index])){
-                                    $year       = $running_year;
-                                    $student_id = $row['student_id'];
-                                    $subject_id = $subject_id;
-                                    ?>
+                            ?>
                                     <input type="hidden" name="student_id[]" value="<?php echo $row['student_id'];?>"/>
                                     <input type="hidden" name="semester" value="<?php echo $semester_id; ?>"/>
                                     <input type="hidden" name="class_id" value="<?php echo $class_id; ?>"/>
@@ -138,9 +131,10 @@
                                         <td>
                                             <select class="form-control selectboxit" name="grade_id_<?php echo $student_id; ?>" disabled>
                                                 <?php
-                                                $x = $this->db->get_where('grades',array('student_id'=>$student_id))->row()->student_grade;
-                                                $grade = $this->db->get_where('grades',array('student_id'=>$student_id))->row()->specific_grade;
-                                                $comments = $this->db->get_where('grades',array('student_id'=>$student_id))->row()->comments;
+                                                $x = $this->db->get_where('grades',array('student_id'=>$row['student_id'],'subject_id'=>$subject_id,'semester'=>$semester_id))->row()->student_grade;
+                                                $grade = $this->db->get_where('grades',array('student_id'=>$row['student_id'],'subject_id'=>$subject_id,'semester'=>$semester_id))->row()->specific_grade;
+                                                $comments = $this->db->get_where('grades',array('student_id'=>$row['student_id'],'subject_id'=>$subject_id,'semester'=>$semester_id))->row()->comments;
+
                                                 ?>
                                                 <option value="1.00" <?php if($x == 1.00){echo 'selected';} ?> >1.00</option>
                                                 <option value="1.25"<?php if($x == 1.25){echo 'selected';} ?> >1.25</option>
@@ -168,10 +162,7 @@
                                         </td>
                                     </tr>
                                     <?php
-                                }
 
-
-                            }
                         }else{
                       ?>
                     <input type="hidden" name="student_id[]" value="<?php echo $row['student_id']; ?>"/>

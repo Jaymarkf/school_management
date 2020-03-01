@@ -82,9 +82,6 @@ if($student_enroll['section_id'] == 0 ){
                                     <button class="btn btn-info">
                 <?php echo $this->crud_model->get_subject_name_by_id($row2['subject_id']);?>
                 <?php
-                if ($row2['time_start_min'] == 0 && $row2['time_end_min'] == 0)
-                    echo '('.$row2['time_start'].'-'.$row2['time_end'].' | Room-['.$row2['room_id'].'])';
-                if ($row2['time_start_min'] != 0 || $row2['time_end_min'] != 0)
                     if($row2['time_start'] > 12  ){
                         $row2['time_start'] = $row2['time_start'] - 12;
                         $mode = " PM";

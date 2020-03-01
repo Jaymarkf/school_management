@@ -68,12 +68,15 @@
                             <td width="100"><?php echo strtoupper($day);?></td>
                             <td>
                                 <?php
-
                                 if($irreg == 0 ){
                                     $this->db->order_by("time_start", "asc");
                                     $this->db->where('day' , $day);
                                     $this->db->where('class_id' , $class_id);
                                     $this->db->where('section_id' , $section_id);
+                                    $sub =  $this->db->get_where('enroll',array('student_id' => $this->session->userdata('student_id')))->row()->selected_subject;
+                                        $subject = explode(',',$sub);
+                               
+
                                 }else{
                                     $this->db->order_by("time_start", "asc");
                                     $this->db->where('day' , $day);
@@ -83,12 +86,10 @@
                                 foreach($routines as $row2):
                                 ?>
                                 <div class="btn-group">
+
                                     <button class="btn btn-info">
                 <?php echo $this->crud_model->get_subject_name_by_id($row2['subject_id']);?>
                 <?php
-                if ($row2['time_start_min'] == 0 && $row2['time_end_min'] == 0)
-                echo '('.$row2['time_start'].'-'.$row2['time_end'].' | Room-['.$row2['room_id'].'])';
-                if ($row2['time_start_min'] != 0 || $row2['time_end_min'] != 0)
                     if($row2['time_start'] > 12  ){
                         $row2['time_start'] = $row2['time_start'] - 12;
                         $mode = " PM";

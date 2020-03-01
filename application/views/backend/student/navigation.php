@@ -37,7 +37,7 @@
                     </li>
                      <li> <a href="<?php echo base_url(); ?>index.php?student/news_" class="waves-effect"><i class="fa fa-file-text-o"></i> <span class="hide-menu"><?php echo get_phrase('News'); ?></span></a>
                     </li>
-                    <li> <a href="<?php echo base_url(); ?>index.php?student/voting/" class="waves-effect"><i class="fa fa-envelope"></i> <span class="hide-menu"><?php echo get_phrase('Voting'); ?></span></a>
+                    <li> <a href="<?php echo base_url(); ?>index.php?student/voting/" class="waves-effect"><i class="fa fa-check-square-o"></i> <span class="hide-menu"><?php echo get_phrase('Voting'); ?></span></a>
                     </li>
                     <li> <a href="<?php echo base_url(); ?>index.php?student/message" class="waves-effect"><i class="fa fa-envelope"></i> <span class="hide-menu"><?php echo get_phrase('Messages'); ?></span></a>
                     </li>

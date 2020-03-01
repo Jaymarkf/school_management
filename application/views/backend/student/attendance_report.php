@@ -13,6 +13,45 @@
 
 <?php echo form_open(base_url() . 'index.php?student/attendance_report_selector/'); ?>
 <div class="row">
+    <?php
+    $query = $this->db->get('class');
+    if ($query->num_rows() > 0):
+        $class = $query->result_array();
+
+        ?>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label class="control-label" style="margin-bottom: 5px;"><?php echo get_phrase('Class');?></label>
+                <select class="form-control selectboxit" name="class_id" onchange="select_section(this.value)">
+                    <option value=""><?php echo get_phrase('Select');?></option>
+                    <?php foreach ($class as $row): ?>
+                        <option value="<?php echo $row['class_id']; ?>" ><?php echo $row['name']; ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+        </div>
+    <?php endif; ?>
+    <div id="section_holder">
+        <div class="col-md-3">
+            <div class="form-group">
+                <label class="control-label" style="margin-bottom: 5px;"><?php echo get_phrase('Section');?></label>
+                <select class="form-control selectboxit" name="section_id">
+                    <option value=""><?php echo get_phrase('Select');?></option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div id="subject_holder">
+        <div class="col-md-3">
+            <div class="form-group">
+                <label class="control-label" style="margin-bottom: 5px;"><?php echo get_phrase('Subject');?></label>
+                <select class="form-control selectboxit" name="subject_id">
+                    <option value=""><?php echo get_phrase('Select');?></option>
+                </select>
+            </div>
+        </div>
+    </div>
     <div class="col-md-3">
          <div class="form-group">
                 <label class="control-label" style="margin-bottom: 5px;"><?php echo get_phrase('Month');?></label>
@@ -70,7 +109,7 @@
 <?php echo form_close(); ?>
 
 <script type="text/javascript">
-    function select_section(class_id) 
+    function select_section(class_id)
     {
         $.ajax({
             url: '<?php echo base_url(); ?>index.php?admin/get_section/' + class_id,
@@ -79,5 +118,13 @@
                 jQuery('#section_holder').html(response);
             }
         });
+        $.ajax({
+            url: '<?php echo base_url(); ?>index.php?admin/get_subjects/' + class_id,
+            success:function (response)
+            {
+                jQuery('#subject_holder').html(response);
+            }
+        });
+
     }
 </script>

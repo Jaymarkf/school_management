@@ -378,6 +378,15 @@
                                                     <div class="col-md-8 col-sm-8">
                                                         <h3 class="box-title m-b-0"><a href="<?php echo base_url();?>index.php?admin/student_portal/<?php echo $row['student_id'];?>"><?php echo $this->db->get_where('student' , array(
                                                                     'student_id' => $row['student_id']))->row()->name;?></a></h3>
+                                                        <label>Vote Result: &nbsp&nbsp&nbsp
+                                                            <?php
+                                                            $this->db->select("count(candidate_student_id) as counts");
+                                                            $this->db->from('voting_process');
+                                                            $this->db->where('candidate_student_id',$row['student_id']);
+                                                            $data = $this->db->get()->row()->counts;
+                                                            echo '<label class="text-success">'.$data.'</label>';
+                                                            ?>
+                                                        </label>
                                                         <small><?php echo $row['roll'];?></small>
                                                     </div>
                                                 </div>
