@@ -586,22 +586,26 @@ class Admin extends CI_Controller
             $data2['date_added']     = strtotime(date("Y-m-d H:i:s"));
             $data2['year']           = $running_year;
             $t = $this->input->post('subject_selected');
+
             if(isset($t)){
                 $data2['selected_subject'] = implode(',',$t);
+
             }else{
                 $getsubject = $this->db->get_where('subject',array('class_id' => $data2['class_id']))->result_array();
-                $temp = '';
+                $temp = array();
+
                 foreach ($getsubject as $index => $item) {
-                    $temp[] .= $item['subject_id'];
+                    $temp[] = $item['subject_id'];
                 }
+
                 $data2['selected_subject'] = implode(',',$temp);
             }
 
             $_SESSION['message'] = "Registration Success";
-            $this->db->insert('enroll', $data2);
 
+            $this->db->insert('enroll', $data2);
             move_uploaded_file($_FILES['userfile']['tmp_name'], 'uploads/student_image/tmp/' . $student_id . '.jpg');
-            redirect(base_url() . 'index.php?admin/add_student/', 'refresh');
+            redirect(base_url() . 'index.php?admin/add_student', 'refresh');
         }
         if ($param1 == 'do_update') 
         {

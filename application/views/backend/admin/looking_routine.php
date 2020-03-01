@@ -85,7 +85,7 @@
                                                     $mode1 = " AM";
                                                 }
 
-                                                echo '('.$row2['time_start'].':'.$row2['time_start_min'].$mode.' -- '.$row2['time_end'].':'.$row2['time_end_min'].$mode1.')';
+                                                echo '('.$row2['time_start'].':'.$row2['time_start_min'].$mode.' -- '.$row2['time_end'].':'.$row2['time_end_min'].$mode1.')~Room: '. $row2['room_id'];
                                         ?>
                                         <span class="caret"></span>
                                     </button>
