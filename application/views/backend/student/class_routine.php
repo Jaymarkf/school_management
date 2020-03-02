@@ -1,4 +1,4 @@
-<?php $running_year = $this->db->get_where('settings' , array('type' => 'running_year'))->row()->description; ?>
+
 <div class="row bg-title">
     <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
         <h4 class="page-title"><?php echo get_phrase('Class-Routine');?></h4> 
@@ -42,6 +42,52 @@
 ?>
 
 <hr />
+<?php
+//for($d = 1 ; $d <= 7; $d++) {
+//    if($d==1)$day= get_phrase('Sunday');
+//    else if($d==2) $day= get_phrase('Monday');
+//    else if($d==3)$day = get_phrase('Tuesday');
+//    else if($d==4)$day= get_phrase('Wednesday');
+//    else if($d==5)$day= get_phrase('Thursday');
+//    else if($d==6)$day= get_phrase('Friday');
+//    else if($d==7)$day= get_phrase('Saturday');
+//    else $day = '';
+//    $sub = $this->db->get_where('enroll', array('student_id' => $this->session->userdata('student_id')))->row()->selected_subject;
+//    $subject = explode(',', $sub);
+//    $subject_array = array();
+//
+//    foreach ($subject as $i) {
+//        $subarr = $this->db->get_where('class_routine', array('subject_id' => $i, 'day' => $day));
+//        if ($subarr->num_rows() >=1) {
+//            $subject_array[] = $i;
+//        }
+//    }
+//    $int = 0;
+//    $queries = array();
+////    echo '<pre>';
+////    print_r($subject_array);
+////    echo '</pre>';
+//    if(!empty($subject_array)){
+//        foreach ($subject_array as $x) {
+//            if ($int == 0) {
+//                $queries[] = $x;
+//            } else {
+//                $queries[] = $x;
+//            }
+//            $int++;
+//        }
+//    }
+//
+//    $int = 0;
+////    echo $qrys . ">>>>>>";
+//    $this->db->order_by("time_start", "asc");
+//    $this->db->where('day' , $day);
+//    $this->db->or_where_in($queries);
+//    $this->db->get('class_routine');
+//    unset($queries);
+//    unset($subject_array);
+//}
+?>
 <div class="row">    
     <div class="col-md-12">
         <div class="panel panel-info" data-collapsed="0">
@@ -54,7 +100,7 @@
 <div class="panel-body">
 <table cellpadding="0" cellspacing="0" border="0"  class="table table-bordered">
                     <tbody>
-                        <?php 
+                        <?php
                         for($d=1;$d<=7;$d++):
                         if($d==1)$day= get_phrase('Sunday');
                         else if($d==2) $day= get_phrase('Monday');
@@ -68,18 +114,45 @@
                             <td width="100"><?php echo strtoupper($day);?></td>
                             <td>
                                 <?php
+
+
                                 if($irreg == 0 ){
                                     $this->db->order_by("time_start", "asc");
                                     $this->db->where('day' , $day);
                                     $this->db->where('class_id' , $class_id);
                                     $this->db->where('section_id' , $section_id);
-                                    $sub =  $this->db->get_where('enroll',array('student_id' => $this->session->userdata('student_id')))->row()->selected_subject;
+                                    $sub =  $this->db->get_where('enroll',array('student_id' => $student_id))->row()->selected_subject;
                                         $subject = explode(',',$sub);
-                               
+
 
                                 }else{
+                                    $sub =  $this->db->get_where('enroll',array('student_id' => $student_id))->row()->selected_subject;
+                                    $subject = explode(',',$sub);
+                                    $subject_array = array();
+                                    foreach ($subject as $i) {
+                                        $subarr = $this->db->get_where('class_routine',array('subject_id'=>$i,'day'=>$day));
+                                        if($subarr->num_rows() > 0 ){
+                                            $subject_array[] = $i;
+                                        }
+                                    }
+                                    $int = 0;
+                                    $qry = array();
+                                    if(!empty($subject_array)) {
+                                        foreach ($subject_array as $x) {
+                                            if ($int == 0) {
+                                                $qry[] = $x;
+                                            } else {
+                                                $qry[] = $x;
+                                            }
+                                            $int++;
+                                        }
+                                    }
+                                    $int = 0;
                                     $this->db->order_by("time_start", "asc");
                                     $this->db->where('day' , $day);
+                                    $this->db->where_in($qry);
+
+
                                 }
                                 $this->db->where('year' , $running_year);
                                 $routines   =   $this->db->get('class_routine')->result_array();
