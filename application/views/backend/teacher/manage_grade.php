@@ -138,43 +138,42 @@
                                 <?php echo $this->db->get_where('student', array('student_id' => $row['student_id']))->row()->name; ?>
                             </td>
                             <td>
-                                <input type="number" name="specific_grade_id_<?php echo $row['student_id'];?>"
-                                       placeholder="Enter grade form 1-100"  class="form-control input-grade" value="<?php echo $grade; ?>"/>
-                            </td>
-                            <td>
-                                <select class="form-control selectboxit" name="grade_id_<?php echo $row['student_id']; ?>">
-                                    <?php
-                                    $qd = '(semester = '.$semester_id.' and class_id = '.$class_id.' and section_id = '.$section_id.' and year = "'.$running_year. '" and subject_id = '.$subject_id.' and student_id = '.$row['student_id'].')
+                                <?php
+                                $qd = '(semester = '.$semester_id.' and class_id = '.$class_id.' and section_id = '.$section_id.' and year = "'.$running_year. '" and subject_id = '.$subject_id.' and student_id = '.$row['student_id'].')
                             or
                             (semester = '.$semester_id.' and class_id = '.$class_id.' and section_id = 0 and year = "'.$running_year. '"  and subject_id = '.$subject_id.' and student_id = '.$row['student_id'].')
                             ';
 
 
-                                    $this->db->where($qd);
-                                    $x = $this->db->get('grades')->row()->student_grade;
-                                    //                                    $x = $this->db->get_where('grades',array('student_id' => $row['student_id'],'section_id' => $section_id,'class_id' => $class_id,'subject_id' => $subject_id))->row()->student_grade;
+                                $this->db->where($qd);
+                                $x = $this->db->get('grades')->row()->student_grade;
+                                //                                    $x = $this->db->get_where('grades',array('student_id' => $row['student_id'],'section_id' => $section_id,'class_id' => $class_id,'subject_id' => $subject_id))->row()->student_grade;
 
-                                    $this->db->where($qd);
-                                    $grade = $this->db->get('grades')->row()->specific_grade;
-                                    //
-                                    //                                    $grade = $this->db->get_where('grades',array('student_id' => $row['student_id'],'section_id' => $section_id,'class_id' => $class_id,'subject_id' => $subject_id))->row()->specific_grade;
-                                    ////
-                                    $this->db->where($qd);
-                                    $comments= $this->db->get('grades')->row()->comments;
-                                    //                                    $comments = $this->db->get_where('grades',array('student_id' => $row['student_id'],'section_id' => $section_id,'class_id' => $class_id,'subject_id' => $subject_id))->row()->comments;
-                                    ?>
-                                    <option value="1" <?php if($x == 1){echo 'selected';} ?> >1.00</option>
-                                    <option value="2"<?php if($x == 2){echo 'selected';} ?> >1.25</option>
-                                    <option value="3"<?php if($x == 3){echo 'selected';} ?> >1.50</option>
-                                    <option value="4"<?php if($x == 4){echo 'selected';} ?> >1.75</option>
-                                    <option value="5"<?php if($x == 5){echo 'selected';} ?> >2.00</option>
-                                    <option value="6"<?php if($x == 6){echo 'selected';} ?> >2.25</option>
-                                    <option value="7"<?php if($x == 7){echo 'selected';} ?> >2.50</option>
-                                    <option value="8"<?php if($x == 8){echo 'selected';} ?> >2.75</option>
-                                    <option value="9"<?php if($x == 9){echo 'selected';} ?> >3.00</option>
-                                    <option value="10"<?php if($x == 10){echo 'selected';} ?> >5.00</option>
+                                $this->db->where($qd);
+                                $grade = $this->db->get('grades')->row()->specific_grade;
+                                //
+                                //                                    $grade = $this->db->get_where('grades',array('student_id' => $row['student_id'],'section_id' => $section_id,'class_id' => $class_id,'subject_id' => $subject_id))->row()->specific_grade;
+                                ////
+                                $this->db->where($qd);
+                                $comments= $this->db->get('grades')->row()->comments;
+                                //                                    $comments = $this->db->get_where('grades',array('student_id' => $row['student_id'],'section_id' => $section_id,'class_id' => $class_id,'subject_id' => $subject_id))->row()->comments;
+                                ?>
+                                <input type="number" name="specific_grade_id_<?php echo $row['student_id'];?>"
+                                       placeholder="Enter grade form 1-100"  class="form-control input-grade" value="<?php echo $grade; ?>"/>
+                            </td>
+                            <td>
+                                <select class="form-control selectboxit" name="grade_id_<?php echo $row['student_id']; ?>">
+                                <option value="1" <?php if($x == 1){echo 'selected';} ?> >1.00</option>
+                                <option value="2"<?php if($x == 2){echo 'selected';} ?> >1.25</option>
+                                <option value="3"<?php if($x == 3){echo 'selected';} ?> >1.50</option>
+                                <option value="4"<?php if($x == 4){echo 'selected';} ?> >1.75</option>
+                                <option value="5"<?php if($x == 5){echo 'selected';} ?> >2.00</option>
+                                <option value="6"<?php if($x == 6){echo 'selected';} ?> >2.25</option>
+                                <option value="7"<?php if($x == 7){echo 'selected';} ?> >2.50</option>
+                                <option value="8"<?php if($x == 8){echo 'selected';} ?> >2.75</option>
+                                <option value="9"<?php if($x == 9){echo 'selected';} ?> >3.00</option>
+                                <option value="10"<?php if($x == 10){echo 'selected';} ?> >5.00</option>
                                 </select>
-
                             </td>
                             <td>
                                 <input type="text" name="comments_id_<?php echo $row['student_id'];?>"
@@ -256,10 +255,14 @@
                  $(this).parents(":eq(1)").children(':nth-child(4)').children().val(9);
                  $(this).parents(":eq(1)").children(':nth-child(5)').children().val('FAIR');
                  $(this).parents(":eq(1)").children(':nth-child(5)').children().css({'background-color':'rgb(171,144,15)','color':'white'});
-             }else if (value < 50) {
+             }else if (50 < value) {
                  $(this).parents(":eq(1)").children(':nth-child(4)').children().val(10);
                  $(this).parents(":eq(1)").children(':nth-child(5)').children().val('FAILED');
                  $(this).parents(":eq(1)").children(':nth-child(5)').children().css({'background-color':'rgb(255,50,50)','color':'white'});
+             }else{
+                 $(this).parents(":eq(1)").children(':nth-child(4)').children().val(0);
+                 $(this).parents(":eq(1)").children(':nth-child(5)').children().val('');
+                 $(this).parents(":eq(1)").children(':nth-child(5)').children().css({'background-color':'rgb(255,255,255)','color':'white'});
              }
 
         });

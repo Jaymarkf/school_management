@@ -121,8 +121,6 @@
                                     $this->db->where('day' , $day);
                                     $this->db->where('class_id' , $class_id);
                                     $this->db->where('section_id' , $section_id);
-                                    $sub =  $this->db->get_where('enroll',array('student_id' => $student_id))->row()->selected_subject;
-                                        $subject = explode(',',$sub);
 
 
                                 }else{
@@ -135,22 +133,23 @@
                                             $subject_array[] = $i;
                                         }
                                     }
-                                    $int = 0;
-                                    $qry = array();
-                                    if(!empty($subject_array)) {
-                                        foreach ($subject_array as $x) {
-                                            if ($int == 0) {
-                                                $qry[] = $x;
-                                            } else {
-                                                $qry[] = $x;
-                                            }
-                                            $int++;
-                                        }
+
+                                    if(count($subject_array) > 1 ){
+                                        //more than one query
+                                        $x = array();
+                                        foreach ($subject_array as $i) {
+                                            $x[] = ' subject_id = '.$i;
+                                       }
+                                        $res = implode(" or ",$x);
+                                        $this->db->where('day',$day);
+                                        $this->db->where($res);
+
+                                    }else{
+                                        //1 query only
+                                        $qry = array('subject_id'=>$subject_array[0],'day'=>$day);
+                                        $this->db->where($qry);
                                     }
-                                    $int = 0;
-                                    $this->db->order_by("time_start", "asc");
-                                    $this->db->where('day' , $day);
-                                    $this->db->where_in($qry);
+
 
 
                                 }

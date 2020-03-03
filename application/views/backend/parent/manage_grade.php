@@ -130,9 +130,9 @@
                             <td>
                                 <select class="form-control selectboxit" name="grade_id_<?php echo $row['student_id']; ?>" disabled>
                                     <?php
-                                    $x = $this->db->get_where('grades',array('student_id' => $student_id,'section_id' => $section_id,'class_id' => $class_id,'subject_id' => $subject_id))->row()->student_grade;
-                                    $grade = $this->db->get_where('grades',array('student_id' => $student_id,'section_id' => $section_id,'class_id' => $class_id,'subject_id' => $subject_id))->row()->specific_grade;
-                                    $comments = $this->db->get_where('grades',array('student_id' => $student_id,'section_id' => $section_id,'class_id' => $class_id,'subject_id' => $subject_id))->row()->comments;
+                                    $x = $this->db->get_where('grades',array('student_id' => $student_id,'section_id' => $section_id,'class_id' => $class_id,'subject_id' => $subject_id,'semester'=>$semester_id))->row()->student_grade;
+                                    $grade = $this->db->get_where('grades',array('student_id' => $student_id,'section_id' => $section_id,'class_id' => $class_id,'subject_id' => $subject_id,'semester'=>$semester_id))->row()->specific_grade;
+                                    $comments = $this->db->get_where('grades',array('student_id' => $student_id,'section_id' => $section_id,'class_id' => $class_id,'subject_id' => $subject_id,'semester'=>$semester_id))->row()->comments;
                                     ?>
                                     <option value="1.00" <?php if($x == 1.00){echo 'selected';} ?> >1.00</option>
                                     <option value="1.25"<?php if($x == 1.25){echo 'selected';} ?> >1.25</option>
