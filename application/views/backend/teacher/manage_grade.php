@@ -201,11 +201,9 @@
             url: '<?php echo base_url(); ?>index.php?teacher/get_section/' + class_id,
             success:function (response)
             {
-
                 jQuery('#section_holder').html(response);
             }
         });
-
         $.ajax({
             url: '<?php echo base_url(); ?>index.php?teacher/get_subjects/' + class_id,
             success:function (response)
@@ -213,7 +211,6 @@
                 jQuery('#subject_holder').html(response);
             }
         });
-
     }
     $(document).ready(function(){
         $(".input-grade").keyup(function(){
@@ -222,7 +219,6 @@
                  $(this).parents(":eq(1)").children(':nth-child(4)').children().val(1);
                  $(this).parents(":eq(1)").children(':nth-child(5)').children().val('EXCELLENT');
                  $(this).parents(":eq(1)").children(':nth-child(5)').children().css({'background-color':'rgb(50,255,99)','color':'white'});
-
              }else if ( 95 >= value && 91 <= value ){
                  $(this).parents(":eq(1)").children(':nth-child(4)').children().val(2);
                  $(this).parents(":eq(1)").children(':nth-child(5)').children().val('VERY GOOD');
@@ -255,7 +251,7 @@
                  $(this).parents(":eq(1)").children(':nth-child(4)').children().val(9);
                  $(this).parents(":eq(1)").children(':nth-child(5)').children().val('FAIR');
                  $(this).parents(":eq(1)").children(':nth-child(5)').children().css({'background-color':'rgb(171,144,15)','color':'white'});
-             }else if (50 < value) {
+             }else if (50 > value) {
                  $(this).parents(":eq(1)").children(':nth-child(4)').children().val(10);
                  $(this).parents(":eq(1)").children(':nth-child(5)').children().val('FAILED');
                  $(this).parents(":eq(1)").children(':nth-child(5)').children().css({'background-color':'rgb(255,50,50)','color':'white'});

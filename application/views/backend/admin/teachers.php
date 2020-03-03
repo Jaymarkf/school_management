@@ -72,7 +72,7 @@
                       <div class="input-group-addon"><i class="ti-user"></i></div>
                       <input type="text" class="form-control" required="" name="name" placeholder="<?php echo get_phrase('Name');?>">
                     </div>
-                    </div>s
+                    </div>
                   </div>
 
 					 <div class="form-group">

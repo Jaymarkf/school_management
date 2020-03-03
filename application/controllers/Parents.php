@@ -201,7 +201,7 @@ class Parents extends CI_Controller
          $this->load->view('backend/index',$page_data);
      }
 
-    function report_attendance_view($class_id = '' , $section_id = '', $month = '', $param1 = '') 
+    function report_attendance_view($class_id = '' , $section_id = '', $subject_id ='', $month = '', $param1 = '')
      {
          if($this->session->userdata('parent_login')!=1)
             redirect(base_url() , 'refresh');
@@ -213,6 +213,7 @@ class Parents extends CI_Controller
         $page_data['page_name'] = 'report_attendance_view';
         $section_name = $this->db->get_where('section' , array('section_id' => $section_id))->row()->name;
         $page_data['section_id'] = $section_id;
+        $page_data['subject_id'] = $subject_id;
         $page_data['page_title'] = get_phrase('Attendance-Report');
         $this->load->view('backend/index', $page_data);
      }
@@ -223,7 +224,8 @@ class Parents extends CI_Controller
         $data['year']       = $this->input->post('year');
         $data['month']  = $this->input->post('month');
         $data['section_id'] = $this->input->post('section_id');
-        redirect(base_url().'index.php?parents/report_attendance_view/'.$data['class_id'].'/'.$data['section_id'].'/'.$data['month'],'refresh');
+        $data['subject_id'] = $this->input->post('subject_id');
+        redirect(base_url().'index.php?parents/report_attendance_view/'.$data['class_id'].'/'.$data['section_id'].'/'.$data['subject_id'].'/'.$data['month'],'refresh');
     }
 
     function exam($param1 = '', $param2 = '', $param3 = '')
