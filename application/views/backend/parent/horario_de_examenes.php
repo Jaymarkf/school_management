@@ -21,6 +21,7 @@ if($student_status['section_id'] == 0){
     foreach ($child_of_parent as $row):
         $class_id = $this->db->get_where('enroll' , array('student_id' => $row['student_id'] , 'year' => $running_year))->row()->class_id;
         $section_id = $this->db->get_where('enroll' , array('student_id' => $row['student_id'] , 'year' => $running_year))->row()->section_id;
+        $sub =  $this->db->get_where('enroll',array('student_id' => $student_status['student_id']))->row()->selected_subject;
 ?>
 <div class="label label-primary pull-right" style="font-size: 14px; font-weight: 100;">
     <i class="entypo-user"></i> <?php echo $this->db->get_where('student' , array('student_id' => $row['student_id']))->row()->name;?>
@@ -52,19 +53,50 @@ if($student_status['section_id'] == 0){
                             <td width="100"><?php echo strtoupper($day);?></td>
                             <td>
                                 <?php
+
+
                                 if($irregular == 0 ){
                                     $this->db->order_by("time_start", "asc");
                                     $this->db->where('day' , $day);
                                     $this->db->where('class_id' , $class_id);
                                     $this->db->where('section_id' , $section_id);
+
+
                                 }else{
-                                    $this->db->order_by("time_start", "asc");
-                                    $this->db->where('day' , $day);
+
+
+                                    $subject = explode(',',$sub);
+                                    $subject_array = array();
+                                    foreach ($subject as $i) {
+                                        $subarr = $this->db->get_where('horarios_examenes',array('subject_id'=>$i,'day'=>$day));
+                                        if($subarr->num_rows() > 0 ){
+                                            $subject_array[] = $i;
+                                        }
+                                    }
+
+                                    if(count($subject_array) > 1 ){
+                                        //more than one query
+                                        $x = array();
+                                        foreach ($subject_array as $i) {
+                                            $x[] = ' subject_id = '.$i;
+                                        }
+                                        $res = implode(" or ",$x);
+                                        $this->db->where('day',$day);
+                                        $this->db->where($res);
+
+                                    }else{
+                                        //1 query only
+                                        $qry = array('subject_id'=>$subject_array[0],'day'=>$day);
+                                        $this->db->where($qry);
+                                    }
+
+
                                 }
                                 $this->db->where('year' , $running_year);
+
                                 $routines   =   $this->db->get('horarios_examenes')->result_array();
                                 foreach($routines as $row2):
-                                ?>
+                                    ?>
                                 <div class="btn-group">
                                     <button class="btn btn-info">
                                         <?php echo $this->crud_model->get_subject_name_by_id($row2['subject_id']);?>
