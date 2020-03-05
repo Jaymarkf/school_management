@@ -89,7 +89,7 @@
                         <ul class="nav nav-second-level">
                             <li> <a href="<?php echo base_url(); ?>index.php?admin/payments"><?php echo get_phrase('Student-Payment'); ?></a></li>
                              <li> <a href="<?php echo base_url(); ?>index.php?admin/students_payments"><?php echo get_phrase('StudentPayment'); ?></a></li>
-                             <li> <a href="<?php echo base_url(); ?>index.php?admin/expense"><?php echo get_phrase('Expense'); ?></a></li>
+<!--                             <li> <a href="--><?php //echo base_url(); ?><!--index.php?admin/expense">--><?php //echo get_phrase('Expense'); ?><!--</a></li>-->
                         </ul>
                     </li>
                     <li> <a href="<?php echo base_url(); ?>index.php?admin/message" class="waves-effect"><i class="fa fa-envelope"></i> <span class="hide-menu"><?php echo get_phrase('Messages'); ?></span></a>

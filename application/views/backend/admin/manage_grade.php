@@ -5,7 +5,7 @@
     </div>
     <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
         <ol class="breadcrumb">
-            <li><a href="<?php echo base_url();?>index.php?admin/admin_dashboard"><?php echo get_phrase('Dashboard'); ?></a></li><li class="active"><?php echo get_phrase('Attendance'); ?></li>
+            <li><a href="<?php echo base_url();?>index.php?admin/admin_dashboard"><?php echo get_phrase('Dashboard'); ?></a></li><li class="active"><?php echo get_phrase('Manage Grade'); ?></li>
         </ol>
     </div>
 </div>
@@ -160,20 +160,16 @@
                                     $comments= $this->db->get('grades')->row()->comments;
                                     //                                    $comments = $this->db->get_where('grades',array('student_id' => $row['student_id'],'section_id' => $section_id,'class_id' => $class_id,'subject_id' => $subject_id))->row()->comments;
                                     ?>
-                                    <option value="1.00" <?php if($x == 1.00){echo 'selected';} ?> >1.00</option>
-                                    <option value="1.25"<?php if($x == 1.25){echo 'selected';} ?> >1.25</option>
-                                    <option value="1.50"<?php if($x == 1.50){echo 'selected';} ?> >1.50</option>
-                                    <option value="1.75"<?php if($x == 1.75){echo 'selected';} ?> >1.75</option>
-                                    <option value="2.00"<?php if($x == 2.00){echo 'selected';} ?> >2.00</option>
-                                    <option value="2.25"<?php if($x == 2.25){echo 'selected';} ?> >2.25</option>
-                                    <option value="2.50"<?php if($x == 2.50){echo 'selected';} ?> >2.50</option>
-                                    <option value="2.75"<?php if($x == 2.75){echo 'selected';} ?> >2.75</option>
-                                    <option value="3.00"<?php if($x == 3.00){echo 'selected';} ?> >3.00</option>
-                                    <option value="3.25"<?php if($x == 3.25){echo 'selected';} ?> >3.25</option>
-                                    <option value="3.50"<?php if($x == 3.50){echo 'selected';} ?> >3.50</option>
-                                    <option value="3.75"<?php if($x == 3.75){echo 'selected';} ?> >3.75</option>
-                                    <option value="4.00"<?php if($x == 4.00){echo 'selected';} ?> >4.00</option>
-                                    <option value="5.00"<?php if($x == 5.00){echo 'selected';} ?> >5.00</option>
+                                    <option value="1" <?php if($x == 1){echo 'selected';} ?> >1.00</option>
+                                    <option value="2"<?php if($x == 2){echo 'selected';} ?> >1.25</option>
+                                    <option value="3"<?php if($x == 3){echo 'selected';} ?> >1.50</option>
+                                    <option value="4"<?php if($x == 4){echo 'selected';} ?> >1.75</option>
+                                    <option value="5"<?php if($x == 5){echo 'selected';} ?> >2.00</option>
+                                    <option value="6"<?php if($x == 6){echo 'selected';} ?> >2.25</option>
+                                    <option value="7"<?php if($x == 7){echo 'selected';} ?> >2.50</option>
+                                    <option value="8"<?php if($x == 8){echo 'selected';} ?> >2.75</option>
+                                    <option value="9"<?php if($x == 9){echo 'selected';} ?> >3.00</option>
+                                    <option value="10"<?php if($x == 10){echo 'selected';} ?> >5.00</option>
                                 </select>
                             </td>
                             <td>
