@@ -12,7 +12,7 @@
 
 <div class="row">
     <?php echo form_open(base_url() . 'index.php?admin/system_settings/do_update' , 
-      array('class' => 'form-horizontal form-groups-bordered validate','target'=>'_top'));?>
+      array('class' => 'form-horizontal form-groups-bordered validate','target'=>'_top' ,'enctype' => 'multipart/form-data'));?>
         <div class="col-md-6">
             <div class="panel panel-info" >
                 <div class="panel-heading">
@@ -42,22 +42,22 @@
                               value="<?php echo $this->db->get_where('settings' , array('type' =>'address'))->row()->description;?>">
                       </div>
                   </div>
-          
-                  <div class="form-group">
-                      <label  class="col-sm-3 control-label"><?php echo get_phrase('Language');?></label>
-                      <div class="col-sm-9">
-                          <select name="language" class="form-control selectboxit">
-                                <?php $fields = $this->db->list_fields('language');
-                                  foreach ($fields as $field)
-                                {
-                    if ($field == 'phrase_id' || $field == 'phrase') continue;
-                    $current_default_language = $this->db->get_where('settings' , array('type'=>'language'))->row()->description; ?>
-                              <option value="<?php echo $field;?>"
-                                <?php if ($current_default_language == $field) echo 'selected';?>> <?php echo $field;?> </option>
-                                        <?php } ?>
-                           </select>
-                      </div>
-                  </div>
+<!--          -->
+<!--                  <div class="form-group">-->
+<!--                      <label  class="col-sm-3 control-label">--><?php //echo get_phrase('Language');?><!--</label>-->
+<!--                      <div class="col-sm-9">-->
+<!--                          <select name="language" class="form-control selectboxit">-->
+<!--                                --><?php //$fields = $this->db->list_fields('language');
+//                                  foreach ($fields as $field)
+//                                {
+//                    if ($field == 'phrase_id' || $field == 'phrase') continue;
+//                    $current_default_language = $this->db->get_where('settings' , array('type'=>'language'))->row()->description; ?>
+<!--                              <option value="--><?php //echo $field;?><!--"-->
+<!--                                --><?php //if ($current_default_language == $field) echo 'selected';?><?php //echo $field;?><!-- </option>-->
+<!--                                        --><?php //} ?>
+<!--                           </select>-->
+<!--                      </div>-->
+<!--                  </div>-->
                     
                   <div class="form-group">
                       <label  class="col-sm-3 control-label"><?php echo get_phrase('Phone');?></label>
@@ -110,6 +110,26 @@
                             <input type="text" class="form-control" name="advertise_message"
                                    value="<?php echo $this->db->get_where('settings' , array('type' =>'advertise'))->row()->description;?>">
                         </div>
+                    </div>
+                    <div class="form-group">
+
+                                <label for="field-1" class="col-sm-3 control-label"><?php echo get_phrase('Advertise-Image');?></label>
+                                <div class="col-sm-9">
+                                    <div class="fileinput fileinput-new" data-provides="fileinput">
+                                        <div class="fileinput-new thumbnail" style="width: 100px; height: 100px;" data-trigger="fileinput">
+                                            <img src="<?php echo base_url();?>uploads/tmp/advertise.jpg" alt="...">
+                                        </div>
+                                        <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px"></div>
+                                        <div>
+                                      <span class="btn btn-info btn-file">
+                                          <span class="fileinput-new"><?php echo get_phrase('Upload');?></span>
+                                          <span class="fileinput-exists"><?php echo get_phrase('Change');?></span>
+                                          <input type="file" name="advertise_image" accept="image/*">
+                                      </span>
+                                            <a href="#" class="btn btn-orange fileinput-exists" data-dismiss="fileinput"><?php echo get_phrase('Delete');?></a>
+                                        </div>
+                                    </div>
+                                </div>
                     </div>
                   <div class="form-group">
                       <label  class="col-sm-5 control-label">RTL</label>
@@ -250,52 +270,10 @@
       </div>
           </div>
 
-        <div class="col-md-6">
-            <?php echo form_open(base_url() . 'index.php?admin/system_settings/upload_logo' , array(
-            'class' => 'form-horizontal form-groups-bordered validate','target'=>'_top' , 'enctype' => 'multipart/form-data'));?>
-
-              <div class="panel panel-info" >
-                  <div class="panel-heading">
-                      <div class="panel-title">
-                          <font color="white"><?php echo get_phrase('Logo');?></font>
-                      </div>
-                  </div>
-                  
-                  <div class="panel-body">   
-                      <div class="form-group">
-                          <label for="field-1" class="col-sm-3 control-label"><?php echo get_phrase('Logo');?></label>
-                          <div class="col-sm-9">
-                              <div class="fileinput fileinput-new" data-provides="fileinput">
-                                  <div class="fileinput-new thumbnail" style="width: 100px; height: 100px;" data-trigger="fileinput">
-                                      <img src="<?php echo base_url();?>uploads/logo.png" alt="...">
-                                  </div>
-                                  <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px"></div>
-                                  <div>
-                                      <span class="btn btn-info btn-file">
-                                          <span class="fileinput-new"><?php echo get_phrase('Upload');?></span>
-                                          <span class="fileinput-exists"><?php echo get_phrase('Change');?></span>
-                                          <input type="file" name="userfile" accept="image/*">
-                                      </span>
-                                      <a href="#" class="btn btn-orange fileinput-exists" data-dismiss="fileinput"><?php echo get_phrase('Delete');?></a>
-                                  </div>
-                              </div>
-                          </div>
-                      </div>
-
-                    <div class="form-group">
-                      <div class="col-sm-offset-3 col-sm-9">
-                          <button type="submit" class="btn btn-info"><?php echo get_phrase('Update');?></button>
-                      </div>
-                    </div>
-                  </div>
-              </div>
-            <?php echo form_close();?>
-         </div>
 
         <div class="col-md-6">
             <?php echo form_open(base_url() . 'index.php?admin/system_settings/ad' , array(
             'class' => 'form-horizontal form-groups-bordered validate','target'=>'_top' , 'enctype' => 'multipart/form-data'));?>
-
               <div class="panel panel-info" >
                   <div class="panel-heading">
                       <div class="panel-title">

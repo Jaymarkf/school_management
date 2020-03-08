@@ -16,7 +16,7 @@
                             <li> <a href="<?php echo base_url(); ?>index.php?admin/teachers"><?php echo get_phrase('Teachers'); ?></a></li>
                             <li> <a href="<?php echo base_url(); ?>index.php?admin/parents"><?php echo get_phrase('Parents'); ?></a></li>
                             <li> <a href="<?php echo base_url(); ?>index.php?admin/add_student"><?php echo get_phrase('Students'); ?></a></li>
-                            <li> <a href="<?php echo base_url(); ?>index.php?admin/student_bulk"><?php echo get_phrase('Student-Bulk'); ?></a></li>
+<!--                            <li> <a href="--><?php //echo base_url(); ?><!--index.php?admin/student_bulk">--><?php //echo get_phrase('Student-Bulk'); ?><!--</a></li>-->
                         </ul>
                     </li>
                     <li> <a href="javascript:void(0);" class="waves-effect"><i class="ti-medall"></i> <span class="hide-menu"><?php echo get_phrase('Students-Information'); ?><span class="fa arrow"></span></span></a>
@@ -46,7 +46,7 @@
                     </li>
                      <li> <a href="javascript:void(0);" class="waves-effect"><i class="ti-check-box"></i> <span class="hide-menu"><?php echo get_phrase('Attendance'); ?><span class="fa arrow"></span></span></a>
                         <ul class="nav nav-second-level">
-                            <li> <a href="<?php echo base_url(); ?>index.php?admin/attendance"><?php echo get_phrase('Daily-Attendance'); ?></a></li>
+<!--                            <li> <a href="--><?php //echo base_url(); ?><!--index.php?admin/attendance">--><?php //echo get_phrase('Daily-Attendance'); ?><!--</a></li>-->
                              <li> <a href="<?php echo base_url(); ?>index.php?admin/attendance_report"><?php echo get_phrase('Attendance-Report'); ?></a></li>
                         </ul>
                     </li>
@@ -89,12 +89,12 @@
                         <ul class="nav nav-second-level">
                             <li> <a href="<?php echo base_url(); ?>index.php?admin/payments"><?php echo get_phrase('Student-Payment'); ?></a></li>
                              <li> <a href="<?php echo base_url(); ?>index.php?admin/students_payments"><?php echo get_phrase('StudentPayment'); ?></a></li>
-                             <li> <a href="<?php echo base_url(); ?>index.php?admin/expense"><?php echo get_phrase('Expense'); ?></a></li>
+<!--                             <li> <a href="--><?php //echo base_url(); ?><!--index.php?admin/expense">--><?php //echo get_phrase('Expense'); ?><!--</a></li>-->
                         </ul>
                     </li>
                     <li> <a href="<?php echo base_url(); ?>index.php?admin/message" class="waves-effect"><i class="fa fa-envelope"></i> <span class="hide-menu"><?php echo get_phrase('Messages'); ?></span></a>
                     </li>
-                    <li> <a href="<?php echo base_url(); ?>index.php?admin/voting" class="waves-effect"><i class="fa fa-envelope"></i> <span class="hide-menu"><?php echo get_phrase('Voting'); ?></span></a>
+                    <li> <a href="<?php echo base_url(); ?>index.php?admin/voting" class="waves-effect"><i class="fa fa-check-square-o"></i> <span class="hide-menu"><?php echo get_phrase('Voting'); ?></span></a>
                     </li>
 
                     <li> <a href="<?php echo base_url(); ?>index.php?admin/system_settings" class="waves-effect"><i class="ti-settings"></i> <span class="hide-menu"><?php echo get_phrase('System-Settings'); ?></span></a> </li>

@@ -84,7 +84,7 @@
                                         }else{
                                             $y = '';
                                         }
-                                                echo '('.$row2['time_start'].':'.$row2['time_start_min'].$x.'~'.$row2['time_end'].':'.$row2['time_end_min'].$y.$mode1.')';
+                                                echo '('.$row2['time_start'].':'.$row2['time_start_min'].$x.'~'.$row2['time_end'].':'.$row2['time_end_min'].$y.$mode1.')~Room: '.$row2['room_id'];
                                         ?>
                                         <span class="caret"></span>
                                     </button>
@@ -115,3 +115,16 @@
 </div>
 <?php endforeach;?>
 <?php endif;?>
+<script>
+$(document).ready(function(){
+
+    <?php
+    if(isset($_SESSION['message'])){
+        echo 'alert("'.$_SESSION['message'].'")';
+        unset($_SESSION['message']);
+    }
+    ?>
+});
+
+
+</script>

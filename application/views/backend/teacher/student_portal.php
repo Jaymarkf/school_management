@@ -54,9 +54,7 @@
 
         <p><span><?php echo get_phrase('Birthday'); ?>:</span>    <span class="pull-right label label-info label-rounded"><?php echo $this->db->get_where('student' , array(
         'student_id' => $row['student_id']))->row()->birthday; ?></span></p>
-
-        <p><span><?php echo get_phrase('Class-Assigned'); ?>:</span>    <span class="pull-right label label-info label-rounded"><?php echo $this->crud_model->get_type_name_by_id('dormitory', $this->db->get_where('student' , array(
-        'student_id' => $row['student_id']))->row()->dormitory_id); ?></span></p>
+                            
                         </div>
                     </div>
 	<?php endforeach;?>

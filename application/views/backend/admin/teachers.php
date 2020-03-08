@@ -60,13 +60,11 @@
 	<div class="tab-pane box" id="add" style="padding: 5px">
                 <div class="box-content">
                 	<?php echo form_open(base_url() . 'index.php?admin/teachers/create/' , array('class' => 'form-horizontal form-groups-bordered validate ajax-submit', 'enctype' => 'multipart/form-data'));?>
-
         <div class="col-md-12">
           <div class="white-box">
             <h3 class="box-title m-b-0"><?php echo get_phrase('New');?></h3>
             <br><br>
 				<div class="padded">
-		     
 		     		 <div class="form-group">
                     <label class="col-sm-4 control-label"><?php echo get_phrase('Name');?></label>
                     <div class="col-sm-5">
@@ -188,7 +186,12 @@
     $(document).ready(function(){
       $('#myTable').DataTable();
       $(document).ready(function() {
-        var table = $('#example').DataTable({
+        var table = $('#example').DataTable({  <?php
+            if(isset($_SESSION['message'])){
+                echo 'alert("Teacher -- '.$_SESSION['message'].' Succesfully added")';
+                unset($_SESSION['message']);
+            }
+            ?>
           "columnDefs": [
           { "visible": false, "targets": 2 }
           ],

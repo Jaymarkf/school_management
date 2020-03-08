@@ -57,7 +57,7 @@
                             for ($i = 1; $i <= $days; $i++) {
                                 $timestamp = strtotime($i . '-' . $month . '-' . $year[0]);
                                 $this->db->group_by('timestamp');
-                                $attendance = $this->db->get_where('attendance', array('section_id' => $section_id, 'class_id' => $class_id, 'year' => $running_year, 'timestamp' => $timestamp, 'student_id' => $row['student_id']))->result_array();
+                                $attendance = $this->db->get_where('attendance', array('section_id' => $section_id, 'class_id' => $class_id, 'year' => $running_year, 'timestamp' => $timestamp, 'student_id' => $row['student_id'],'subject_id' => $subject_id))->result_array();
 
                                 foreach ($attendance as $row1):
                                     $month_dummy = date('d', $row1['timestamp']);

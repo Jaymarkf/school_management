@@ -12,7 +12,11 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <p><?php echo $this->db->get_where('settings',array('type'=>'advertise'))->row()->description;?></p>
+                        <div class="row">
+                            <div class="text-center"> <img src="<?php echo base_url().'uploads/tmp/advertise.jpg'; ?>" width="800" height="400" class="img-responsive"/></div>
+                        </div>
+                        <br><br><br>
+                        <div class="text-center"><p><?php echo $this->db->get_where('settings',array('type'=>'advertise'))->row()->description;?></p></div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

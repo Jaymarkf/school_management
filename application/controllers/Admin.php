@@ -102,6 +102,7 @@ class Admin extends CI_Controller
             $this->db->insert('teacher', $data);
             $teacher_id = $this->db->insert_id();
             move_uploaded_file($_FILES['userfile']['tmp_name'], 'uploads/teacher_image/' . $teacher_id . '.jpg');
+            $_SESSION['message'] = $data['name'];
             redirect(base_url() . 'index.php?admin/teacher_profile/'.$teacher_id, 'refresh');
         }
         if ($param1 == 'do_update') {
@@ -451,7 +452,7 @@ class Admin extends CI_Controller
             $data['status']             = $this->input->post('status');
             $data['creation_timestamp'] = strtotime($this->input->post('date'));
             $data['year']               = $this->db->get_where('settings' , array('type' => 'running_year'))->row()->description;
-            
+            $_SESSION['message'] = "a new invoice was successfully added";
             $this->db->insert('invoice', $data);
             $invoice_id = $this->db->insert_id();
 
@@ -477,6 +478,7 @@ class Admin extends CI_Controller
             
             $this->db->where('invoice_id', $param2);
             $this->db->update('invoice', $data);
+            $_SESSION['message'] = "a new invoice was successfully updated";
             redirect(base_url() . 'index.php?admin/students_payments', 'refresh');
         } else if ($param1 == 'edit') {
             $page_data['edit_data'] = $this->db->get_where('invoice', array(
@@ -487,6 +489,7 @@ class Admin extends CI_Controller
         if ($param1 == 'delete') {
             $this->db->where('invoice_id', $param2);
             $this->db->delete('invoice');
+            $_SESSION['message'] = "an invoice was successfully deleted";
             redirect(base_url() . 'index.php?admin/students_payments', 'refresh');
         }
         $page_data['page_name']  = 'invoice';
@@ -583,21 +586,26 @@ class Admin extends CI_Controller
             $data2['date_added']     = strtotime(date("Y-m-d H:i:s"));
             $data2['year']           = $running_year;
             $t = $this->input->post('subject_selected');
+
             if(isset($t)){
                 $data2['selected_subject'] = implode(',',$t);
+
             }else{
                 $getsubject = $this->db->get_where('subject',array('class_id' => $data2['class_id']))->result_array();
-                $temp = '';
+                $temp = array();
+
                 foreach ($getsubject as $index => $item) {
-                    $temp[] .= $item['subject_id'];
+                    $temp[] = $item['subject_id'];
                 }
+
                 $data2['selected_subject'] = implode(',',$temp);
             }
 
+            $_SESSION['message'] = "Registration Success";
 
             $this->db->insert('enroll', $data2);
             move_uploaded_file($_FILES['userfile']['tmp_name'], 'uploads/student_image/tmp/' . $student_id . '.jpg');
-            redirect(base_url() . 'index.php?admin/add_student/', 'refresh');
+            redirect(base_url() . 'index.php?admin/add_student', 'refresh');
         }
         if ($param1 == 'do_update') 
         {
@@ -671,7 +679,9 @@ class Admin extends CI_Controller
             $this->db->insert('parent', $data);
             $parent_id     =   $this->db->insert_id();
         	move_uploaded_file($_FILES['userfile']['tmp_name'], 'uploads/parent_image/' . $parent_id . '.jpg');
+            $_SESSION['message'] = $data['name'];
             redirect(base_url() . 'index.php?admin/parents/', 'refresh');
+
         }
         if ($param1 == 'edit') 
         {
@@ -740,27 +750,25 @@ class Admin extends CI_Controller
             $data['teacher_id'] = $this->input->post('teacher_id');
             $data['year']       = $this->db->get_where('settings' , array('type' => 'running_year'))->row()->description;
             $this->db->insert('subject', $data);
+            $section_name = $data['name'];
+            $class_name = $this->db->get_where('class',array('class_id' => $data['class_id']))->row()->name;
+            $teacher_name = $this->db->get_where('teacher',array('teacher_id' => $data['teacher_id']))->row()->name;
+            $_SESSION['message'] = "subject: " . $section_name. " with class name: " . $class_name . " and teacher: " . $teacher_name . " was successfully added";
             redirect(base_url() . 'index.php?admin/courses/'.$data['class_id'], 'refresh');
         }
         if ($param1 == 'do_update') 
         {
             $data['name']       = $this->input->post('name');
-            $data['la1']       = $this->input->post('la1');
-            $data['la2']       = $this->input->post('la2');
-            $data['la3']       = $this->input->post('la3');
-            $data['la4']       = $this->input->post('la4');
-            $data['la5']       = $this->input->post('la5');
-            $data['la6']       = $this->input->post('la6');
-            $data['la7']       = $this->input->post('la7');
-            $data['la8']       = $this->input->post('la8');
-            $data['la9']       = $this->input->post('la9');
-            $data['final']       = $this->input->post('final');
             $data['class_id']   = $this->input->post('class_id');
             $data['teacher_id'] = $this->input->post('teacher_id');
             $data['year']       = $this->db->get_where('settings' , array('type' => 'running_year'))->row()->description;
             
             $this->db->where('subject_id', $param2);
             $this->db->update('subject', $data);
+            $section_name = $data['name'];
+            $class_name = $this->db->get_where('class',array('class_id' => $data['class_id']))->row()->name;
+            $teacher_name = $this->db->get_where('teacher',array('teacher_id' => $data['teacher_id']))->row()->name;
+            $_SESSION['message'] = "subject: " . $section_name. " with class name: " . $class_name . " and teacher: " . $teacher_name . " was successfully updated";
             redirect(base_url() . 'index.php?admin/courses/'.$data['class_id'], 'refresh');
         } else if ($param1 == 'edit') {
             $page_data['edit_data'] = $this->db->get_where('subject', array(
@@ -770,6 +778,7 @@ class Admin extends CI_Controller
         if ($param1 == 'delete') {
             $this->db->where('subject_id', $param2);
             $this->db->delete('subject');
+            $_SESSION['message'] = "successfully deleted";
             redirect(base_url() . 'index.php?admin/courses/'.$param3, 'refresh');
         }
 		$page_data['class_id']   = $param1;
@@ -787,9 +796,7 @@ class Admin extends CI_Controller
             $data['name']         = $this->input->post('name');
             $this->db->insert('class', $data);
             $class_id = $this->db->insert_id();
-            $data2['class_id']  =   $class_id;
-            $data2['name']      =   'A';
-            $this->db->insert('section' , $data2);
+            $_SESSION['message'] = $data['name'] . " was successfully added";
             redirect(base_url() . 'index.php?admin/manage_classes/', 'refresh');
         }
         if ($param1 == 'do_update')
@@ -799,6 +806,7 @@ class Admin extends CI_Controller
             
             $this->db->where('class_id', $param2);
             $this->db->update('class', $data);
+            $_SESSION['message'] = $data['name'] . " was successfully update";
             redirect(base_url() . 'index.php?admin/manage_classes/', 'refresh');
         } else if ($param1 == 'edit') 
         {
@@ -810,6 +818,7 @@ class Admin extends CI_Controller
         {
             $this->db->where('class_id', $param2);
             $this->db->delete('class');
+            $_SESSION['message'] = "successfully deleted";
             redirect(base_url() . 'index.php?admin/manage_classes/', 'refresh');
         }
         $page_data['classes']    = $this->db->get('class')->result_array();
@@ -927,6 +936,7 @@ class Admin extends CI_Controller
             $data['class_id']   =   $this->input->post('class_id');
             $data['teacher_id'] =   $this->input->post('teacher_id');
             $this->db->insert('section' , $data);
+            $_SESSION['message'] = $data['name'] . " was successfully added";
             redirect(base_url() . 'index.php?admin/section/' . $data['class_id'] , 'refresh');
         }
         if ($param1 == 'edit') {
@@ -935,12 +945,14 @@ class Admin extends CI_Controller
             $data['teacher_id'] =   $this->input->post('teacher_id');
             $this->db->where('section_id' , $param2);
             $this->db->update('section' , $data);
+            $_SESSION['message'] = $data['name'] . " was successfully updated";
             redirect(base_url() . 'index.php?admin/section/' . $data['class_id'] , 'refresh');
         }
         if ($param1 == 'delete') 
         {
             $this->db->where('section_id' , $param2);
             $this->db->delete('section');
+            $_SESSION['message'] = "successfully deleted";
             redirect(base_url() . 'index.php?admin/section' , 'refresh');
         }
     }
@@ -1179,6 +1191,7 @@ class Admin extends CI_Controller
             $data['day']            = $this->input->post('day');
             $data['room_id'] = $this->input->post('room_id');
             $data['year']           = $this->db->get_where('settings' , array('type' => 'running_year'))->row()->description;
+            $_SESSION['message'] = "A new Class Route was successfully added";
             $this->db->insert('class_routine', $data);
             redirect(base_url() . 'index.php?admin/class_routine_add/', 'refresh');
         }
@@ -1197,6 +1210,7 @@ class Admin extends CI_Controller
             
             $this->db->where('class_routine_id', $param2);
             $this->db->update('class_routine', $data);
+            $_SESSION['message'] = "A new Class Route was successfully updated";
             redirect(base_url() . 'index.php?admin/class_routine_view/' . $data['class_id'], 'refresh');
         } else if ($param1 == 'edit') {
             $page_data['edit_data'] = $this->db->get_where('class_routine', array(
@@ -1207,6 +1221,7 @@ class Admin extends CI_Controller
             $class_id = $this->db->get_where('class_routine' , array('class_routine_id' => $param2))->row()->class_id;
             $this->db->where('class_routine_id', $param2);
             $this->db->delete('class_routine');
+            $_SESSION['message'] = "class Route was successfully deleted";
             redirect(base_url() . 'index.php?admin/class_routine_view/' . $class_id, 'refresh');
         } 
     }
@@ -1230,6 +1245,7 @@ class Admin extends CI_Controller
             $data['room_id']            = $this->input->post('room_id');
             $data['year']           = $this->db->get_where('settings' , array('type' => 'running_year'))->row()->description;
             $this->db->insert('horarios_examenes', $data);
+            $_SESSION['message'] = "a new exam route was successfully added";
             redirect(base_url() . 'index.php?admin/add_exam_routine/', 'refresh');
         }
         if ($param1 == 'do_update') {
@@ -1248,6 +1264,7 @@ class Admin extends CI_Controller
             $data['year']           = $this->db->get_where('settings' , array('type' => 'running_year'))->row()->description;
             $this->db->where('horario_id', $param2);
             $this->db->update('horarios_examenes', $data);
+            $_SESSION['message'] = "a new exam route was successfully updated";
             redirect(base_url() . 'index.php?admin/looking_routine/' . $data['class_id'], 'refresh');
         } else if ($param1 == 'edit') 
         {
@@ -1258,6 +1275,7 @@ class Admin extends CI_Controller
             $class_id = $this->db->get_where('horarios_examenes' , array('horario_id' => $param2))->row()->class_id;
             $this->db->where('horario_id', $param2);
             $this->db->delete('horarios_examenes');
+            $_SESSION['message'] = "exam route was successfully deleted";
             redirect(base_url() . 'index.php?admin/looking_routine/' . $class_id, 'refresh');
         }
     }
@@ -1373,6 +1391,14 @@ class Admin extends CI_Controller
         $this->load->view('backend/admin/student_bulk_subjects' , $page_data);
     }
 
+    function get_subjects_teacher($class_id,$teacher_id)
+    {
+
+        $page_data['class_id'] = $class_id;
+        $page_data['teacher_id'] = $teacher_id;
+        $this->load->view('backend/admin/student_bulk_subjects' , $page_data);
+    }
+
 
     function attendance_selector()
     {
@@ -1391,7 +1417,7 @@ class Admin extends CI_Controller
 
 
 
-        if($query->num_rows() < 1) {
+
 //            $students = $this->db->get_where('enroll' , array(
 //                'class_id' => $data['class_id'] , 'section_id' => $data['section_id'] , 'year' => $data['year']
 //            ))->result_array();
@@ -1406,63 +1432,70 @@ class Admin extends CI_Controller
                             ';
             $this->db->where($qryd);
             $students = $this->db->get('enroll')->result_array();
-
 //          echo '<pre>';
 //          print_r($students);
 //          echo '</pre>';
 //          die();
+        if($query->num_rows() < 1) {
+            foreach ($students as $row => $ix) {
+//        $res = $this->db->get_where('attendance', array('student_id' => $row['student_id']))->result_array();
+                if ($ix['section_id'] == 0)  {
+//            $w = ' (class_id = ' . $data['class_id'] . ' and section_id = ' . $data['section_id'] . ' and year = "' . $data['year'] . '" and find_in_set("' . $data['subject_id'] . '",selected_subject) and student_id = ' . $row['student_id'] . ')
+//                            or
+//                            (class_id = ' . $data['class_id'] . ' and section_id = 0 and year = "' . $data['year'] . '"  and find_in_set("' . $data['subject_id'] . '",selected_subject) and student_id = ' . $row['student_id'] . ')';
 
-            foreach ($students as $row) {
-                $res = $this->db->get_where('attendance', array('student_id' => $row['student_id']))->result_array();
+//            $sel = "*, (select SUBSTR('" . $row['selected_subject'] . "',locate('" . $data['subject_id'] . "','" . $row['selected_subject'] . "'),1)) as selected_s";
 
-
-                if ($row['section_id'] == 0) {
-
-                    $w = ' (class_id = ' . $data['class_id'] . ' and section_id = ' . $data['section_id'] . ' and year = "' . $data['year'] . '" and find_in_set("' . $data['subject_id'] . '",selected_subject) and student_id = ' . $row['student_id'] . ')
-                            or
-                            (class_id = ' . $data['class_id'] . ' and section_id = 0 and year = "' . $data['year'] . '"  and find_in_set("' . $data['subject_id'] . '",selected_subject) and student_id = ' . $row['student_id'] . ')';
-
-                    $sel = "*, (select SUBSTR('" . $row['selected_subject'] . "',locate('" . $data['subject_id'] . "','" . $row['selected_subject'] . "'),1)) as selected_s";
-
-                    $datax = $this->db->query('SELECT *, (select SUBSTR("' . $row['selected_subject'] . '", locate("' . $data['subject_id'] . '", "' . $row['selected_subject'] . '"), 1)) as selected_s FROM `enroll` WHERE (class_id = ' . $data['class_id'] . ' and section_id = 0 and year = "' . $data['section_id'] . '" and find_in_set("' . $data['subject_id'] . '",selected_subject) and student_id = ' . $row['student_id'] . ')')->result_array();
-
-
-                    if ($datax['selected_s'] == $data['subject_id']) {
-
-                        $attn_data['class_id'] = $data['class_id'];
-                        $attn_data['year'] = $data['year'];
-                        $attn_data['timestamp'] = $data['timestamp'];
-                        $attn_data['section_id'] = 0;
-                        $attn_data['student_id'] = $row['student_id'];
-                        $attn_data['subject_id'] = $data['subject_id'];
-                        $this->db->where('student_id', $datax['student_id']);
-                        $this->db->where('subject_id', $datax['selected_s']);
-                        $this->db->update('attendance');
-                    } else {
-
-                        $attn_data['class_id'] = $data['class_id'];
-                        $attn_data['year'] = $data['year'];
-                        $attn_data['timestamp'] = $data['timestamp'];
-                        $attn_data['section_id'] = $row['section_id'];
-                        $attn_data['student_id'] = $row['student_id'];
-                        $attn_data['subject_id'] = $data['subject_id'];
-                        $this->db->insert('attendance', $attn_data);
+                    $datax = $this->db->query('SELECT *, (select SUBSTR("' . $ix['selected_subject'] . '", locate("' . $data['subject_id'] . '", "' . $ix['selected_subject'] . '"), 1)) as selected_s FROM `enroll` WHERE (class_id = ' . $data['class_id'] . ' and section_id = 0 and year = "' . $data['year'] . '" and find_in_set("' . $data['subject_id'] . '",selected_subject) and student_id = ' . $ix['student_id'] . ')')->result_array();
+                    foreach ($datax as $index => $i) {
+                        if ($i['selected_s'] == $data['subject_id']) {
+                            $sub_id = 0;
+                            $getstud = $this->db->get_where('attendance',array('student_id'=> $i['student_id'],'timestamp' => $data['timestamp']));
+                            if($getstud->num_rows() > 1){
+                                $attn_data['class_id'] = $data['class_id'];
+                                $attn_data['year'] = $data['year'];
+                                $attn_data['timestamp'] = $data['timestamp'];
+                                $attn_data['section_id'] = 0;
+                                $attn_data['student_id'] = $ix['student_id'];
+                                $attn_data['subject_id'] = $data['subject_id'];
+                                $this->db->where('student_id', $i['student_id']);
+                                $this->db->where('subject_id', $i['selected_s']);
+                                $this->db->where('section_id','0');
+                                $this->db->update('attendance', $attn_data);
+                            }else{
+                                $attn_data['class_id'] = $data['class_id'];
+                                $attn_data['year'] = $data['year'];
+                                $attn_data['timestamp'] = $data['timestamp'];
+                                $attn_data['section_id'] = 0;
+                                $attn_data['student_id'] = $ix['student_id'];
+                                $attn_data['subject_id'] = $data['subject_id'];
+                                $this->db->where('student_id', $i['student_id']);
+                                $this->db->where('subject_id', $i['selected_s']);
+                                $this->db->where('section_id','0');
+                                $this->db->insert('attendance', $attn_data);
+                            }
+                        } else {
+                            $attn_data['class_id'] = $data['class_id'];
+                            $attn_data['year'] = $data['year'];
+                            $attn_data['timestamp'] = $data['timestamp'];
+                            $attn_data['section_id'] = $ix['section_id'];
+                            $attn_data['student_id'] = $ix['student_id'];
+                            $attn_data['subject_id'] = $data['subject_id'];
+                            $this->db->insert('attendance', $attn_data);
+                        }
                     }
-
                 } else {
                     $attn_data['class_id'] = $data['class_id'];
                     $attn_data['year'] = $data['year'];
                     $attn_data['timestamp'] = $data['timestamp'];
-                    $attn_data['section_id'] = $row['section_id'];
-                    $attn_data['student_id'] = $row['student_id'];
+                    $attn_data['section_id'] = $ix['section_id'];
+                    $attn_data['student_id'] = $ix['student_id'];
                     $attn_data['subject_id'] = $data['subject_id'];
+                    $d = "section_id <> 0 and subject_id <> '".$data['subject_id']."'";
+                    $this->db->where($d);
                     $this->db->insert('attendance', $attn_data);
-
                 }
-
             }
-
-
         }
 //        echo '<pre>';
 //        print_r($attn_data);
@@ -1995,6 +2028,10 @@ class Admin extends CI_Controller
             $this->db->where('type','advertise');
             $this->db->update('settings',$data);
 
+            if(isset($_FILES['advertise_image'])){
+               // die($_FILES['advertise_image']['tmp_name']);
+                move_uploaded_file($_FILES['advertise_image']['tmp_name'], 'uploads/tmp/advertise.jpg');
+            }
         
             redirect(base_url() . 'index.php?admin/system_settings/', 'refresh');
         }

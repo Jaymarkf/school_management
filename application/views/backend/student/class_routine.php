@@ -1,4 +1,4 @@
-<?php $running_year = $this->db->get_where('settings' , array('type' => 'running_year'))->row()->description; ?>
+
 <div class="row bg-title">
     <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
         <h4 class="page-title"><?php echo get_phrase('Class-Routine');?></h4> 
@@ -42,6 +42,52 @@
 ?>
 
 <hr />
+<?php
+//for($d = 1 ; $d <= 7; $d++) {
+//    if($d==1)$day= get_phrase('Sunday');
+//    else if($d==2) $day= get_phrase('Monday');
+//    else if($d==3)$day = get_phrase('Tuesday');
+//    else if($d==4)$day= get_phrase('Wednesday');
+//    else if($d==5)$day= get_phrase('Thursday');
+//    else if($d==6)$day= get_phrase('Friday');
+//    else if($d==7)$day= get_phrase('Saturday');
+//    else $day = '';
+//    $sub = $this->db->get_where('enroll', array('student_id' => $this->session->userdata('student_id')))->row()->selected_subject;
+//    $subject = explode(',', $sub);
+//    $subject_array = array();
+//
+//    foreach ($subject as $i) {
+//        $subarr = $this->db->get_where('class_routine', array('subject_id' => $i, 'day' => $day));
+//        if ($subarr->num_rows() >=1) {
+//            $subject_array[] = $i;
+//        }
+//    }
+//    $int = 0;
+//    $queries = array();
+////    echo '<pre>';
+////    print_r($subject_array);
+////    echo '</pre>';
+//    if(!empty($subject_array)){
+//        foreach ($subject_array as $x) {
+//            if ($int == 0) {
+//                $queries[] = $x;
+//            } else {
+//                $queries[] = $x;
+//            }
+//            $int++;
+//        }
+//    }
+//
+//    $int = 0;
+////    echo $qrys . ">>>>>>";
+//    $this->db->order_by("time_start", "asc");
+//    $this->db->where('day' , $day);
+//    $this->db->or_where_in($queries);
+//    $this->db->get('class_routine');
+//    unset($queries);
+//    unset($subject_array);
+//}
+?>
 <div class="row">    
     <div class="col-md-12">
         <div class="panel panel-info" data-collapsed="0">
@@ -54,7 +100,7 @@
 <div class="panel-body">
 <table cellpadding="0" cellspacing="0" border="0"  class="table table-bordered">
                     <tbody>
-                        <?php 
+                        <?php
                         for($d=1;$d<=7;$d++):
                         if($d==1)$day= get_phrase('Sunday');
                         else if($d==2) $day= get_phrase('Monday');
@@ -69,26 +115,53 @@
                             <td>
                                 <?php
 
+
                                 if($irreg == 0 ){
                                     $this->db->order_by("time_start", "asc");
                                     $this->db->where('day' , $day);
                                     $this->db->where('class_id' , $class_id);
                                     $this->db->where('section_id' , $section_id);
+
+
                                 }else{
-                                    $this->db->order_by("time_start", "asc");
-                                    $this->db->where('day' , $day);
+                                    $sub =  $this->db->get_where('enroll',array('student_id' => $student_id))->row()->selected_subject;
+                                    $subject = explode(',',$sub);
+                                    $subject_array = array();
+                                    foreach ($subject as $i) {
+                                        $subarr = $this->db->get_where('class_routine',array('subject_id'=>$i,'day'=>$day));
+                                        if($subarr->num_rows() > 0 ){
+                                            $subject_array[] = $i;
+                                        }
+                                    }
+
+                                    if(count($subject_array) > 1 ){
+                                        //more than one query
+                                        $x = array();
+                                        foreach ($subject_array as $i) {
+                                            $x[] = ' subject_id = '.$i;
+                                       }
+                                        $res = implode(" or ",$x);
+                                        $this->db->where('day',$day);
+                                        $this->db->where($res);
+
+                                    }else{
+                                        //1 query only
+                                        $qry = array('subject_id'=>$subject_array[0],'day'=>$day);
+                                        $this->db->where($qry);
+                                    }
+
+
+
                                 }
                                 $this->db->where('year' , $running_year);
                                 $routines   =   $this->db->get('class_routine')->result_array();
                                 foreach($routines as $row2):
                                 ?>
                                 <div class="btn-group">
+
                                     <button class="btn btn-info">
                 <?php echo $this->crud_model->get_subject_name_by_id($row2['subject_id']);?>
                 <?php
-                if ($row2['time_start_min'] == 0 && $row2['time_end_min'] == 0)
-                echo '('.$row2['time_start'].'-'.$row2['time_end'].' | Room-['.$row2['room_id'].'])';
-                if ($row2['time_start_min'] != 0 || $row2['time_end_min'] != 0)
                     if($row2['time_start'] > 12  ){
                         $row2['time_start'] = $row2['time_start'] - 12;
                         $mode = " PM";
@@ -101,7 +174,12 @@
                     }else{
                         $mode1 = " AM";
                     }
-                echo '( '.$row2['time_start'].':'.$row2['time_start_min'].$mode.' to '.$row2['time_end'].':'.$row2['time_end_min'].$mode1.' | Room-['.$row2['room_id'].'])'; ?>
+                    if($row2['time_start_min'] == 0 ){
+                        $add_zero = "0";
+                    }else{
+                        $add_zero = "";
+                    }
+                echo '( '.$row2['time_start'].':'.$row2['time_start_min'].$add_zero.$mode.' to '.$row2['time_end'].':'.$row2['time_end_min'].$add_zero.$mode1.' | Room-['.$row2['room_id'].'])'; ?>
                                     </button>
                                 </div>
                                 <?php endforeach;?>

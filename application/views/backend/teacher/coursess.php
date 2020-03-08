@@ -22,7 +22,6 @@
                     <th style="text-align: center;"><div><?php echo get_phrase('Class');?></div></th>
                     <th style="text-align: center;"><div><?php echo get_phrase('Subject');?></div></th>
                     <th style="text-align: center;"><div><?php echo get_phrase('Teacher');?></div></th>
-                    <th style="text-align: center;"><div><?php echo get_phrase('Edit');?></div></th>
                 </tr>
               </thead>
               <tbody>
@@ -32,9 +31,6 @@
                 <td style="text-align: center;"><?php echo $this->crud_model->get_type_name_by_id('class',$row['class_id']);?></td>
               <td style="text-align: center;"><?php echo $row['name'];?></td>
               <td style="text-align: center;"><?php echo $this->crud_model->get_type_name_by_id('teacher',$row['teacher_id']);?></td>
-
-			    <td style="text-align: center;" class="text-nowrap">
-          <a href="#" onclick="showAjaxModal('<?php echo base_url();?>index.php?modal/popup/modal_edit_subject/<?php echo $row['subject_id'];?>');" data-toggle="tooltip" data-original-title="Subject Activity"> <i class="fa fa-edit text-info m-r-10"></i> </a></td>
                 </tr>
                  <?php } ?>
                 <?php endforeach;?>

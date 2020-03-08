@@ -24,46 +24,96 @@
                     <?php endforeach; ?>
             </div>
         </div>
-    <div class="col-md-3">
-         <div class="form-group">
+    <div class="col-md-12">
+
+        <div class="row">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label class="control-label" style="margin-bottom: 5px;"><?php echo get_phrase('Semester'); ?></label>
+                    <select name="semester_id" class="form-control selectboxit">
+                        <option value=""><?php echo get_phrase('Select'); ?></option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label class="control-label" style="margin-bottom: 5px;"><?php echo get_phrase('Class'); ?></label>
+                    <select name="class_id" class="form-control selectboxit" onchange="select_section(this.value)">
+                        <option value=""><?php echo get_phrase('Select'); ?></option>
+                        <?php
+                        $classes = $this->db->get('class')->result_array();
+                        foreach($classes as $row):
+                            ?>
+                            <option value="<?php echo $row['class_id'];?>"
+                            ><?php echo $row['name'];?></option>
+                        <?php endforeach;?>
+                    </select>
+                </div>
+            </div>
+
+            <div id="section_holder">
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label" style="margin-bottom: 5px;"><?php echo get_phrase('Section'); ?></label>
+                        <select class="form-control selectboxit" name="section_id">
+                            <option value=""><?php echo get_phrase('Select'); ?></option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div id="subject_holder">
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label class="control-label" style="margin-bottom: 5px;"><?php echo get_phrase('Subject'); ?></label>
+                        <select class="form-control selectboxit" name="subject_id">
+                            <option value=""><?php echo get_phrase('Select'); ?></option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2">
                 <label class="control-label" style="margin-bottom: 5px;"><?php echo get_phrase('Month');?></label>
-        <select name="month" class="form-control selectboxit" id="month" onchange="show_year()">
-            <?php
-            for ($i = 1; $i <= 12; $i++):
-                if ($i == 1)
-                    $m = get_phrase('January');
-                else if ($i == 2)
-                    $m = get_phrase('February');
-                else if ($i == 3)
-                    $m = get_phrase('March');
-                else if ($i == 4)
-                    $m = get_phrase('April');
-                else if ($i == 5)
-                    $m = get_phrase('May');
-                else if ($i == 6)
-                    $m = get_phrase('June');
-                else if ($i == 7)
-                    $m = get_phrase('July');
-                else if ($i == 8)
-                    $m = get_phrase('August');
-                else if ($i == 9)
-                    $m = get_phrase('September');
-                else if ($i == 10)
-                    $m = get_phrase('October');
-                else if ($i == 11)
-                    $m = get_phrase('November');
-                else if ($i == 12)
-                    $m = get_phrase('December');
-                ?>
-                <option value="<?php echo $i; ?>"
-                      <?php if($month == $i) echo 'selected'; ?>  >
-                            <?php echo $m; ?>
-                </option>
-                <?php
-            endfor;
-            ?>
-        </select>
-         </div>
+                    <select name="month" class="form-control selectboxit" id="month" onchange="show_year()">
+                        <?php
+                        for ($i = 1; $i <= 12; $i++):
+                            if ($i == 1)
+                                $m = get_phrase('January');
+                            else if ($i == 2)
+                                $m = get_phrase('February');
+                            else if ($i == 3)
+                                $m = get_phrase('March');
+                            else if ($i == 4)
+                                $m = get_phrase('April');
+                            else if ($i == 5)
+                                $m = get_phrase('May');
+                            else if ($i == 6)
+                                $m = get_phrase('June');
+                            else if ($i == 7)
+                                $m = get_phrase('July');
+                            else if ($i == 8)
+                                $m = get_phrase('August');
+                            else if ($i == 9)
+                                $m = get_phrase('September');
+                            else if ($i == 10)
+                                $m = get_phrase('October');
+                            else if ($i == 11)
+                                $m = get_phrase('November');
+                            else if ($i == 12)
+                                $m = get_phrase('December');
+                            ?>
+                            <option value="<?php echo $i; ?>"
+                                  <?php if($month == $i) echo 'selected'; ?>  >
+                                        <?php echo $m; ?>
+                            </option>
+                            <?php
+                        endfor;
+                        ?>
+                    </select>
+            </div>
+        </div>
 
     </div>
 
@@ -76,3 +126,28 @@
 	</div>
 </div>
 <?php echo form_close(); ?>
+
+<script type="text/javascript">
+    function select_section(class_id)
+    {
+        $.ajax({
+            url: '<?php echo base_url(); ?>index.php?admin/get_section/' + class_id,
+            success:function (response)
+            {
+                console.log(response);
+                jQuery('#section_holder').html(response);
+            }
+        });
+        $.ajax({
+            url: '<?php echo base_url(); ?>index.php?admin/get_subjects/' + class_id,
+            success:function (response)
+            {
+                jQuery('#subject_holder').html(response);
+            }
+        });
+
+
+
+    }
+
+</script>

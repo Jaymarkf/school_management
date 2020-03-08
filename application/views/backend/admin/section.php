@@ -66,7 +66,8 @@
 
 								 <td style="text-align: center;" class="text-nowrap"><a href="#" onclick="confirm_modal('<?php echo base_url();?>index.php?admin/sections/delete/<?php echo $row['section_id'];?>');" data-toggle="tooltip" data-original-title="Delete"> <i class="fa fa-trash text-danger m-r-10"></i> </a></td>
 							</tr>
-						<?php endforeach;?>
+						<?php endforeach;
+						 ?>
 						</tbody>
 					</table>
 				</div>
@@ -76,9 +77,18 @@
 </div>
 
 <script>
+
     $(document).ready(function(){
+
       $('#myTable').DataTable();
       $(document).ready(function() {
+          <?php
+          if(isset($_SESSION['message'])){
+              echo 'alert("'.$_SESSION['message'].'")';
+              unset($_SESSION['message']);
+          }
+          ?>
+
         var table = $('#example').DataTable({
           "columnDefs": [
           { "visible": false, "targets": 2 }

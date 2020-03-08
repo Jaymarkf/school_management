@@ -54,7 +54,7 @@ class Student extends CI_Controller
          $this->load->view('backend/index',$page_data);
      }
 
-     function report_attendance_view($class_id = '' , $section_id = '', $month = '') 
+     function report_attendance_view($class_id = '' , $section_id = '', $month = '' ,$subject_id ='')
      {
          if($this->session->userdata('student_login')!=1)
             redirect(base_url() , 'refresh');
@@ -63,6 +63,7 @@ class Student extends CI_Controller
         ))->row()->name;
         $page_data['class_id'] = $class_id;
         $page_data['month']    = $month;
+        $page_data['subject_id'] = $subject_id;
         $page_data['page_name'] = 'report_attendance_view';
         $section_name = $this->db->get_where('section' , array(
             'section_id' => $section_id
@@ -78,7 +79,8 @@ class Student extends CI_Controller
         $data['year']       = $this->input->post('year');
         $data['month']  = $this->input->post('month');
         $data['section_id'] = $this->input->post('section_id');
-        redirect(base_url().'index.php?student/report_attendance_view/'.$data['class_id'].'/'.$data['section_id'].'/'.$data['month'],'refresh');
+        $data['subject_id'] = $this->input->post('subject_id');
+        redirect(base_url().'index.php?student/report_attendance_view/'.$data['class_id'].'/'.$data['section_id'].'/'.$data['month'].'/'.$data['subject_id'],'refresh');
     }
 
     function pages_view($param1 = '' , $param2 = '')
@@ -234,6 +236,7 @@ class Student extends CI_Controller
         $page_data['student_id'] = $student_profile->student_id;
         $page_data['page_name']  = 'class_routine';
         $page_data['student_id'] = $param1;
+        $page_data['running_year'] = $param2;
         $page_data['page_title'] = get_phrase('Class-Routine');
         $this->load->view('backend/index', $page_data);
     }
@@ -680,15 +683,13 @@ class Student extends CI_Controller
         $data['subject_id'] = $this->input->post('subject_id');
         $data['student_id'] = $this->input->post('student_id');
         $data['year'] = $this->db->get_where('settings' , array('type' => 'running_year'))->row()->description;
-        redirect(base_url().'index.php?student/manage_grade/'.$data['class_id'].'/'.$data['section_id'].'/'.$data['subject_id'].'/'.$data['semester_id'].'/'.$data['student_id'],'refresh');
+        redirect(base_url().'index.php?student/manage_grade/'.$data['class_id'].'/'.$data['section_id'].'/'.$data['subject_id'].'/'.$data['semester_id'].'/'.$data['student_id'].'/'.$data['year'],'refresh');
     }
     function manage_grade($class_id = '' , $section_id = '' ,$subject_id = '', $semester_id = '',$student_id = '')
     {
+
         if($this->session->userdata('student_login')!=1)
             redirect(base_url() , 'refresh');
-        $class_name = $this->db->get_where('class' , array(
-            'class_id' => $class_id
-        ))->row()->name;
         $page_data['class_id'] = $class_id;
         $page_data['semester_id'] = $semester_id;
         $page_data['page_name'] = 'manage_grade';

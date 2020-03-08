@@ -26,7 +26,7 @@
     <div class="col-md-3">
         <div class="form-group">
             <label class="control-label" style="margin-bottom: 5px;"><?php echo get_phrase('Class'); ?></label>
-            <select name="class_id" class="form-control selectboxit" onchange="select_section(this.value)">
+            <select name="class_id" class="form-control selectboxit" onchange="select_section(this.value, <?php echo $this->session->userdata('teacher_id'); ?>)">
                 <option value=""><?php echo get_phrase('Select'); ?></option>
                 <?php
                 $classes = $this->db->get('class')->result_array();
@@ -78,7 +78,7 @@
 
 
 <script type="text/javascript">
-    function select_section(class_id)
+    function select_section(class_id,teacher_id)
     {
         $.ajax({
             url: '<?php echo base_url(); ?>index.php?admin/get_section/' + class_id,
@@ -89,7 +89,7 @@
             }
         });
         $.ajax({
-            url: '<?php echo base_url(); ?>index.php?admin/get_subjects/' + class_id,
+            url: '<?php echo base_url(); ?>index.php?admin/get_subjects_teacher/' + class_id + '/' + teacher_id,
             success:function (response)
             {
                 jQuery('#subject_holder').html(response);

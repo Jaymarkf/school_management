@@ -1,5 +1,5 @@
 <?php $running_year = $this->db->get_where('settings' , array('type' => 'running_year'))->row()->description; ?>
-<?php echo form_open(base_url() . 'index.php?admin/attendance_report_selector/'); ?>
+<?php echo form_open(base_url() . 'index.php?teacher/attendance_report_selector/'); ?>
 
 <div class="row bg-title">
     <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
@@ -152,8 +152,9 @@
 //                            $students = $this->db->get_where('enroll', array('class_id' => $class_id, 'year' => $running_year, 'section_id' => $section_id))->result_array();
                     $qryd = '(class_id = '.$class_id.' and section_id = '.$section_id.' and year = "'.$running_year. '" and find_in_set("'.$subject_id.'",selected_subject))
                             or
-                            (section_id = 0 and year = "'.$running_year. '"  and find_in_set("'.$subject_id.'",selected_subject))
+                            (class_id = '.$class_id.' and section_id = 0 and year = "'.$running_year. '"  and find_in_set("'.$subject_id.'",selected_subject))
                             ';
+                    //die($q);
                     $this->db->where($qryd);
                     $students =  $this->db->get('enroll')->result_array();
 //                    echo  '<pre>';

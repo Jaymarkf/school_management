@@ -30,11 +30,6 @@
                                 	<font color="white"><?php echo get_phrase('Profile');?> <i class="fa fa-user"></font></i>
                             	</a>
 				           </td>
-						   <td>
-				            	<a href="<?php echo base_url(); ?>index.php?admin/student_portal/<?php echo $row['student_id']; ?>" class="btn btn-info">
-                                <font color="white"><?php echo get_phrase('Qualifications');?> <i class="fa fa-graduation-cap"></i></font>
-                            	</a>
-				           </td>
 						</tr>
 						<?php 
 							endforeach;

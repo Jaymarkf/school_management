@@ -41,7 +41,9 @@
                 foreach ($classes as $row):
                     ?>
                             <li> <a href="<?php echo base_url(); ?>index.php?teacher/manage_attendance/<?php echo $row['class_id']; ?>"><?php echo $row['name']; ?></a></li>
+
                               <?php endforeach; ?>
+                            <li> <a href="<?php echo base_url(); ?>index.php?teacher/attendance_report"><?php echo get_phrase('Attendance-Report'); ?></a></li>
                         </ul>
                     </li>
                     <li> <a href="javascript:void(0);" class="waves-effect"><i class="ti-id-badge"></i> <span class="hide-menu"><?php echo get_phrase('Grades'); ?><span class="fa arrow"></span></span></a>

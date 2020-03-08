@@ -64,27 +64,66 @@ if($student_enroll['section_id'] == 0 ){
                         <tr class="gradeA">
                             <td width="100"><?php echo strtoupper($day);?></td>
                             <td>
+<!--                                --><?php
+//                                if($irreg == 0 ){
+//                                    $this->db->order_by("time_start", "asc");
+//                                    $this->db->where('day' , $day);
+//                                    $this->db->where('class_id' , $class_id);
+//                                    $this->db->where('section_id' , $section_id);
+//                                }else{
+//                                    $this->db->order_by("time_start", "asc");
+//                                    $this->db->where('day' , $day);
+//                                }
+//                                $this->db->where('year' , $running_year);
+//                                $routines   =   $this->db->get('horarios_examenes')->result_array();
+//                                foreach($routines as $row2):
+//                                ?>
                                 <?php
+
+
                                 if($irreg == 0 ){
                                     $this->db->order_by("time_start", "asc");
                                     $this->db->where('day' , $day);
                                     $this->db->where('class_id' , $class_id);
                                     $this->db->where('section_id' , $section_id);
                                 }else{
-                                    $this->db->order_by("time_start", "asc");
-                                    $this->db->where('day' , $day);
+                                    $sub =  $this->db->get_where('enroll',array('student_id' => $student_id))->row()->selected_subject;
+                                    $subject = explode(',',$sub);
+                                    $subject_array = array();
+                                    foreach ($subject as $i) {
+                                        $subarr = $this->db->get_where('horarios_examenes',array('subject_id'=>$i,'day'=>$day));
+                                        if($subarr->num_rows() > 0 ){
+                                            $subject_array[] = $i;
+                                        }
+                                    }
+
+                                    if(count($subject_array) > 1 ){
+                                        //more than one query
+                                        $x = array();
+                                        foreach ($subject_array as $i) {
+                                            $x[] = ' subject_id = '.$i;
+                                        }
+                                        $res = implode(" or ",$x);
+                                        $this->db->where('day',$day);
+                                        $this->db->where($res);
+
+                                    }else{
+                                        //1 query only
+                                        $qry = array('subject_id'=>$subject_array[0],'day'=>$day);
+                                        $this->db->where($qry);
+                                    }
+
+
+
                                 }
                                 $this->db->where('year' , $running_year);
                                 $routines   =   $this->db->get('horarios_examenes')->result_array();
                                 foreach($routines as $row2):
-                                ?>
+                                    ?>
                                 <div class="btn-group">
                                     <button class="btn btn-info">
                 <?php echo $this->crud_model->get_subject_name_by_id($row2['subject_id']);?>
                 <?php
-                if ($row2['time_start_min'] == 0 && $row2['time_end_min'] == 0)
-                    echo '('.$row2['time_start'].'-'.$row2['time_end'].' | Room-['.$row2['room_id'].'])';
-                if ($row2['time_start_min'] != 0 || $row2['time_end_min'] != 0)
                     if($row2['time_start'] > 12  ){
                         $row2['time_start'] = $row2['time_start'] - 12;
                         $mode = " PM";
@@ -97,7 +136,12 @@ if($student_enroll['section_id'] == 0 ){
                 }else{
                     $mode1 = " AM";
                 }
-                echo '( '.$row2['time_start'].':'.$row2['time_start_min'].$mode.' to '.$row2['time_end'].':'.$row2['time_end_min'].$mode1.' | Room-['.$row2['room_id'].'] ~ Date: '.$row2['fecha'].')';
+                if($row2['time_start_min'] == 0 ){
+                    $add_zero = "0";
+                }else{
+                    $add_zero = "";
+                }
+                echo '( '.$row2['time_start'].':'.$row2['time_start_min'].$add_zero.$mode.' to '.$row2['time_end'].':'.$row2['time_end_min'].$add_zero.$mode1.' | Room-['.$row2['room_id'].'] ~ Date: '.$row2['fecha'].')';
                 ?>
                                     </button>
                                 </div>

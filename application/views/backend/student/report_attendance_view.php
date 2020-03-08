@@ -14,6 +14,44 @@
 
 <div class="white-box">
 <div class="row">
+    <?php
+    $query = $this->db->get('class');
+    if ($query->num_rows() > 0):
+        $class = $query->result_array();
+        ?>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label class="control-label" style="margin-bottom: 5px;"><?php echo get_phrase('Class');?></label>
+                <select class="form-control selectboxit" name="class_id" onchange="select_section(this.value)">
+                    <option value=""><?php echo get_phrase('Select');?></option>
+                    <?php foreach ($class as $row): ?>
+                        <option value="<?php echo $row['class_id']; ?>" ><?php echo $row['name']; ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+        </div>
+    <?php endif; ?>
+    <div id="section_holder">
+        <div class="col-md-3">
+            <div class="form-group">
+                <label class="control-label" style="margin-bottom: 5px;"><?php echo get_phrase('Section');?></label>
+                <select class="form-control selectboxit" name="section_id">
+                    <option value=""><?php echo get_phrase('Select');?></option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div id="subject_holder">
+        <div class="col-md-3">
+            <div class="form-group">
+                <label class="control-label" style="margin-bottom: 5px;"><?php echo get_phrase('Subject');?></label>
+                <select class="form-control selectboxit" name="subject_id">
+                    <option value=""><?php echo get_phrase('Select');?></option>
+                </select>
+            </div>
+        </div>
+    </div>
     <div class="col-md-3">
         <div class="form-group">
             <label class="control-label" style="margin-bottom: 5px;"><?php echo get_phrase('Month');?></label>
@@ -67,7 +105,7 @@
     </div>
 </div>
 
-<?php if ($class_id != '' && $section_id != '' && $month != ''): ?>
+<?php if ($class_id != '' && $section_id != '' && $month != '' && $subject_id != ''): ?>
     <br>
     <div class="row">
         <div class="col-md-4"></div>
@@ -75,6 +113,7 @@
     </div>
     <hr />
     <div class="row">
+
         <div class="col-md-12">
          <center><p><i class="fa fa-check-circle" style="color: #00a651;"></i> <?php echo get_phrase('Present');?>&nbsp;&nbsp;&nbsp;<i class="fa fa-times-circle" style="color: #ee4749;"></i> <?php echo get_phrase('Absent');?>&nbsp;&nbsp;&nbsp;<i class="fa fa-certificate" style="color: #fec42d;"></i>Late</p></center>
          <hr>
@@ -104,7 +143,7 @@
                             for ($i = 1; $i <= $days; $i++) {
                                 $timestamp = strtotime($i . '-' . $month . '-' . $year[0]);
                                 $this->db->group_by('timestamp');
-                                $attendance = $this->db->get_where('attendance', array('section_id' => $section_id, 'class_id' => $class_id, 'year' => $running_year, 'timestamp' => $timestamp, 'student_id' => $this->session->userdata('login_user_id')))->result_array();
+                                $attendance = $this->db->get_where('attendance', array('section_id' => $section_id, 'subject_id' => $subject_id, 'class_id' => $class_id, 'year' => $running_year, 'timestamp' => $timestamp, 'student_id' => $this->session->userdata('login_user_id')))->result_array();
 
                                 foreach ($attendance as $row1):
                                     $month_dummy = date('d', $row1['timestamp']);
@@ -154,7 +193,8 @@
     }); 
 </script>
 <script type="text/javascript">
-    function select_section(class_id) {
+    function select_section(class_id)
+    {
         $.ajax({
             url: '<?php echo base_url(); ?>index.php?admin/get_section/' + class_id,
             success: function (response)
@@ -162,5 +202,13 @@
                 jQuery('#section_holder').html(response);
             }
         });
+        $.ajax({
+            url: '<?php echo base_url(); ?>index.php?admin/get_subjects/' + class_id,
+            success:function (response)
+            {
+                jQuery('#subject_holder').html(response);
+            }
+        });
+
     }
 </script>

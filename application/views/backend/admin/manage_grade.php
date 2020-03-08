@@ -5,7 +5,7 @@
     </div>
     <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
         <ol class="breadcrumb">
-            <li><a href="<?php echo base_url();?>index.php?admin/admin_dashboard"><?php echo get_phrase('Dashboard'); ?></a></li><li class="active"><?php echo get_phrase('Attendance'); ?></li>
+            <li><a href="<?php echo base_url();?>index.php?admin/admin_dashboard"><?php echo get_phrase('Dashboard'); ?></a></li><li class="active"><?php echo get_phrase('Manage Grade'); ?></li>
         </ol>
     </div>
 </div>
@@ -119,7 +119,7 @@
 //                    ))->result_array();
                     $q = '(class_id = '.$class_id.' and section_id = '.$section_id.' and year = "'.$running_year. '" and find_in_set("'.$subject_id.'",selected_subject))
                             or
-                            (class_id = '.$class_id.' and section_id = 0 and year = "'.$running_year. '"  and find_in_set("'.$subject_id.'",selected_subject))
+                            (section_id = 0 and year = "'.$running_year. '"  and find_in_set("'.$subject_id.'",selected_subject))
                             ';
                     $this->db->where($q);
                     $temp_grade = $this->db->get('enroll')->result_array();
@@ -141,24 +141,35 @@
                             <td>
                                 <select class="form-control selectboxit" name="grade_id_<?php echo $row['student_id']; ?>" disabled>
                                     <?php
-                                    $x = $this->db->get_where('grades',array('student_id' => $row['student_id'],'section_id' => $section_id,'class_id' => $class_id,'subject_id' => $subject_id))->row()->student_grade;
-                                    $grade = $this->db->get_where('grades',array('student_id' => $row['student_id'],'section_id' => $section_id,'class_id' => $class_id,'subject_id' => $subject_id))->row()->specific_grade;
-                                    $comments = $this->db->get_where('grades',array('student_id' => $row['student_id'],'section_id' => $section_id,'class_id' => $class_id,'subject_id' => $subject_id))->row()->comments;
+                                    $qd = '(semester = '.$semester_id.' and class_id = '.$class_id.' and section_id = '.$section_id.' and year = "'.$running_year. '" and subject_id = '.$subject_id.' and student_id = '.$row['student_id'].')
+                            or
+                            (semester = '.$semester_id.' and class_id = '.$class_id.' and section_id = 0 and year = "'.$running_year. '"  and subject_id = '.$subject_id.' and student_id = '.$row['student_id'].')
+                            ';
+
+
+                                    $this->db->where($qd);
+                                    $x = $this->db->get('grades')->row()->student_grade;
+                                    //                                    $x = $this->db->get_where('grades',array('student_id' => $row['student_id'],'section_id' => $section_id,'class_id' => $class_id,'subject_id' => $subject_id))->row()->student_grade;
+
+                                    $this->db->where($qd);
+                                    $grade = $this->db->get('grades')->row()->specific_grade;
+                                    //
+                                    //                                    $grade = $this->db->get_where('grades',array('student_id' => $row['student_id'],'section_id' => $section_id,'class_id' => $class_id,'subject_id' => $subject_id))->row()->specific_grade;
+                                    ////
+                                    $this->db->where($qd);
+                                    $comments= $this->db->get('grades')->row()->comments;
+                                    //                                    $comments = $this->db->get_where('grades',array('student_id' => $row['student_id'],'section_id' => $section_id,'class_id' => $class_id,'subject_id' => $subject_id))->row()->comments;
                                     ?>
-                                    <option value="1.00" <?php if($x == 1.00){echo 'selected';} ?> >1.00</option>
-                                    <option value="1.25"<?php if($x == 1.25){echo 'selected';} ?> >1.25</option>
-                                    <option value="1.50"<?php if($x == 1.50){echo 'selected';} ?> >1.50</option>
-                                    <option value="1.75"<?php if($x == 1.75){echo 'selected';} ?> >1.75</option>
-                                    <option value="2.00"<?php if($x == 2.00){echo 'selected';} ?> >2.00</option>
-                                    <option value="2.25"<?php if($x == 2.25){echo 'selected';} ?> >2.25</option>
-                                    <option value="2.50"<?php if($x == 2.50){echo 'selected';} ?> >2.50</option>
-                                    <option value="2.75"<?php if($x == 2.75){echo 'selected';} ?> >2.75</option>
-                                    <option value="3.00"<?php if($x == 3.00){echo 'selected';} ?> >3.00</option>
-                                    <option value="3.25"<?php if($x == 3.25){echo 'selected';} ?> >3.25</option>
-                                    <option value="3.50"<?php if($x == 3.50){echo 'selected';} ?> >3.50</option>
-                                    <option value="3.75"<?php if($x == 3.75){echo 'selected';} ?> >3.75</option>
-                                    <option value="4.00"<?php if($x == 4.00){echo 'selected';} ?> >4.00</option>
-                                    <option value="5.00"<?php if($x == 5.00){echo 'selected';} ?> >5.00</option>
+                                    <option value="1" <?php if($x == 1){echo 'selected';} ?> >1.00</option>
+                                    <option value="2"<?php if($x == 2){echo 'selected';} ?> >1.25</option>
+                                    <option value="3"<?php if($x == 3){echo 'selected';} ?> >1.50</option>
+                                    <option value="4"<?php if($x == 4){echo 'selected';} ?> >1.75</option>
+                                    <option value="5"<?php if($x == 5){echo 'selected';} ?> >2.00</option>
+                                    <option value="6"<?php if($x == 6){echo 'selected';} ?> >2.25</option>
+                                    <option value="7"<?php if($x == 7){echo 'selected';} ?> >2.50</option>
+                                    <option value="8"<?php if($x == 8){echo 'selected';} ?> >2.75</option>
+                                    <option value="9"<?php if($x == 9){echo 'selected';} ?> >3.00</option>
+                                    <option value="11"<?php if($x == 11 || $x == ''){echo 'selected';} ?> ></option>
                                 </select>
                             </td>
                             <td>
@@ -167,7 +178,13 @@
                             </td>
                             <td>
                                 <input type="text" name="comments_id_<?php echo $row['student_id'];?>"
-                                       placeholder="Enter your comments" class="form-control" value ="<?php echo $comments; ?>" disabled/>
+                                       placeholder="Enter your comments" class="form-control" value ="<?php echo $comments; ?>" <?php if($comments == "FAILED"){
+                                           echo 'style="color:red"';
+                                }else{
+                                           echo 'style="color:black"';
+                                }
+
+                                ?> disabled/>
                             </td>
                         </tr>
                     <?php endforeach; ?>
@@ -176,9 +193,78 @@
             </div>
             <?php echo form_close(); ?>
         </div>
+        <a class="btn btn-success btn-lg" id="btnprint">PRINT</a>
+    </div>
+
+</div>
+<div class="row" style="display:none;">
+    <div class="row" id="print_data">
+        <div class="col-lg-6" style="float:none;margin:auto;">
+            <div class="text-right">
+                <label>Date: ______________ </label>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <th>Semester : <?php echo $semester_id?></th>
+                    <th>Class : <?php echo $this->db->get_where('class',array('class_id'=>$class_id))->row()->name; ?></th>
+                    <th>Section : <?php echo $this->db->get_where('section',array('section_id' => $section_id))->row()->name; ?></th>
+                    <th>Subject : <?php echo $this->db->get_where('subject',array('subject_id' => $subject_id))->row()->name; ?></th>
+                </table>
+                <table class="table table-bordered">
+                    <th>
+                        Student
+                    </th>
+                    <th>
+                        Grade
+                    </th>
+                    <th>
+                        Specific Grade
+                    </th>
+                    <th>
+                        Comments Optional
+                    </th>
+                    <tbody>
+                    <?php
+                    $q = '(class_id = '.$class_id.' and section_id = '.$section_id.' and year = "'.$running_year. '" and find_in_set("'.$subject_id.'",selected_subject))
+                            or
+                            (class_id = '.$class_id.' and section_id = 0 and year = "'.$running_year. '"  and find_in_set("'.$subject_id.'",selected_subject))
+                            ';
+                    $this->db->where($q);
+                    $temp_grade = $this->db->get('enroll')->result_array();
+                    //                    $this->db->select('*');
+                    //                    $this->db->from('enroll');
+                    //                    $this->db->where('');
+                    foreach ($temp_grade as $row):
+                    ?>
+                        <tr>
+                            <td><?php echo $this->db->get_where('student', array('student_id' => $row['student_id']))->row()->name; ?></td>
+                            <?php
+                            $qd = '(class_id = '.$class_id.' and section_id = '.$section_id.' and year = "'.$running_year. '" and subject_id = '.$subject_id.' and student_id = '.$row['student_id'].')
+                            or
+                            (class_id = '.$class_id.' and section_id = 0 and year = "'.$running_year. '"  and subject_id = '.$subject_id.' and student_id = '.$row['student_id'].')
+                            ';
+
+
+                            $this->db->where($qd);
+                            $x = $this->db->get('grades')->row()->student_grade;
+                            $this->db->where($qd);
+                            $grade = $this->db->get('grades')->row()->specific_grade;
+                            $this->db->where($qd);
+                            $comments= $this->db->get('grades')->row()->comments;
+                            ?>
+                            <td><?php echo $x; ?></td>
+                            <td><?php echo $grade; ?></td>
+                            <td><?php echo $comments;?></td>
+                        </tr>
+
+                    <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
     </div>
 </div>
-
 <script type="text/javascript">
     function select_section(class_id) {
         $.ajax({
@@ -199,4 +285,41 @@
         });
 
     }
+
+        $(document).ready(function() {
+
+            $('#btnprint').click(function () {
+                var elem = $('#print_data');
+                PrintElem(elem);
+                Popup(data);
+            });
+        });
+            function PrintElem(elem)
+            {
+                Popup($(elem).html());
+            }
+
+            function Popup(data) {
+                var a = '<link rel=\"stylesheet\" href=\"https:\/\/maxcdn.bootstrapcdn.com\/bootstrap\/3.4.1\/css\/bootstrap.min.css\"><style>' +
+                    '@media print {' +
+                    'body {-webkit-print-color-adjust: exact;}' +
+                    '}<\/style>';
+                var b = '<script src=\"https:\/\/ajax.googleapis.com\/ajax\/libs\/jquery\/3.4.1\/jquery.min.js\"><\/script>';
+                var c = '<script src=\"https:\/\/maxcdn.bootstrapcdn.com\/bootstrap\/3.4.1\/js\/bootstrap.min.js\"><\/script>';
+                var d = '<link rel=\"stylesheet\" href=\"https:\/\/cdnjs.cloudflare.com\/ajax\/libs\/font-awesome\/4.7.0\/css\/font-awesome.min.css\">';
+                var scripts = a + '' + b +'' + c + '' + d;
+
+                var mywindow = window.open('', 'my div', 'height=400,width=700');
+                mywindow.document.write('<html><head><title></title>');
+                mywindow.document.write(scripts + '</head><body>');
+                mywindow.document.write('<br><br><br><br>');
+                mywindow.document.write(data+'</body></html>');
+                mywindow.document.close();
+                mywindow.print();
+
+            }
+
+
+
+
 </script>

@@ -1,1 +1,1 @@
-<footer class="footer text-center"> 2020 &copy; You Company Name</footer>
+<footer class="footer text-center">ACLC STUDENT</footer>

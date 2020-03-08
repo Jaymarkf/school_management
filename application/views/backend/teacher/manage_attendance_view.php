@@ -44,7 +44,7 @@
             <label class="control-label" style="margin-bottom: 5px;"><?php echo get_phrase('Subject'); ?></label>
             <select class="form-control selectboxit" name="subject_id">
                 <?php
-                $subj = $this->db->get_where('subject',array('class_id' => $class_id))->result_array();
+                $subj = $this->db->get_where('subject',array('subject_id' => $subject_id))->result_array();
                 foreach ($subj as $index => $item) {
                     echo '<option value="'.$item['subject_id'].'">'.$item['name'].'</option>';
                 }
@@ -71,7 +71,6 @@
 				<thead>
 					<tr>
 						<th>No.</th>
-						<th><?php echo get_phrase('Roll'); ?></th>
 						<th><?php echo get_phrase('Student'); ?></th>
 						<th><?php echo get_phrase('Status'); ?></th>
 					</tr>
@@ -79,27 +78,44 @@
 				<tbody>
 				<?php
 					$count = 1;
-					if($section_id != ''){
-						$attendance_of_students = $this->db->get_where('attendance' , array(
-							'class_id' => $class_id, 'section_id' => $section_id , 'year' => $running_year,'timestamp'=>$timestamp,'subject_id'=>$subject_id
-						))->result_array();
-					}
-					foreach($attendance_of_students as $row):
+
+                $qryd = '(class_id = '.$class_id.' and section_id = '.$section_id.' and year = "'.$running_year. '" and find_in_set("'.$subject_id.'",selected_subject))
+                            or
+                            (section_id = 0 and year = "'.$running_year. '"  and find_in_set("'.$subject_id.'",selected_subject))
+                            ';
+                $this->db->where($qryd);
+                $students =  $this->db->get('enroll')->result_array();
+
+//
+//					if($section_id != ''){
+//                        $qrs = ' (class_id = '.$class_id.' and section_id = '.$section_id.' and year = "'.$running_year. '" and timestamp = "'.$timestamp.'" and subject_id = "'.$subject_id.'")
+//                            or
+//                            ( section_id = 0 and year = "'.$running_year. '" and timestamp = "'.$timestamp.'" and subject_id = "'.$subject_id.'")
+//                            ';
+//                        $this->db->where($qrs);
+//                        $attendance_of_students =  $this->db->get('attendance')->result_array();
+//					}
+
+
+
+					foreach($students as $row):
 				?>
 					<tr>
 						<td><?php echo $count++;?></td>
-						<td>
-							<?php echo $this->db->get_where('enroll', array('student_id'=>$row['student_id']))->row()->roll;?>
-						</td>
+
 						<td>
 							<?php echo $this->db->get_where('student' , array('student_id' => $row['student_id']))->row()->name;?>
 						</td>
 						<td>
-							<select class="form-control selectboxit" name="status_<?php echo $row['attendance_id'];?>">
-								<option value="0" <?php if($row['status'] == 0) echo 'selected';?>><?php echo get_phrase('Select'); ?></option>
-								<option value="1" <?php if($row['status'] == 1) echo 'selected';?>><?php echo get_phrase('Present'); ?></option>
-								<option value="2" <?php if($row['status'] == 2) echo 'selected';?>><?php echo get_phrase('Absent'); ?></option>
-								<option value="3" <?php if($row['status'] == 3) echo 'selected';?>><?php echo get_phrase('Late');?></option>
+							<select class="form-control selectboxit" name="status_<?php
+                                $x = $this->db->get_where('attendance',array('student_id' => $row['student_id'],'subject_id' => $subject_id,'year' => $running_year, 'timestamp' => $timestamp, 'class_id' => $class_id))->row()->attendance_id;
+                                $stat = $this->db->get_where('attendance',array('student_id' => $row['student_id'],'subject_id' => $subject_id,'year' => $running_year, 'timestamp' => $timestamp, 'class_id' => $class_id))->row()->status;
+                                echo $x;
+                            ?>">
+								<option value="0" <?php if($stat == 0) echo 'selected';?>><?php echo get_phrase('Select'); ?></option>
+								<option value="1" <?php if($stat == 1) echo 'selected';?>><?php echo get_phrase('Present'); ?></option>
+								<option value="2" <?php if($stat == 2) echo 'selected';?>><?php echo get_phrase('Absent'); ?></option>
+								<option value="3" <?php if($stat == 3) echo 'selected';?>><?php echo get_phrase('Late');?></option>
 							</select>	
 						</td>
 					</tr>

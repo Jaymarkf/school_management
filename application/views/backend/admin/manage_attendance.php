@@ -99,7 +99,6 @@
                 <thead>
                     <tr>
                         <th>No.</th>
-                        <th style="text-align: center;"><?php echo get_phrase('Roll');?></th>
                         <th style="text-align: center;"><?php echo get_phrase('Student');?></th>
                         <th style="text-align: center;"><?php echo get_phrase('Status');?></th>
                     </tr>
@@ -107,6 +106,7 @@
                 <tbody>
                     <?php
                     $count = 1;
+
                     $qrs = ' (class_id = '.$class_id.' and section_id = '.$section_id.' and year = "'.$running_year. '" and timestamp = "'.$timestamp.'" and subject_id = "'.$subject_id.'")
                             or
                             (class_id = '.$class_id.' and section_id = 0 and year = "'.$running_year. '" and timestamp = "'.$timestamp.'" and subject_id = "'.$subject_id.'")
@@ -114,14 +114,10 @@
                     $this->db->where($qrs);
                     $attendance_of_students =  $this->db->get('attendance')->result_array();
 
-
                     foreach ($attendance_of_students as $row):
                         ?>
                         <tr>
                             <td><?php echo $count++; ?></td>
-                            <td>
-                                <?php echo $this->db->get_where('enroll', array('student_id' => $row['student_id']))->row()->roll; ?>
-                            </td>
                             <td>
                                 <?php echo $this->db->get_where('student', array('student_id' => $row['student_id']))->row()->name; ?>
                             </td>

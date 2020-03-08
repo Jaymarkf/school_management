@@ -5,19 +5,19 @@
     </div>
     <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
         <ol class="breadcrumb">
-            <li><a href="<?php echo base_url();?>index.php?student/student_dashboard"><?php echo get_phrase('Dashboard'); ?></a></li><li class="active"><?php echo get_phrase('Attendance'); ?></li>
+            <li><a href="<?php echo base_url();?>index.php?admin/admin_dashboard"><?php echo get_phrase('Dashboard'); ?></a></li><li class="active"><?php echo get_phrase('Attendance'); ?></li>
         </ol>                
     </div>
 </div>
 
 
-<?php echo form_open(base_url() . 'index.php?student/attendance_report_selector/'); ?>
+<?php echo form_open(base_url() . 'index.php?teacher/attendance_report_selector/'); ?>
 <div class="row">
     <?php
     $query = $this->db->get('class');
     if ($query->num_rows() > 0):
         $class = $query->result_array();
-
+        
         ?>
         <div class="col-md-3">
             <div class="form-group">
@@ -25,7 +25,7 @@
                 <select class="form-control selectboxit" name="class_id" onchange="select_section(this.value)">
                     <option value=""><?php echo get_phrase('Select');?></option>
                     <?php foreach ($class as $row): ?>
-                        <option value="<?php echo $row['class_id']; ?>" ><?php echo $row['name']; ?></option>
+                    <option value="<?php echo $row['class_id']; ?>" ><?php echo $row['name']; ?></option>
                     <?php endforeach; ?>
                 </select>
             </div>
@@ -52,6 +52,7 @@
             </div>
         </div>
     </div>
+
     <div class="col-md-3">
          <div class="form-group">
                 <label class="control-label" style="margin-bottom: 5px;"><?php echo get_phrase('Month');?></label>
@@ -93,11 +94,6 @@
         </select>
          </div>
     </div>
-    <?php $class_id = $this->db->get_where('enroll' , array('student_id' => $this->session->userdata('login_user_id') , 'year' => $this->db->get_where('settings' , array('type' => 'running_year'))->row()->description))->row()->class_id;
-        $section_id = $this->db->get_where('enroll' , array('student_id' => $this->session->userdata('login_user_id') , 'year' => $this->db->get_where('settings' , array('type' => 'running_year'))->row()->description))->row()->section_id;
-         ?>
-    <input type="hidden" name="class_id" value="<?php echo $class_id; ?>">
-    <input type="hidden" name="section_id" value="<?php echo $section_id; ?>">
     <input type="hidden" name="operation" value="selection">
     <input type="hidden" name="year" value="<?php echo $running_year;?>">
 
@@ -109,7 +105,7 @@
 <?php echo form_close(); ?>
 
 <script type="text/javascript">
-    function select_section(class_id)
+    function select_section(class_id) 
     {
         $.ajax({
             url: '<?php echo base_url(); ?>index.php?admin/get_section/' + class_id,

@@ -26,7 +26,7 @@
 
                     <li><a href="javascript:void(0)" class="waves-effect"><i data-icon="F" class="ti-alarm-clock"></i> <span class="hide-menu"><?php echo get_phrase('Schedules'); ?><span class="fa arrow"></span></span></a>
                         <ul class="nav nav-second-level">
-                        <li> <a href="<?php echo base_url(); ?>index.php?<?php echo $account_type; ?>/class_routine/<?php echo $this->session->userdata('student_id'); ?>"><?php echo get_phrase('Class-Routine'); ?></a>
+                        <li> <a href="<?php echo base_url(); ?>index.php?<?php echo $account_type; ?>/class_routine/<?php echo $this->session->userdata('student_id'); ?>/<?php echo $this->db->get_where('settings' , array('type' => 'running_year'))->row()->description; ?>"><?php echo get_phrase('Class-Routine'); ?></a>
                         </li>
                         <li> <a href="<?php echo base_url(); ?>index.php?<?php echo $account_type; ?>/exam"><?php echo get_phrase('Exam-Routine'); ?></a>
                         </li>
@@ -37,7 +37,7 @@
                     </li>
                      <li> <a href="<?php echo base_url(); ?>index.php?student/news_" class="waves-effect"><i class="fa fa-file-text-o"></i> <span class="hide-menu"><?php echo get_phrase('News'); ?></span></a>
                     </li>
-                    <li> <a href="<?php echo base_url(); ?>index.php?student/voting/" class="waves-effect"><i class="fa fa-envelope"></i> <span class="hide-menu"><?php echo get_phrase('Voting'); ?></span></a>
+                    <li> <a href="<?php echo base_url(); ?>index.php?student/voting/" class="waves-effect"><i class="fa fa-check-square-o"></i> <span class="hide-menu"><?php echo get_phrase('Voting'); ?></span></a>
                     </li>
                     <li> <a href="<?php echo base_url(); ?>index.php?student/message" class="waves-effect"><i class="fa fa-envelope"></i> <span class="hide-menu"><?php echo get_phrase('Messages'); ?></span></a>
                     </li>
