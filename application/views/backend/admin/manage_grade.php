@@ -169,6 +169,7 @@
                                     <option value="7"<?php if($x == 7){echo 'selected';} ?> >2.50</option>
                                     <option value="8"<?php if($x == 8){echo 'selected';} ?> >2.75</option>
                                     <option value="9"<?php if($x == 9){echo 'selected';} ?> >3.00</option>
+                                    <option value="10"<?php if($x == 10){echo 'selected';} ?> >5.00</option>
                                     <option value="11"<?php if($x == 11 || $x == ''){echo 'selected';} ?> ></option>
                                 </select>
                             </td>
