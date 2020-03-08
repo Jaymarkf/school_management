@@ -18,7 +18,8 @@
 --
 -- Table structure for table `academic_settings`
 --
-
+create database pro_sms;
+use pro_sms;
 DROP TABLE IF EXISTS `academic_settings`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
