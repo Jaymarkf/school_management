@@ -113,7 +113,12 @@ if($student_status['section_id'] == 0){
                                         }else{
                                             $mode1 = " AM";
                                         }
-                                        echo '( '.$row2['time_start'].':'.$row2['time_start_min'].$mode.' to '.$row2['time_end'].':'.$row2['time_end_min'].$mode1.' | Room-['.$row2['room_id'].'])'; ?>
+                                        if($row2['time_start_min'] == 0 ){
+                                            $add_zero = "0";
+                                        }else{
+                                            $add_zero = "";
+                                        }
+                                        echo '( '.$row2['time_start'].':'.$row2['time_start_min'].$add_zero.$mode.' to '.$row2['time_end'].':'.$row2['time_end_min'].$add_zero.$mode1.' | Room-['.$row2['room_id'].'])'; ?>
                                     </button>
                                 </div>
                                 <?php endforeach;?>

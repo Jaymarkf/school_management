@@ -173,12 +173,18 @@
                                 <option value="8"<?php if($x == 8){echo 'selected';} ?> >2.75</option>
                                 <option value="9"<?php if($x == 9){echo 'selected';} ?> >3.00</option>
                                 <option value="10"<?php if($x == 10){echo 'selected';} ?> >5.00</option>
-                                <option value="10"<?php if($x == ''){echo 'selected';} ?> ></option>
+                                <option value="11"<?php if($x == 11 || $x == ''){echo 'selected';} ?> ></option>
                                 </select>
                             </td>
                             <td>
-                                <input type="text" name="comments_id_<?php echo $row['student_id'];?>"
-                                       placeholder="Enter your comments" class="form-control" value ="<?php echo $comments; ?>"/>
+                                <input type="text" <?php if($comments == "FAILED"){
+                                    echo 'style="color:red"';
+                                }else{
+                                    echo 'style="color:black"';
+                                }
+
+                                ?> name="comments_id_<?php echo $row['student_id'];?>"
+                                       placeholder="Enter your comments" class="form-control" value ="<?php echo $comments; ?>"  />
                             </td>
                         </tr>
                     <?php endforeach; ?>
@@ -257,7 +263,7 @@
                  $(this).parents(":eq(1)").children(':nth-child(5)').children().val('FAILED');
                  $(this).parents(":eq(1)").children(':nth-child(5)').children().css({'background-color':'rgb(255,50,50)','color':'white'});
              }else{
-                 $(this).parents(":eq(1)").children(':nth-child(4)').children().val(0);
+                 $(this).parents(":eq(1)").children(':nth-child(4)').children().val(11);
                  $(this).parents(":eq(1)").children(':nth-child(5)').children().val('');
                  $(this).parents(":eq(1)").children(':nth-child(5)').children().css({'background-color':'rgb(255,255,255)','color':'white'});
              }

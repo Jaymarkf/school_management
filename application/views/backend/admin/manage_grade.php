@@ -169,7 +169,7 @@
                                     <option value="7"<?php if($x == 7){echo 'selected';} ?> >2.50</option>
                                     <option value="8"<?php if($x == 8){echo 'selected';} ?> >2.75</option>
                                     <option value="9"<?php if($x == 9){echo 'selected';} ?> >3.00</option>
-                                    <option value="10"<?php if($x == 10){echo 'selected';} ?> >5.00</option>
+                                    <option value="11"<?php if($x == 11 || $x == ''){echo 'selected';} ?> ></option>
                                 </select>
                             </td>
                             <td>
@@ -178,7 +178,13 @@
                             </td>
                             <td>
                                 <input type="text" name="comments_id_<?php echo $row['student_id'];?>"
-                                       placeholder="Enter your comments" class="form-control" value ="<?php echo $comments; ?>" disabled/>
+                                       placeholder="Enter your comments" class="form-control" value ="<?php echo $comments; ?>" <?php if($comments == "FAILED"){
+                                           echo 'style="color:red"';
+                                }else{
+                                           echo 'style="color:black"';
+                                }
+
+                                ?> disabled/>
                             </td>
                         </tr>
                     <?php endforeach; ?>
@@ -248,7 +254,7 @@
                             ?>
                             <td><?php echo $x; ?></td>
                             <td><?php echo $grade; ?></td>
-                            <td><?php echo $comments; ?></td>
+                            <td><?php echo $comments;?></td>
                         </tr>
 
                     <?php endforeach; ?>
@@ -259,7 +265,6 @@
         </div>
     </div>
 </div>
-
 <script type="text/javascript">
     function select_section(class_id) {
         $.ajax({

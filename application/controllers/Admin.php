@@ -1391,6 +1391,14 @@ class Admin extends CI_Controller
         $this->load->view('backend/admin/student_bulk_subjects' , $page_data);
     }
 
+    function get_subjects_teacher($class_id,$teacher_id)
+    {
+
+        $page_data['class_id'] = $class_id;
+        $page_data['teacher_id'] = $teacher_id;
+        $this->load->view('backend/admin/student_bulk_subjects' , $page_data);
+    }
+
 
     function attendance_selector()
     {
