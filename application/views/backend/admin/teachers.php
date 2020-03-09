@@ -94,17 +94,17 @@
                     </div>
                     </div>
                   </div>
-					
-					<div class="form-group">
-                    <label class="col-sm-4 control-label"><?php echo get_phrase('Password');?></label>
-                    <div class="col-sm-5">
-                    <div class="input-group">
-                      <div class="input-group-addon"><i class="fa fa-key"></i></div>
-                      <input id="password-field" type="password" class="form-control" required="" name="password" placeholder="<?php echo get_phrase('Password');?>">
+
+
+                    <div class="form-group">
+
+                        <label for="field-2" class="col-sm-4 control-label"><?php echo get_phrase('Password'); ?></label>
+                        <div class="col-sm-5">
+                            <input id="password-field" type="password" class="form-control" name="password" value="" required>
+                            <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password text-success" style="position:absolute !important;right:9px;top:10px;"></span>
+                        </div>
+
                     </div>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password text-success"></span>
-                    </div>
-                  </div>
 					
 					<div class="form-group">
                     <label class="col-sm-4 control-label"><?php echo get_phrase('Phone');?></label>

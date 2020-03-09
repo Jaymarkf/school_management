@@ -66,8 +66,17 @@
                                             $mode1 = " PM";
                                         }else{
                                             $mode1 = " AM";
+                                        }   if($row2['time_start_min'] == 0){
+                                            $x = 0;
+                                        }else{
+                                            $x = '';
                                         }
-                                        echo '( '.$row2['time_start'].':'.$row2['time_start_min'].$mode.' to '.$row2['time_end'].':'.$row2['time_end_min'].$mode1.' | Room-['.$row2['room_id'].'] ~ Date: '.$row2['fecha'].')'; ?>
+                                        if($row2['time_end_min'] == 0){
+                                            $y = 0;
+                                        }else{
+                                            $y = '';
+                                        }
+                                        echo '( '.$row2['time_start'].':'.$row2['time_start_min'].$x.$mode.' to '.$row2['time_end'].':'.$row2['time_end_min'].$y.$mode1.' | Room-['.$row2['room_id'].'] ~ Date: '.$row2['fecha'].')'; ?>
                                     </button>
                                 </div>
                                 <?php endforeach;?>

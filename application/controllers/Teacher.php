@@ -593,7 +593,7 @@ class Teacher extends CI_Controller
         $this->load->view('backend/index', $page_data);
     }
 
-    function manage_attendance($class_id)
+    function manage_attendance($class_id,$teacher_id)
     {
         if($this->session->userdata('teacher_login')!=1)
             redirect(base_url() , 'refresh');
@@ -603,6 +603,7 @@ class Teacher extends CI_Controller
         ))->row()->name;
         $page_data['page_name']  =  'manage_attendance';
         $page_data['class_id']   =  $class_id;
+        $page_data['teacher_id'] = $teacher_id;
         $page_data['page_title'] =  get_phrase('Daily-Attendance') . ' ' . $class_name;
         $this->load->view('backend/index', $page_data);
     }

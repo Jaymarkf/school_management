@@ -40,7 +40,7 @@
                 $classes = $this->db->get('class')->result_array();
                 foreach ($classes as $row):
                     ?>
-                            <li> <a href="<?php echo base_url(); ?>index.php?teacher/manage_attendance/<?php echo $row['class_id']; ?>"><?php echo $row['name']; ?></a></li>
+                            <li> <a href="<?php echo base_url(); ?>index.php?teacher/manage_attendance/<?php echo $row['class_id']; ?>/<?php echo $this->session->userdata('teacher_id'); ?>"><?php echo $row['name']; ?></a></li>
 
                               <?php endforeach; ?>
                             <li> <a href="<?php echo base_url(); ?>index.php?teacher/attendance_report"><?php echo get_phrase('Attendance-Report'); ?></a></li>
